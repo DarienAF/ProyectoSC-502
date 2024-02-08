@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    Inicio de Proyecto
+    Inicio de Proyecto<br>
+    <p>Cambios desde github, prueba de pull entre branch</p>
 </body>
 </html>
