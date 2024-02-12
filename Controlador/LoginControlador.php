@@ -2,11 +2,11 @@
 session_start();
 require_once './Modelo/Conexion.php';
 
-class IndexControlador {
+class LoginControlador {
 
     function Index()
     {
-        require_once './Vista/home.php';
+        require_once './Vista/Login.php';
     }
 
 }
