@@ -4,12 +4,12 @@ class Rutas
 {
     function CargarControlador($controlador)//estudiante
     {
-        $nombreControlador= ucwords(strtolower($controlador))."Controlador";
-        $archivoControlador="./Controlador/".ucwords(strtolower($controlador))."Controlador.php";
+        $nombreControlador= ucwords(strtolower($controlador)) . "Controller";
+        $archivoControlador="./Controller/".ucwords(strtolower($controlador))."Controller.php";
 
         if(!is_file($archivoControlador))
         {
-            $nombreControlador="IndexControlador";
+            $nombreControlador="IndexPageController";
             $archivoControlador=RUTA_FIJA;
         }
 
@@ -28,7 +28,7 @@ class Rutas
         else
         {
             require_once RUTA_FIJA;
-            $controlador=new IndexControlador();
+            $controlador=new IndexPageController();
             $controlador->Index();
         }
     }
