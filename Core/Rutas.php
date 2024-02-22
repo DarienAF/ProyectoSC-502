@@ -2,34 +2,34 @@
 
 class Rutas
 {
-    function CargarControlador($controlador)//estudiante
+    function LoadController($Controller)//estudiante
     {
-        $nombreControlador= ucwords(strtolower($controlador)) . "Controller";
-        $archivoControlador="./Controller/".ucwords(strtolower($controlador))."Controller.php";
+        $nombreController= ucwords(strtolower($Controller)) . "Controller";
+        $archivoController="./Controller/".ucwords(strtolower($Controller))."Controller.php";
 
-        if(!is_file($archivoControlador))
+        if(!is_file($archivoController))
         {
-            $nombreControlador="IndexPageController";
-            $archivoControlador=RUTA_FIJA;
+            $nombreController="IndexPageController";
+            $archivoController=FIXED_PATH;
         }
 
-        require_once $archivoControlador;
-        $controladorObjeto= new $nombreControlador();
-        return $controladorObjeto;
+        require_once $archivoController;
+        $ControllerObjeto= new $nombreController();
+        return $ControllerObjeto;
     }
-    //Cargar la accion del controlador pasado por la url ejemplo = ...../php?controlador=estudiante&accion=Index
-    //carga el index del controlador estudiante
-    function CargarAccion($controlador,$accion)
+    //Cargar la action del Controller pasado por la url ejemplo = ...../php?Controller=estudiante&action=Index
+    //carga el index del Controller estudiante
+    function LoadAction($Controller,$action)
     {
-        if(isset($accion) && method_exists($controlador, $accion))
+        if(isset($action) && method_exists($Controller, $action))
         {
-            $controlador->$accion();
+            $Controller->$action();
         }
         else
         {
-            require_once RUTA_FIJA;
-            $controlador=new IndexPageController();
-            $controlador->Index();
+            require_once FIXED_PATH;
+            $Controller=new IndexPageController();
+            $Controller->Index();
         }
     }
 }

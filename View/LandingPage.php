@@ -4,7 +4,7 @@
     <title>v-Fit Studio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="./Vista/style/HomeStyle.css">
+    <link rel="stylesheet" href="./View/style/LandingPageStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
@@ -14,18 +14,18 @@
         <div class="icon"></div>
         <ul class="nav justify-content-end container-fluid">
             <a class="navbar-brand Logo d-none d-lg-block" href="#">
-                <img src="http://localhost/dashboard/ProyectoSC-502/Vista/imagen/Logo.svg" width="170" height="140">
+                <img src="http://localhost/dashboard/ProyectoSC-502/View/img/Logo.svg" width="170" height="140">
             </a>
             <li class="nav-item">
                 <a class="active" aria-current="page" href="#">INICIO</a>
             </li>
             <li class="nav-item">
                 <a
-                   href="http://localhost/dashboard/ProyectoSC-502/index.php?controlador=LoginPage&accion=index">INICIAR
+                   href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=LoginPage&accion=index">INICIAR
                     SESIÓN</a>
             </li>
             <li class="nav-item">
-                <a class="redButton " href="http://localhost/dashboard/ProyectoSC-502/index.php?controlador=SignUpPage&accion=index">¡ÚNETE YA!</a>
+                <a class="redButton " href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=SignUpPage&accion=index">¡ÚNETE YA!</a>
             </li>
             <li class="nav-item">
                 <a  href="#">PRECIOS</a>
@@ -115,7 +115,7 @@
                     <h3 class="BentoTitle">Bienvenido a VerveFit Studio</h3>
                 </div>
                 <div class="box d-none d-lg-block">
-                    <img src="http://localhost/dashboard/ProyectoSC-502/Vista/imagen/Logo.svg" alt="Logo" width="100%"
+                    <img src="http://localhost/dashboard/ProyectoSC-502/View/img/Logo.svg" alt="Logo" width="100%"
                          height="90%">
                 </div>
                 <div class="box">
@@ -132,7 +132,7 @@
                 <span class="Img1"></span>
             </div>
             <div class="image-content">
-                <img src="http://localhost/dashboard/ProyectoSC-502/Vista/imagen/BentoImg2.png" alt="Imagen" width="50%"
+                <img src="http://localhost/dashboard/ProyectoSC-502/View/img/BentoImg2.png" alt="img" width="50%"
                      height="32%">
                 <div class="content">
                     <h2 class="BentoTitle">¿Por qué VerveFit Studio?</h2>
@@ -167,7 +167,7 @@
 
 <section id="UneteYa">
     <div class="container  JoinBanner">
-        <div class="mt-5 mb-5 row">
+        <div class="row">
 
             <div class="col-6 imgJoinBanner" r>
 
@@ -188,11 +188,11 @@
 </section>
 
 <section id="Contactanos">
-    <div class="container ContactUsBanner mb-5">
+    <div class="container ContactUsBanner mb-4">
         <div class="ContactUsText">
             <p style="font-size: 10px">
             </p>
-            <p style="font-size: 10px ; padding-top: 50px" >
+            <p style="font-size: 16px ; padding-top: 50px" >
                 ¿Tienes preguntas, necesitas asistencia o simplemente quieres hablar sobre cómo podemos mejorar tu
                 experiencia en nuestro estudio? No dudes en ponerte en contacto con nuestro equipo de soporte al cliente.
                 Estamos comprometidos en proporcionarte el mejor servicio y apoyo en cada paso de tu viaje de bienestar y
@@ -211,50 +211,7 @@
     </div>
 </section>
 
-<section id="Footer">
-    <div class="Footer text-center">
-        <div class="row justify-content-center">
-            <div class="col-4 Correo">
-                <p style="font-size: 40px;">¿Listo para una vida
-                    <span style="color: #D43B3B">asombrosa</span>? </p>
-                <p>
-                    Info@VerveFitStudio.com
-                </p>
-            </div>
-            <div class="col-4 Redes">
-                <p>
-                    Síguenos
+<?php require 'elements\footer.php'; ?>
 
-                </p>
-                <p>
-                    <i class="bi bi-instagram"></i>
-                    <i class="bi bi-facebook"></i>
-                </p>
-
-                <a>
-                    Quienes somos
-                </a>
-
-                <a>
-                    Términos  & Condiciones
-                </a>
-
-                <a>Política de Privacidad</a>
-
-                <a>
-                    FAQs
-                </a>
-            </div>
-            <div class="col-4 Icono">
-                <img src="http://localhost/dashboard/ProyectoSC-502/Vista/imagen/LogoFooter.png" alt="Imagen" width="210" height="190">
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
 </body>
 </html>
