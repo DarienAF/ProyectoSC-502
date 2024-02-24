@@ -8,60 +8,43 @@
     <link rel="stylesheet" href="./View/style/SignUpPageStyle.css">
     <style>
         body {
+            display: flex;
+            flex-direction: column;
             background-repeat: no-repeat;
+            background-position: 50% 50%;
             background-size: cover;
-            height: 50em;
+            height: 100vh;
             background-color: #000000;
             background-image: url(http://localhost/dashboard/ProyectoSC-502/View/img/Login.png);
         }
+
 
     </style>
 </head>
 <body>
 
-<section id="Nav">
-    <div class="Nav">
-        <ul class="nav justify-content-end container-fluid">
-            <li class="nav-item">
-                <a aria-current="page" href="http://localhost/dashboard/ProyectoSC-502/">INICIO</a>
-            </li>
-            <li class="nav-item">
-                <a href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=LoginPage&accion=index">INICIAR
-                    SESIÓN</a>
-            </li>
-            <li class="nav-item">
-                <a class="redButton active" href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=SignUpPage&accion=index">¡ÚNETE YA!</a>
-            </li>
-            <li class="nav-item">
-                <a href="#">PRECIOS</a>
-            </li>
-            <li class="nav-item">
-                <a href="#">CONTACTOS</a>
-            </li>
-        </ul>
-    </div>
-</section>
+<?php require 'elements\nav.php'; ?>
 
 
 <section id="Contenido">
     <div class="Contenido container text-center mt-5">
         <div class="row align-items-center">
-            <div class="col-6 Logo">
+            <div class="col-md-6 Logo">
                 <img src="http://localhost/dashboard/ProyectoSC-502/View/img/Logo.svg" width=500px height="50%">
             </div>
-            <div class="col-6 Login">
+            <div class="col-md-6 Login mb-4">
                 <p class="mt-5 mb-5 Titulo">Registrarse</p>
-                <div class="Form">
+                <form class="Form">
                     <label for="exampleFormControlInput1" class="form-label">Ingresa tu Correo Electrónico</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Correo Electrónico">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Nombre de Usuario</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nombre de Usuario">
 
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Número de Contacto</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Número de Contacto">
 
@@ -70,12 +53,12 @@
                     <label for="exampleFormControlInput1" class="form-label">Ingresa tu contraseña</label>
                     <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Contraseña">
 
-                    <a class="AlreadyAccount" href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=Login&accion=index">¿Ya tienes una cuenta?
-                        Inicia Sesión</a>
+                    <a class="AlreadyAccount" href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=Login&action=index">¿Ya tienes una cuenta?
+                        <br>Inicia Sesión</a>
 
 
 
-                </div>
+                </form>
                 <a class="btn btn-danger Boton">UNIRME</a>
             </div>
         </div>

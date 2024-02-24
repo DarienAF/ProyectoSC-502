@@ -6,34 +6,15 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./View/style/LandingPageStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+    </style>
 </head>
 <body>
 
 <section id="LandingPage">
     <div class="LandingPage">
         <div class="icon"></div>
-        <ul class="nav justify-content-end container-fluid">
-            <a class="navbar-brand Logo d-none d-lg-block" href="#">
-                <img src="http://localhost/dashboard/ProyectoSC-502/View/img/Logo.svg" width="170" height="140">
-            </a>
-            <li class="nav-item">
-                <a class="active" aria-current="page" href="#">INICIO</a>
-            </li>
-            <li class="nav-item">
-                <a
-                   href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=LoginPage&accion=index">INICIAR
-                    SESIÓN</a>
-            </li>
-            <li class="nav-item">
-                <a class="redButton " href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=SignUpPage&accion=index">¡ÚNETE YA!</a>
-            </li>
-            <li class="nav-item">
-                <a  href="#">PRECIOS</a>
-            </li>
-            <li class="nav-item">
-                <a  href="#">CONTACTOS</a>
-            </li>
-        </ul>
+        <?php require 'elements\nav.php'; ?>
 
         <div class="TextLandingPage row">
             <div class="col-md-7 col-xxl-4">
