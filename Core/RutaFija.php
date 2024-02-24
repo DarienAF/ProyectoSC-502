@@ -1,6 +1,6 @@
 <?php
-    define("CONTROLADOR_PRINCIPAL", "Index");
-    define("ACCION_PRINCIPAL", "Index");
-    define("RUTA_FIJA", "./Controlador/IndexControlador.php");
+    define("MAIN_CONTROLLER", "Index");
+    define("MAIN_ACTION", "Index");
+    define("FIXED_PATH", "./Controller/IndexPageController.php");
     
 

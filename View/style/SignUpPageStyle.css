@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Angkor&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Saira+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Stick+No+Bills:wght@200..800&family=Zen+Dots&display=swap'); a
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+.Logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10%;
+    height: 100%;
+}
+
+.nav {
+    font-size: 24px;
+    font-family: 'Saira Condensed', sans-serif;
+    padding: 30px 20px 20px 20px;
+    position: relative;
+    top: 0;
+    right: 0;
+}
+
+.nav-item a{
+    margin: 0px 30px 0px 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.active {
+    border-bottom: 1px solid #D43B3B;
+}
+
+.redButton {
+    text-decoration: none;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #D43B3B;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+
+.Login{
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 20px;
+}
+
+.Login .Titulo{
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 35px;
+    color: #000;
+    text-align: start;
+    margin-left: 30px;
+}
+
+.Opciones{
+    margin-left: 30px;
+    display: flex;
+}
+
+.Google{
+    text-decoration: none;
+    color: black;
+    margin-right: 60px;
+    border-radius: 10px;
+    padding: 10px 30px 10px 30px;
+    background-color: #E9F1FF;
+    font-size: 20px;
+}
+
+.NoAccount{
+    text-align: start;
+    display: inline-grid;
+}
+
+.NoAccount *{
+    text-decoration: none;
+    color: #8D8D8D;
+    margin: 0;
+}
+
+.Form{
+    margin-right: 30px;
+    margin-left: 30px;
+    text-align: start;
+}
+
+.Form label{
+    margin-top: 30px;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.Form input{
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    padding: 15px;
+}
+
+.AlreadyAccount{
+    top:0;
+    position: relative;
+    left: 60%;
+    text-decoration: none;
+    color: #4285F4;
+}
+
+.Boton{
+    padding: 10px 150px 10px 150px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}

@@ -1,0 +1,13 @@
+<?php
+session_start();
+require_once './Model/Connection.php';
+
+class SignUpPageController {
+
+    function Index()
+    {
+        // Get the current page name
+        $current_page = basename($_GET['controller']);
+        require_once './View/SignUpPage.php';
+    }
+}
