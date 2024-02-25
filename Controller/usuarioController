@@ -1,0 +1,159 @@
+<?php
+require_once '../Model/Usuario.php';
+
+switch ($_GET["op"]) {
+    case 'listar_para_tabla':
+        $user_login = new Usuario();
+        $usuarios = $user_login->listarTodosDb();
+        $data = array();
+        foreach ($usuarios as $reg) {
+            if ($reg->getRutaImagen() != '' && $reg->getRutaImagen() != null) {
+                $imagen = './assets/images/profiles/' . $reg->getRutaImagen();
+            } else {
+                $imagen = './assets/images/profiles/' . 'user-160x160.jpg';
+            }
+            $data[] = array(
+                "0" => $reg->getIdUsuario(),
+                "1" => $reg->getUsername(),
+                "2" => $reg->getPassword(), // Asegúrate de que sea seguro enviar la contraseña aquí
+                "3" => $reg->getNombre(),
+                "4" => $reg->getApellidos(),
+                "5" => $reg->getCorreo(),
+                "6" => $reg->getTelefono(),
+                "7" => '<img src="' . $imagen . '" width="50px" height="50px"/>',
+                "8" => ($reg->getActivo() == 1) ? '<span class="label bg-success"> Activado </span>' : '<span class="label bg-danger"> Desactivado </span>',
+                "9" => ($reg->getActivo()) ? '<button class="btn btn-warning" id="modificarUsuario">Modificar</button> ' .
+                    '<button class="btn btn-danger" onclick="desactivar(\'' . $reg->getIdUsuario() . '\')">Desactivar</button>' : '</button> <button class="btn btn-warning" id="modificarUsuario">Modificar</button> ' .
+                    '<button class="btn btn-success" onclick="activar(\'' . $reg->getIdUsuario() . '\')">Activar</button>'
+            );
+        }
+        $resultados = array(
+            "sEcho" => 1, // Información para DataTables
+            "iTotalRecords" => count($data), // Total de registros para DataTables
+            "iTotalDisplayRecords" => count($data), // Total de registros a mostrar para DataTables
+            "aaData" => $data
+        );
+        echo json_encode($resultados);
+        break;
+        case 'insertar':
+            $username = isset($_POST["username"]) ? trim($_POST["username"]) : "";
+            $password = isset($_POST["password"]) ? trim($_POST["password"]) : "";
+            $nombre = isset($_POST["nombre"]) ? trim($_POST["nombre"]) : "";
+            $apellidos = isset($_POST["apellidos"]) ? trim($_POST["apellidos"]) : "";
+            $correo = isset($_POST["correo"]) ? trim($_POST["correo"]) : "";
+            $telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]) : "";
+            $ruta_imagen = isset($_POST["ruta_imagen"]) ? trim($_POST["ruta_imagen"]) : "";
+            $activo = isset($_POST["activo"]) ? trim($_POST["activo"]) : 1;
+        
+            $clavehash = hash('SHA256', trim($password));
+        
+            $usuario = new Usuario();
+            $usuario->setCorreo($correo);
+            $encontrado = $usuario->verificarExistenciaDb();
+        
+            if ($encontrado == false) {
+                $usuario->setUsername($username);
+                $usuario->setPassword($clavehash);
+                $usuario->setNombre($nombre);
+                $usuario->setApellidos($apellidos);
+                $usuario->setCorreo($correo);
+                $usuario->setTelefono($telefono);
+                $usuario->setRutaImagen($ruta_imagen);
+                $usuario->setActivo($activo);
+                $usuario->guardarEnDb();
+        
+                if($usuario->verificarExistenciaDb()){
+                    echo 1; //usuario registrado
+                } else {
+                    echo 3; //Fallo al realizar el registro
+                }
+            } else {
+                echo 2; //el usuario ya existe
+            }
+        
+        break;
+        case 'existeUsuario':
+            $username = isset($_POST["username"]) ? $_POST["username"] : "";
+            $user_login = new Usuario();
+            $user_login->setUsername($username);
+            $encontrado = $user_login->verificarExistenciaDb();
+            if ($encontrado != null) {
+                echo 1; // El usuario existe
+            } else {
+                echo 0; // El usuario no existe
+            }
+        break;
+        case 'activar':
+            $ul = new Usuario();
+            $ul->setIdUsuario(trim($_POST['idUsuario']));
+            $rspta = $ul->activar();
+            echo $rspta;
+        break;
+        
+        case 'desactivar':
+            $ul = new Usuario();
+            $ul->setIdUsuario(trim($_POST['idUsuario']));
+            $rspta = $ul->desactivar();
+            echo $rspta;
+        break;
+        case 'mostrar':
+            $username = isset($_POST["username"]) ? $_POST["username"] : "";
+            $user = new Usuario();
+            $user->setUsername($username);
+            $encontrado = $user->mostrar($username);
+            if ($encontrado != null) {
+                $arr = Array();
+                $arr[] = [
+                    "username" => $encontrado->getUsername(),
+                    "nombre" => $encontrado->getNombre(),
+                    "apellidos" => $encontrado->getApellidos(),
+                    "correo" => $encontrado->getCorreo(),
+                    "telefono" => $encontrado->getTelefono(),
+                    "ruta_imagen" => $encontrado->getRutaImagen(),
+                    "activo" => $encontrado->getActivo()
+                ];
+        
+                echo json_encode($arr);
+            } else {
+                echo 0; // El usuario no existe
+            }
+        break;
+        case 'editar':
+            $idUsuario = isset($_POST["idUsuario"]) ? trim($_POST["idUsuario"]) : "";
+            $username = isset($_POST["username"]) ? trim($_POST["username"]) : "";
+            $password = isset($_POST["password"]) ? trim($_POST["password"]) : "";
+            $nombre = isset($_POST["nombre"]) ? trim($_POST["nombre"]) : "";
+            $apellidos = isset($_POST["apellidos"]) ? trim($_POST["apellidos"]) : "";
+            $correo = isset($_POST["correo"]) ? trim($_POST["correo"]) : "";
+            $telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]) : "";
+            $ruta_imagen = isset($_POST["ruta_imagen"]) ? trim($_POST["ruta_imagen"]) : "";
+            $activo = isset($_POST["activo"]) ? trim($_POST["activo"]) : 1;
+        
+            $usuario = new Usuario();
+            $usuario->setUsername($username);
+            $encontrado = $usuario->verificarExistenciaDb();
+        
+            if ($encontrado == 1) {
+                $usuario->llenarCampos($idUsuario);
+                $usuario->setIdUsuario($idUsuario);
+                $usuario->setUsername($username);
+                $usuario->setPassword($password); // Asegúrate de que sea seguro enviar la contraseña aquí
+                $usuario->setNombre($nombre);
+                $usuario->setApellidos($apellidos);
+                $usuario->setCorreo($correo);
+                $usuario->setTelefono($telefono);
+                $usuario->setRutaImagen($ruta_imagen);
+                $usuario->setActivo($activo);
+        
+                $modificados = $usuario->actualizarUsuario();
+                if ($modificados > 0) {
+                    echo 1; // Usuario actualizado con éxito
+                } else {
+                    echo 0; // Fallo al actualizar el usuario
+                }
+            } else {
+                echo 2; // El usuario no existe
+            }
+        break;
+}
+?>
