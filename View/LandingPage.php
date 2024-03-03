@@ -96,7 +96,7 @@
                     <h3 class="BentoTitle">Bienvenido a VerveFit Studio</h3>
                 </div>
                 <div class="box d-none d-lg-block">
-                    <img src="http://localhost/dashboard/ProyectoSC-502/View/img/Logo.svg" alt="Logo" width="100%"
+                    <img src="./View/img/Logo.svg" alt="Logo" width="100%"
                          height="90%">
                 </div>
                 <div class="box">
@@ -113,7 +113,7 @@
                 <span class="Img1"></span>
             </div>
             <div class="image-content">
-                <img src="http://localhost/dashboard/ProyectoSC-502/View/img/BentoImg2.png" alt="img" width="50%"
+                <img src="./View/img/BentoImg2.png" alt="img" width="50%"
                      height="32%">
                 <div class="content">
                     <h2 class="BentoTitle">¿Por qué VerveFit Studio?</h2>
