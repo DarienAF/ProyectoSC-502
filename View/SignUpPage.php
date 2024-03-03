@@ -26,45 +26,65 @@
 <?php require 'elements\nav.php'; ?>
 
 
-<section id="Contenido">
-    <div class="Contenido container text-center mt-5">
+<section id="Contenido"  class="d-flex justify-content-center align-items-center">>
+    <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-6 Logo">
-                <img src="http://localhost/dashboard/ProyectoSC-502/View/img/Logo.svg" width=500px height="50%">
+            <div class="col">
+                <img src="./View/img/Logo.svg" width=500px height="50%" style="user-select: none">
             </div>
-            <div class="col-md-6 Login mb-4">
+            <div class="col Login ">
                 <p class="mt-5 mb-5 Titulo">Registrarse</p>
+
                 <form class="Form">
-                    <label for="exampleFormControlInput1" class="form-label">Ingresa tu Correo Electrónico</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Correo Electrónico">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="Nombre" placeholder="Nombre">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exampleFormControlInput1" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="Apellidos" placeholder="Apellidos">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="exampleFormControlInput1" class="form-label">Ingresa tu Correo Electrónico</label>
+                        <input type="text" class="form-control" id="correoElectronico" placeholder="Correo Electrónico">
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Nombre de Usuario</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nombre de Usuario">
+                            <input type="text" class="form-control" id="nombreUsuario" placeholder="Nombre de Usuario">
 
                         </div>
 
                         <div class="col-md-6">
                             <label for="exampleFormControlInput1" class="form-label">Número de Contacto</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Número de Contacto">
+                            <input type="text" class="form-control" id="numeroContacto" placeholder="Número de Contacto">
 
                         </div>
                     </div>
-                    <label for="exampleFormControlInput1" class="form-label">Ingresa tu contraseña</label>
-                    <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Contraseña">
 
-                    <a class="AlreadyAccount" href="http://localhost/dashboard/ProyectoSC-502/index.php?controller=Login&action=index">¿Ya tienes una cuenta?
-                        <br>Inicia Sesión</a>
+                    <div class="col-md-12">
+                        <label for="exampleFormControlInput1" class="form-label">Ingresa tu contraseña</label>
+                        <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña">
+                            <a class="AlreadyAccount" href="./index.php?controller=Login&action=index">¿Ya tienes una cuenta?</a>
+                    </div>
 
-
-
+                    <div class="col-md-12 text-center">
+                        <button id="signUpBtn" class="btn btn-danger Boton">UNIRME</button>
+                    </div>
                 </form>
-                <a class="btn btn-danger Boton">UNIRME</a>
+
             </div>
         </div>
     </div>
 </section>
 
 <?php require 'elements\footer.php'; ?>
+
+<script src="./View/js/signup.js"></script>
+
 </body>
 </html>

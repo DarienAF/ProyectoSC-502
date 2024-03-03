@@ -22,6 +22,8 @@
 <div class="main container">
     <p class="welcomeMessage"><?php echo 'Bienvenido ',$current_user ?></p>
 
+    <a href="./index.php?controller=LoginPage&action=LogOut"><button>Cerrar Sesion</button></a>
+
 </div>
 
 

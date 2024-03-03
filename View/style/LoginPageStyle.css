@@ -1,29 +1,5 @@
-
-.Logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10%;
-    height: 100%;
-}
-
-.nav {
-    font-size: 24px;
-    font-family: 'Saira Condensed', sans-serif;
-    padding: 30px 20px 20px 20px;
-    position: relative;
-    top: 0;
-    right: 0;
-}
-
 #Contenido{
     flex-grow: 1;
-}
-
-.nav-item a{
-    margin: 0px 30px 0px 10px;
-    text-decoration: none;
-    color: white;
 }
 
 .active {

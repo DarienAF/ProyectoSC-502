@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once './Model/Connection.php';
+require_once './Model/Methods/UsuarioM.php';
 
 class IndexPageController
 {
@@ -9,8 +10,8 @@ class IndexPageController
     {
         $current_page = 'IndexPage';
 
-        if (isset($_SESSION['user'])) {
-            $current_user = $_SESSION['user'];
+        if (isset($_SESSION['usuario'])) {
+            $current_user = $_SESSION['usuario'];
             require_once './View/HomePage.php';
         } else {
             $current_user = null;
@@ -19,4 +20,5 @@ class IndexPageController
 
 
     }
+
 }
