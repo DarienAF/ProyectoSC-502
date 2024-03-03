@@ -1,0 +1,45 @@
+body {
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 100vh;
+  background-color: #000000;
+}
+
+#Contenido{
+  overflow-x: hidden;
+  flex-grow: 1;
+}
+
+.pricing-card {
+  margin-top: 150px;
+  margin-right: 25px;
+  margin-left: 25px;
+  border-radius: 15px;
+  background: #333;
+  color: #fff;
+  max-width: 300px;
+
+}
+
+.card-header {
+  background: #DC3545;
+  border-bottom: 0;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card_text_container{
+  min-height: 250px;
+}
+
+
+.btn-buy {
+  background: #DC3545;
+  color: #fff;
+  border-radius: 20px;
+}

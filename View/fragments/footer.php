@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./View/style/FooterStyle.css">
+<link rel="stylesheet" href="./View/style/fragments/FooterStyle.css">
 
 <section id="Footer">
     <div class="Footer text-center">
@@ -35,7 +35,7 @@
                 </a>
             </div>
             <div class="col-md-3 Icono">
-                <img src="./View/img/LogoFooter.png" alt="img" width="250" height="240">
+                <img src="./View/img/logos/LogoFooter.png" alt="img" width="250" height="240">
             </div>
         </div>
     </div>

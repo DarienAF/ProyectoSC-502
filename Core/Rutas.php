@@ -9,7 +9,7 @@ class Rutas
 
         if(!is_file($archivoController))
         {
-            $nombreController="IndexPageController";
+            $nombreController=MAIN_CONTROLLER;
             $archivoController=FIXED_PATH;
         }
 

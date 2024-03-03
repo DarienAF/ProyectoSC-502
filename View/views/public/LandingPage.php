@@ -4,9 +4,22 @@
     <title>v-Fit Studio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="./View/style/LandingPageStyle.css">
+    <link rel="stylesheet" href="./View/style/public/LandingPageStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
+        .LandingPage {
+            background-image: url('./View/img/public/landingPage/Background.png');
+        }
+        .text-image .Img1 {
+
+            background-image: url("./View/img/public/landingPage/BentoImg1.png");
+        }
+        .imgJoinBanner:after {
+            background-image: url("./View/img/public/landingPage/JoinBanner.png");
+        }
+        .ContactUsBanner {
+            background-image: url('./View/img/public/landingPage/ContactUs.png');
+        }
     </style>
 </head>
 <body>
@@ -14,7 +27,7 @@
 <section id="LandingPage">
     <div class="LandingPage">
         <div class="icon"></div>
-        <?php require 'elements\nav.php'; ?>
+        <?php require './View/fragments/nav.php'; ?>
 
         <div class="TextLandingPage row">
             <div class="col-md-7 col-xxl-4">
@@ -47,12 +60,10 @@
         </p>
         <div class="collapse" id="collapseAboutUs">
             <div class="card card-body">
-                En VerveFit Studio, creemos en algo más que entrenamientos; creemos en
-                transformaciones.
-                Sumérgete en
-                una comunidad donde la energía se une a la tranquilidad, y la fuerza a la flexibilidad. Si usted
-                está aquí para construir músculo, encontrar su zen, o tomar su resistencia a nuevas alturas, tenemos
-                el espacio, la comunidad, y la orientación de expertos que necesita para prosperar.
+                En VerveFit Studio, creemos en algo más que entrenamientos; creemos en transformaciones.
+                Sumérgete en una comunidad donde la energía se une a la tranquilidad, y la fuerza a la flexibilidad. Si usted
+                está aquí para construir músculo o llevar su estado físico a nuevas alturas, tenemos
+                el espacio, la comunidad, y la orientación de expertos que necesita para lograrlo.
             </div>
         </div>
         <p class="d-inline-flex gap-1">
@@ -96,7 +107,7 @@
                     <h3 class="BentoTitle">Bienvenido a VerveFit Studio</h3>
                 </div>
                 <div class="box d-none d-lg-block">
-                    <img src="./View/img/Logo.svg" alt="Logo" width="100%"
+                    <img src="./View/img/logos/Logo.svg" alt="Logo" width="100%"
                          height="90%">
                 </div>
                 <div class="box">
@@ -113,7 +124,7 @@
                 <span class="Img1"></span>
             </div>
             <div class="image-content">
-                <img src="./View/img/BentoImg2.png" alt="img" width="50%"
+                <img src="./View/img/public/landingPage/BentoImg2.png" alt="img" width="50%"
                      height="32%">
                 <div class="content">
                     <h2 class="BentoTitle">¿Por qué VerveFit Studio?</h2>
@@ -161,7 +172,7 @@
                     Únete a nosotros y descubre cómo VerveFit Studio puede transformar tu cuerpo, mente y espíritu.
                     Embarquémonos juntos en este viaje, donde cada entrenamiento es un paso hacia un mejor tú.
                 </p>
-                <a class="redButton">¡ÚNETE YA!</a>
+                <a href="./index.php?controller=SignUpPage&action=index" class="redButton">¡ÚNETE YA!</a>
             </div>
 
         </div>
@@ -192,7 +203,7 @@
     </div>
 </section>
 
-<?php require 'elements\footer.php'; ?>
+<?php require './View/fragments/footer.php'; ?>
 
 </body>
 </html>
