@@ -1,6 +1,28 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 100vh;
+    background-color: #000000;
+}
 
 #Contenido{
     flex-grow: 1;
+}
+
+.active {
+    border-bottom: 1px solid #D43B3B;
+}
+
+.redButton {
+    text-decoration: none;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #D43B3B;
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 
 
@@ -35,7 +57,7 @@
 }
 
 .NoAccount{
-    text-align: start;
+text-align: start;
     display: inline-grid;
 }
 
@@ -67,17 +89,16 @@
     padding: 15px;
 }
 
-.AlreadyAccount{
+.passwordForgot{
     top:0;
     position: relative;
-    left: 72%;
+    left: 75%;
     text-decoration: none;
     color: #4285F4;
 }
 
 .Boton{
     padding: 10px 150px 10px 150px;
-
-    margin: 50px auto;
-
+    margin-top: 100px;
+    margin-bottom: 50px;
 }

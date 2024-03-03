@@ -5,36 +5,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="./View/style/SignUpPageStyle.css">
+    <link rel="stylesheet" href="./View/style/public/SignUpPageStyle.css">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
-            background-size: cover;
-            height: 100vh;
-            background-color: #000000;
-            background-image: url(http://localhost/dashboard/ProyectoSC-502/View/img/Login.png);
+            background-image: url(./View/img/public/login-signUp/Login.png);
         }
-
-
     </style>
 </head>
 <body>
 
-<?php require 'elements\nav.php'; ?>
+<?php require './View/fragments/nav.php'; ?>
 
 
-<section id="Contenido"  class="d-flex justify-content-center align-items-center">>
+<section id="Contenido"  class="d-flex justify-content-center align-items-center">
     <div class="container">
         <div class="row align-items-center">
             <div class="col">
-                <img src="./View/img/Logo.svg" width=500px height="50%" style="user-select: none">
+                <img src="./View/img/logos/Logo.svg" width=500px height="50%" style="user-select: none">
             </div>
             <div class="col Login ">
                 <p class="mt-5 mb-5 Titulo">Registrarse</p>
-
                 <form class="Form">
                     <div class="row">
                         <div class="col-md-6">
@@ -69,12 +59,13 @@
                     <div class="col-md-12">
                         <label for="exampleFormControlInput1" class="form-label">Ingresa tu contraseña</label>
                         <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña">
-                            <a class="AlreadyAccount" href="./index.php?controller=Login&action=index">¿Ya tienes una cuenta?</a>
+                            <a class="AlreadyAccount" href="./index.php?controller=LoginPage&action=index">¿Ya tienes una cuenta?</a>
                     </div>
 
                     <div class="col-md-12 text-center">
                         <button id="signUpBtn" class="btn btn-danger Boton">UNIRME</button>
                     </div>
+
                 </form>
 
             </div>
@@ -82,9 +73,9 @@
     </div>
 </section>
 
-<?php require 'elements\footer.php'; ?>
+<?php require './View/fragments/footer.php'; ?>
 
-<script src="./View/js/signup.js"></script>
+<script src="./View/js/crudUsuario/signup.js"></script>
 
 </body>
 </html>

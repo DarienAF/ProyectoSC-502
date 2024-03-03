@@ -13,10 +13,10 @@ class LoginPageController {
 
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
-            require_once './View/LoginPage.php';
+            require_once './View/views/public/LoginPage.php';
         } else {
             $current_user = null;
-            require_once './View/LoginPage.php';
+            require_once './View/views/public/LoginPage.php';
         }
     }
 

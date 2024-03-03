@@ -3,9 +3,9 @@
 class Connection
 {
     private $mysqli;
-    private $host= '127.0.0.1';
+    private $host= 'localhost';
     private $user = 'root';
-    private $password = '04112218';
+    private $password = '';
     private $dbname = 'ProyectoSC-502';
 
 

@@ -1,7 +1,6 @@
 $(document).ready(function (){
     $("#signUpBtn").click(async function(){
 
-
         var nombre = $("#Nombre").val()
         var apellidos = $("#Apellidos").val()
         var correo = $("#correoElectronico").val()
@@ -28,8 +27,7 @@ $(document).ready(function (){
             const data = await response.json()
 
             if(data.success){
-                alert(data.message)
-                location.href='./index.php?controller=IndexPage&action=Index'
+                location.href='./index.php?controller=indexPage&action=index'
             }else
                 alert(data.message)
 

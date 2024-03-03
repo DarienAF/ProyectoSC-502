@@ -21,11 +21,10 @@ $(document).ready(function () {
 
 
             if (data.success) {
-                alert(data.message)
-                location.href = './index.php?controller=IndexPage&action=index'
+                location.href='./index.php?controller=indexPage&action=index'
             } else{
                 alert(data.message)
-                location.href = './index.php?controller=LoginPage&action=index'
+                location.href='./index.php?controller=LoginPage&action=index'
             }
 
         } else {
