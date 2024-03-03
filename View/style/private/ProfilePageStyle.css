@@ -1,0 +1,60 @@
+#Profile {
+	padding: 50px;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: #fff;
+}
+
+.profile-info {
+	border-radius: 15px;
+	padding: 30px;
+}
+
+.profile-info h1 {
+	font-size: 2.5rem;
+}
+
+.profile-info .form-label {
+	color: #fff;
+}
+
+.profile-info .form-control {
+	background-color: rgba(255, 255, 255, 0.1);
+	color: #fff;
+}
+
+.profile-info .form-control:focus {
+	border-color: #dc3545;
+	box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.profile-info .form-select {
+	background-color: rgba(255, 255, 255, 0.1);
+	color: #fff;
+}
+
+.profile-info .form-select:disabled:hover {
+	border-color: #dc3545;
+	box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.profile-info .form-select:focus:not(:hover) {
+	color: #000;
+}
+
+.profile-info .form-select:focus:hover {
+	color: #000;
+}
+
+.profile-info .form-select:not(:focus):hover {
+	color: #000;
+}
+
+.profile-info .btn-primary {
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+.profile-info .btn-primary:hover {
+	background-color: #c82333;
+	border-color: #c82333;
+}
