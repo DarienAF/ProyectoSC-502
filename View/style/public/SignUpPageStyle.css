@@ -1,0 +1,92 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 100vh;
+    background-color: #000000;
+}
+
+#Contenido{
+    flex-grow: 1;
+}
+
+
+.Login{
+    background-color: rgba(255, 255, 255, 0.88);
+    border-radius: 20px;
+}
+
+.Login .Titulo{
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 35px;
+    color: #000;
+    text-align: start;
+    margin-left: 30px;
+}
+
+.Opciones{
+    margin-left: 30px;
+    display: flex;
+}
+
+.Google{
+    text-decoration: none;
+    color: black;
+    margin-right: 60px;
+    border-radius: 10px;
+    padding: 10px 30px 10px 30px;
+    background-color: #E9F1FF;
+    font-size: 20px;
+}
+
+.NoAccount{
+    text-align: start;
+    display: inline-grid;
+}
+
+.NoAccount *{
+    text-decoration: none;
+    color: #8D8D8D;
+    margin: 0;
+}
+
+.Form{
+    margin-right: 30px;
+    margin-left: 30px;
+    text-align: start;
+}
+
+.Form label{
+    margin-top: 30px;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.Form input{
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    padding: 15px;
+}
+
+.AlreadyAccount{
+    top:0;
+    position: relative;
+    left: 72%;
+    text-decoration: none;
+    color: #4285F4;
+}
+
+.Boton{
+    padding: 10px 150px 10px 150px;
+
+    margin: 50px auto;
+
+}
