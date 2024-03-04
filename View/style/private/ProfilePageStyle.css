@@ -1,12 +1,24 @@
+body {
+	display: flex;
+	flex-direction: column;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
+	height: 100vh;
+	background-color: #000000;
+}
+
 #Profile {
-	padding: 50px;
+	padding: 20px 50px;
 	background-color: rgba(0, 0, 0, 0.6);
 	color: #fff;
+	overflow-x: hidden;
+	flex-grow: 1;
 }
 
 .profile-info {
 	border-radius: 15px;
-	padding: 30px;
+	padding: 0px 30px;
 }
 
 .profile-info h1 {

@@ -1,10 +1,11 @@
 <?php
 session_start();
 require_once './Model/Connection.php';
-require_once  './Model/Methods/UsuarioM.php';
+require_once './Model/Methods/UsuarioM.php';
 
 
-class ContactPageController {
+class ContactPageController
+{
 
     function Index()
     {

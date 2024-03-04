@@ -46,6 +46,13 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link <?php echo ($current_page == 'SchedulePage') ? 'active' : ''; ?>"
+                        href="./index.php?controller=SchedulePage&action=index">
+                        HORARIOS
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link <?php echo ($current_page == 'ContactPage') ? 'active' : ''; ?>"
                         href="./index.php?controller=ContactPage&action=index">
                         CONTACTOS

@@ -17,10 +17,9 @@
 </head>
 
 <body>
-
     <?php require './View/fragments/nav_private.php'; ?>
 
-    <section id="Profile">
+    <section id="Profile" class="d-flex justify-content-center align-items-top">
         <div class="container profile-info">
             <div class="row justify-content-center">
                 <div class="col-md-8">
@@ -99,9 +98,6 @@
             </div>
         </div>
     </section>
-
-
-
 
     <?php require './View/fragments/footer.php'; ?>
 
