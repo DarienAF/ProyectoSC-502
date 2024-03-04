@@ -43,3 +43,8 @@ body {
   color: #fff;
   border-radius: 20px;
 }
+
+
+.active {
+  border-bottom: 1px solid #D43B3B;
+}

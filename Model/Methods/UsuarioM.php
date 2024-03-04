@@ -8,7 +8,7 @@ class UsuarioM
 
     public function __construct()
     {
-        $this->connection = new Connection();
+        $this->connection = Connection::getInstance();
     }
 
     function Create(Usuario $usuario)
@@ -16,7 +16,6 @@ class UsuarioM
         $retVal = false;
 
         try {
-            $this->connection->Connect();
             $query = "INSERT INTO Usuarios (
                       username, 
                       password, 
@@ -50,8 +49,6 @@ class UsuarioM
         } catch (Exception $e) {
             error_log($e->getMessage());
             $retVal = false;
-        } finally {
-            $this->connection->Close();
         }
 
         return $retVal;
@@ -63,7 +60,6 @@ class UsuarioM
         $retVal = false;
 
         try {
-            $this->connection->Connect();
             $query = "UPDATE `Usuarios` SET 
                           `username`=?, 
                           `password`=?, 
@@ -96,8 +92,6 @@ class UsuarioM
         } catch (Exception $e) {
             error_log($e->getMessage());
             $retVal = false;
-        } finally {
-            $this->connection->Close();
         }
 
         return $retVal;
@@ -108,7 +102,7 @@ class UsuarioM
     {
         $usuario = new Usuario();
 
-        $query = "SELECT * FROM `Usuarios` WHERE `id_usuario` = ?";
+        $query = "SELECT * FROM `USUARIOS` WHERE `id_usuario` = ?";
 
         $statement = $this->connection->Prepare($query);
         $statement->bind_param("i", $id);
@@ -130,7 +124,7 @@ class UsuarioM
     {
         $usuarios = [];
 
-        $query = 'SELECT * FROM `Usuarios`';
+        $query = 'SELECT * FROM `USUARIOS`';
         $result = $this->connection->Query($query);
 
         while ($row = $result->fetch_assoc()) {
@@ -160,9 +154,7 @@ class UsuarioM
     {
         $retVal = false;
 
-        $this->connection->Connect();
-
-        $query = "UPDATE `Usuarios` SET `activo`=? WHERE `id_usuario` = ?";
+        $query = "UPDATE `USUARIOS` SET `activo`=? WHERE `id_usuario` = ?";
         $statement = $this->connection->Prepare($query);
 
         $activo = 1;
@@ -173,7 +165,6 @@ class UsuarioM
         }
 
         $statement->close();
-        $this->connection->Close();
 
         return $retVal;
     }
@@ -182,9 +173,7 @@ class UsuarioM
     {
         $retVal = false;
 
-        $this->connection->Connect();
-
-        $query = "UPDATE `Usuarios` SET `activo`=? WHERE `id_usuario` = ?";
+        $query = "UPDATE `USUARIOS` SET `activo`=? WHERE `id_usuario` = ?";
         $statement = $this->connection->Prepare($query);
 
         $activo = 0;
@@ -195,7 +184,6 @@ class UsuarioM
         }
 
         $statement->close();
-        $this->connection->Close();
 
         return $retVal;
     }
@@ -205,7 +193,7 @@ class UsuarioM
     {
         $usuario = new Usuario();
 
-        $sql = "SELECT * FROM usuarios WHERE `username` = ?";
+        $sql = "SELECT * FROM USUARIOS WHERE `username` = ?";
 
         $statement = $this->connection->Prepare($sql);
         $statement->bind_param("s", $user);
@@ -225,7 +213,6 @@ class UsuarioM
         }
 
         $statement->close();
-        $this->connection->Close();
 
         return $usuario;
     }

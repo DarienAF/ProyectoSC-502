@@ -102,3 +102,8 @@ textarea{
   text-align: start;
   margin: 10px auto;
 }
+
+
+.active {
+  border-bottom: 1px solid #D43B3B;
+}

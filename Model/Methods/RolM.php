@@ -3,52 +3,56 @@ require_once './Model/Connection.php';
 require_once './Model/Entities/Rol.php';
 
 class RolM{
+
+    private $connection;
+
+    public function __construct()
+    {
+        $this->connection = Connection::getInstance();
+    }
+
+
     function ViewAll()
     {
-        $retVal = [];
+        $roles = [];
 
-        $DB = new Connection();
+        $query = 'SELECT * FROM `ROL`';
+        $result = $this->connection->Query($query);
 
-        $sql = 'SELECT * FROM USUARIOS';
-
-        $result = $DB->Query($sql);
-
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $rol = new Rol();
-                $rol->setIdRol  ($row["id_rol"]);
-                $rol->setNombre ($row["nombre"]);
-                $retVal[] = $rol;
-            }
-        } else {
-            $retVal = null;
+        while ($row = $result->fetch_assoc()) {
+            $rol = new Rol();
+            $this->setRolFields($rol, $row);
+            $roles[] = $rol;
         }
-        $DB->Close();
 
-        return $retVal;
-
+        return $roles;
     }
 
     function View($id)
     {
         $rol = new Rol();
 
-        $conexion = new Conexion();
-        $sql = "SELECT * FROM `Rol` WHERE `id_rol` = " . $id;
+        $query = "SELECT * FROM `ROL` WHERE `id_rol` = ?";
 
-        $resultado = $conexion->Ejecutar($sql);
+        $statement = $this->connection->Prepare($query);
+        $statement->bind_param("i", $id);
+        $statement->execute();
+        $result = $statement->get_result();
 
-        if (mysqli_num_rows($resultado) > 0) {
-            while ($row = $resultado->fetch_assoc()) {
-                $rol->setIdRol  ($row["id_rol"]);
-                $rol->setNombre ($row["nombre"]);
-            }
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $this->setRolFields($rol, $row);
         } else {
             $rol = null;
         }
-        $conexion->Cerrar();
 
         return $rol;
+    }
 
+
+    function setRolFields(Rol $rol, array $row)
+    {
+        $rol->setIdRol  ($row["id_rol"]);
+        $rol->setNombre ($row["nombre"]);
     }
 }

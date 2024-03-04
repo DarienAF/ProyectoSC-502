@@ -31,7 +31,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($current_page == 'ShippingPage') ? 'active' : ''; ?>"
+                    <a class="nav-link <?php echo ($current_page == 'PricePage') ? 'active' : ''; ?>"
                        href="./index.php?controller=PricePage&action=index">
                         PRECIOS
                     </a>
