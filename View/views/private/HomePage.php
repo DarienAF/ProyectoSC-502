@@ -16,11 +16,7 @@
 
 <section id="Contenido"  class="d-flex justify-content-center align-items-top">
     <p class="welcomeMessage"><?php echo 'Bienvenido ',$current_user?></p>
-    <a href="./index.php?controller=LoginPage&action=LogOut"><button>Cerrar Sesion</button></a>
-
 </section>
-
-
 
 <?php require './View/fragments/footer.php'; ?>
 

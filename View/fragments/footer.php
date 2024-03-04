@@ -3,10 +3,10 @@
 <section id="Footer">
     <div class="Footer text-center">
         <div class="row justify-content-center">
-            <div class="col-md-3 Correo">
-                <p style="font-size: 64px;">¿LISTO PARA UNA VIDA
-                    <span style="color: #D43B3B">ASOMBROSA</span>? </p>
-                <p>
+            <div class="col-md-3">
+                <p class="Eslogan">¿LISTO PARA UNA VIDA
+                    <span class="Eslogan" style="color: #D43B3B">ASOMBROSA</span>? </p>
+                <p class="Correo">
                     Info@VerveFitStudio.com
                 </p>
             </div>

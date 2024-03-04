@@ -56,3 +56,7 @@ body {
 .schedule-table tbody td {
 	color: #000;
 }
+
+.active {
+	border-bottom: 1px solid #D43B3B;
+}
