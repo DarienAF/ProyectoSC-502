@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 100vh;
+    background-color: gray;
+}
+
+#Contenido{
+    overflow-x: hidden;
+    flex-grow: 1;
+}
+
+.main{
+    flex-grow: 1;
+}
+.welcomeMessage{
+    font-size: xx-large;
+    opacity: 0.50;
+    animation: animate 1s ease-in-out 1 forwards;
+}
+
+@keyframes animate {
+    from {
+        opacity: 0.50;
+        transform: translate(0,100px);
+        filter: blur(33px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translate(0);
+        filter: blur(0);
+    }
+}
+
+.active {
+    border-bottom: 1px solid #D43B3B;
+}

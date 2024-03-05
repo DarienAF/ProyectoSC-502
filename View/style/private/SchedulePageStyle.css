@@ -1,0 +1,62 @@
+body {
+	display: flex;
+	flex-direction: column;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: cover;
+	height: 100vh;
+	background-color: #000000;
+}
+
+#ClassSchedule {
+	padding: 50px;
+	border-radius: 20px;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+	color: #000;
+	margin-bottom: 100px;
+	overflow-x: hidden;
+	flex-grow: 1;
+}
+
+#ClassSchedule h1 {
+	color: #fff;
+}
+
+.schedule-table {
+	overflow-x: auto;
+}
+
+.schedule-table table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.schedule-table th,
+.schedule-table td {
+	padding: 15px;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #000;
+	font-weight: bold;
+}
+
+.schedule-table th {
+	background-color: #dc3545;
+	color: #fff;
+}
+
+.schedule-table tbody tr:nth-child(even) {
+	background-color: rgba(220, 53, 69, 0.1);
+}
+
+.schedule-table tbody tr:hover {
+	background-color: rgba(220, 53, 69, 0.2);
+}
+
+.schedule-table tbody td {
+	color: #000;
+}
+
+.active {
+	border-bottom: 1px solid #D43B3B;
+}

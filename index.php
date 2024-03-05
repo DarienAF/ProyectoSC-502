@@ -4,23 +4,23 @@
     
     $ruta=new Rutas();
 
-    //verifica si en la url lleve "controlador={}"
-    if(isset($_GET['controlador']))
+    //verifica si en la url lleve "controller={}"
+    if(isset($_GET['controller']))
     {
-        //aqui asigna el controlador que se le haya pasado por la url
-        $controlador=$ruta->CargarControlador($_GET['controlador']);
+        //aqui asigna el controller que se le haya pasado por la url
+        $controller=$ruta->LoadController($_GET['controller']);
         //verifica si en la url lleve "accion={}"
-        if(isset($_GET['accion']))
+        if(isset($_GET['action']))
         {
-            $ruta->CargarAccion($controlador, $_GET['accion']);
+            $ruta->LoadAction($controller, $_GET['action']);
         }
         else
         {
-            $ruta->CargarAccion($controlador, ACCION_PRINCIPAL);
+            $ruta->LoadAction($controller, MAIN_ACTION);
         }
     }
     else
     {
-        $controlador=$ruta->CargarControlador(CONTROLADOR_PRINCIPAL);
-        $ruta->CargarAccion($controlador, ACCION_PRINCIPAL);
+        $controller=$ruta->LoadController(MAIN_CONTROLLER);
+        $ruta->LoadAction($controller, MAIN_ACTION);
     }
