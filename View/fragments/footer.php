@@ -1,17 +1,16 @@
-<link rel="stylesheet" href="./View/style/FooterStyle.css">
+<link rel="stylesheet" href="./View/style/fragments/FooterStyle.css">
 
 <section id="Footer">
-    <div class="Footer text-center"
-    style="position:<?php echo ($current_page == 'SignUpPage' || $current_page == 'LoginPage') ? 'fixed' : 'relative'; ?>">
+    <div class="Footer text-center">
         <div class="row justify-content-center">
-            <div class="col-3 Correo">
-                <p style="font-size: 64px;">¿LISTO PARA UNA VIDA
-                    <span style="color: #D43B3B">ASOMBROSA</span>? </p>
-                <p>
+            <div class="col-md-3">
+                <p class="Eslogan">¿LISTO PARA UNA VIDA
+                    <span class="Eslogan" style="color: #D43B3B">ASOMBROSA</span>? </p>
+                <p class="Correo">
                     Info@VerveFitStudio.com
                 </p>
             </div>
-            <div class="col-3 Redes">
+            <div class="col-md-3 Redes">
                 <p>
                     Síguenos
 
@@ -35,8 +34,8 @@
                     FAQs
                 </a>
             </div>
-            <div class="col-3 Icono">
-                <img src="http://localhost/dashboard/ProyectoSC-502/View/img/LogoFooter.png" alt="img" width="250" height="240">
+            <div class="col-md-3 Icono">
+                <img src="./View/img/logos/LogoFooter.png" alt="img" width="250" height="240">
             </div>
         </div>
     </div>
@@ -46,3 +45,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

@@ -5,6 +5,14 @@
     overflow-x: hidden;
 }
 
+.Footer .Eslogan{
+    color: white;
+    text-align: start;
+    font-family: 'Saira Condensed', sans-serif;
+    font-weight: bolder;
+    font-size: 64px;
+}
+
 .Footer .Correo{
     color: white;
     text-align: start;

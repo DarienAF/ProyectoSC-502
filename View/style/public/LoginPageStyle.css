@@ -1,28 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Angkor&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Saira+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Stick+No+Bills:wght@200..800&family=Zen+Dots&display=swap'); a
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-
-.Logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10%;
-    height: 100%;
+body {
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    height: 100vh;
+    background-color: #000000;
 }
 
-.nav {
-    font-size: 24px;
-    font-family: 'Saira Condensed', sans-serif;
-    padding: 30px 20px 20px 20px;
-    position: relative;
-    top: 0;
-    right: 0;
-}
-
-.nav-item a{
-    margin: 0px 30px 0px 10px;
-    text-decoration: none;
-    color: white;
+#Contenido{
+    flex-grow: 1;
 }
 
 .active {
@@ -70,7 +57,7 @@
 }
 
 .NoAccount{
-    text-align: start;
+text-align: start;
     display: inline-grid;
 }
 
@@ -102,10 +89,10 @@
     padding: 15px;
 }
 
-.AlreadyAccount{
+.passwordForgot{
     top:0;
     position: relative;
-    left: 60%;
+    left: 75%;
     text-decoration: none;
     color: #4285F4;
 }

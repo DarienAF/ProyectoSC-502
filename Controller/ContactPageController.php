@@ -3,23 +3,21 @@ session_start();
 require_once './Model/Connection.php';
 require_once './Model/Methods/UsuarioM.php';
 
-class IndexPageController
+
+class ContactPageController
 {
 
     function Index()
     {
-        $current_page = 'IndexPage';
+        // Get the current page name
+        $current_page = 'ContactPage';
 
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
-            $current_page = 'HomePage';
-            require_once './View/views/private/HomePage.php';
+            require_once './View/views/public/ContactPage.php';
         } else {
             $current_user = null;
-            require_once './View/views/public/LandingPage.php';
+            require_once './View/views/public/ContactPage.php';
         }
-
-
     }
-
 }

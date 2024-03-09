@@ -2,14 +2,14 @@
 
 class Rutas
 {
-    function LoadController($Controller)//estudiante
+    function LoadController($Controller)
     {
         $nombreController= ucwords(strtolower($Controller)) . "Controller";
         $archivoController="./Controller/".ucwords(strtolower($Controller))."Controller.php";
 
         if(!is_file($archivoController))
         {
-            $nombreController="IndexPageController";
+            $nombreController=MAIN_CONTROLLER;
             $archivoController=FIXED_PATH;
         }
 
@@ -17,8 +17,7 @@ class Rutas
         $ControllerObjeto= new $nombreController();
         return $ControllerObjeto;
     }
-    //Cargar la action del Controller pasado por la url ejemplo = ...../php?Controller=estudiante&action=Index
-    //carga el index del Controller estudiante
+
     function LoadAction($Controller,$action)
     {
         if(isset($action) && method_exists($Controller, $action))
