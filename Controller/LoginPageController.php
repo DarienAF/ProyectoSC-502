@@ -1,16 +1,16 @@
 <?php
 session_start();
 require_once './Model/Connection.php';
-require_once  './Model/Methods/UsuarioM.php';
-
+require_once './Model/Methods/UsuarioM.php';
 
 class LoginPageController {
 
+    // Método para cargar la vista de la página de inicio de sesión.
     function Index()
     {
-        // Get the current page name
         $current_page = 'LoginPage';
 
+        // Verifica si el usuario ya está en sesión.
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
             require_once './View/views/public/LoginPage.php';
@@ -22,10 +22,12 @@ class LoginPageController {
 
     function LogIn()
     {
-        $usuarioM = new UsuarioM();
+        $usuarioM = new UsuarioM(); // Crea una instancia de la clase UsuarioM.
 
+        // Obtiene los datos enviados en formato JSON y los convierte en un array asociativo.
         $data = json_decode(file_get_contents('php://input'), true);
 
+        // Verifica si se han enviado el usuario y la contraseña
         if (isset($data['usuario']) && isset($data['contrasena'])) {
             $username = $data['usuario'];
             $password = $data['contrasena'];
@@ -33,7 +35,6 @@ class LoginPageController {
             $usuario = $usuarioM->UserLogin($username);
 
             if ($usuario) {
-                // Asumiendo que $password es la contraseña ingresada por el usuario y está disponible en este contexto
                 if (password_verify($password, $usuario->getPassword())) {
                     $response = ['success' => true, 'message' => '¡Usuario validado exitosamente!'];
                     $_SESSION['usuario'] = $usuario->getNombre()." ".$usuario->getApellidos();

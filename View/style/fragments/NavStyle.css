@@ -50,3 +50,19 @@
     text-decoration: none;
     color: white;
 }
+
+
+.userNameLabel {
+    font-size: 30px;
+    font-family: 'Saira Condensed', sans-serif;
+    font-weight: bold;
+    margin: 0 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.user-a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
