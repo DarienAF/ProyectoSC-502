@@ -4,9 +4,6 @@ class Planes
 {
     private $id_plan;
     private $nombre_plan;
-    private $descripcion_plan;
-    private $duracion;
-    private $costo;
     private $id_usuario;
 
     public function getIdPlan()
@@ -27,36 +24,6 @@ class Planes
     public function setNombrePlan($nombre_plan)
     {
         $this->nombre_plan = $nombre_plan;
-    }
-
-    public function getDescripcionPlan()
-    {
-        return $this->descripcion_plan;
-    }
-
-    public function setDescripcionPlan($descripcion_plan)
-    {
-        $this->descripcion_plan = $descripcion_plan;
-    }
-
-    public function getDuracion()
-    {
-        return $this->duracion;
-    }
-
-    public function setDuracion($duracion)
-    {
-        $this->duracion = $duracion;
-    }
-
-    public function getCosto()
-    {
-        return $this->costo;
-    }
-
-    public function setCosto($costo)
-    {
-        $this->costo = $costo;
     }
 
     public function getIdUsuario()
