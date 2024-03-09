@@ -23,7 +23,21 @@
     font-size: 20px;
 }
 
+/* La primer configuracion la obtuve del herramientas de desarrollador
+    del navegador, modifique colores. Luego va la config previa del nav*/
 .nav {
+    --bs-nav-link-padding-x: 1rem ;
+    --bs-nav-link-padding-y: 0.5rem;
+    --bs-nav-link-font-weight: ;
+    --bs-nav-link-color: #dc3545 !important;
+    --bs-nav-link-hover-color: #dc3545 !important;
+    --bs-nav-link-disabled-color: var(--bs-secondary-color);
+    /* display: flex; */
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,10 +57,15 @@
 }
 
 .nav-item a {
-    font-size: 25px;
+    font-size: 20px;
     font-family: 'Saira Condensed', sans-serif;
-    font-weight: bold;
+ /*   font-weight: bold;*/
     margin: 0 5px;
     text-decoration: none;
     color: white;
+}
+
+.profile-pic{
+    padding: 10px;
+
 }
