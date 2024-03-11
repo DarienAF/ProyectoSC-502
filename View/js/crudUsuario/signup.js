@@ -15,7 +15,14 @@ $(document).ready(function () {
             const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({nombre, apellidos, correo, usuario, numero, contrasena}),
+                body: JSON.stringify({
+                    nombre    : nombre   ,
+                    apellidos : apellidos,
+                    correo    : correo   ,
+                    usuario   : usuario  ,
+                    numero    : numero   ,
+                    contraseña: contrasena
+                }),
             });
 
             // Espera la respuesta del servidor en formato JSON.
