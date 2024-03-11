@@ -40,13 +40,13 @@ class LoginPageController {
                     $_SESSION['usuario'] = $usuario->getNombre()." ".$usuario->getApellidos();
                     $_SESSION['rol'] = $usuario->getIdRol();
                 } else {
-                    $response = ['success' => false, 'message' => 'Contraseña incorrecta'];
+                    $response = ['success' => false, 'error'=>'contraseña', 'message' => 'Contraseña incorrecta'];
                 }
             } else {
-                $response = ['success' => false, 'message' => 'Usuario incorrecto'];
+                $response = ['success' => false,'error'=>'usuario', 'message' => 'Usuario incorrecto'];
             }
         } else {
-            $response = ['success' => false, 'message' => 'Rellene las credenciales'];
+            $response = ['success' => false, 'error'=>'ambos', 'message' => 'Rellene las credenciales'];
         }
 
         header('Content-Type: application/json');
