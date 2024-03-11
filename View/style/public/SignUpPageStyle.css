@@ -1,24 +1,34 @@
 body {
     display: flex;
     flex-direction: column;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+    min-height: 100vh;
+    background-image: url('../../../view/img/public/login-signUp/auth-pages-background.png');
     background-size: cover;
-    height: 100vh;
-    background-color: #000000;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow-x: hidden;
 }
 
-#Contenido{
-    flex-grow: 1;
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.row.align-items-center {
+    width: 60%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
-.Login{
+.Login {
     background-color: rgba(255, 255, 255, 0.88);
     border-radius: 20px;
 }
 
-.Login .Titulo{
+.Login .Titulo {
     font-family: "Poppins", sans-serif;
     font-weight: bold;
     font-style: normal;
@@ -28,12 +38,12 @@ body {
     margin-left: 30px;
 }
 
-.Opciones{
+.Opciones {
     margin-left: 30px;
     display: flex;
 }
 
-.Google{
+.Google {
     text-decoration: none;
     color: black;
     margin-right: 60px;
@@ -43,24 +53,24 @@ body {
     font-size: 20px;
 }
 
-.NoAccount{
+.NoAccount {
     text-align: start;
     display: inline-grid;
 }
 
-.NoAccount *{
+.NoAccount * {
     text-decoration: none;
     color: #8D8D8D;
     margin: 0;
 }
 
-.Form{
+.Form {
     margin-right: 30px;
     margin-left: 30px;
     text-align: start;
 }
 
-.Form label{
+.Form label {
     margin-top: 30px;
     font-size: 16px;
     font-family: "Poppins", sans-serif;
@@ -68,7 +78,7 @@ body {
     font-style: normal;
 }
 
-.Form input{
+.Form input {
     font-size: 12px;
     font-family: "Poppins", sans-serif;
     font-weight: bold;
@@ -76,17 +86,15 @@ body {
     padding: 15px;
 }
 
-.AlreadyAccount{
-    top:0;
+.AlreadyAccount {
+    top: 0;
     position: relative;
     left: 72%;
     text-decoration: none;
     color: #4285F4;
 }
 
-.Boton{
+.Boton {
     padding: 10px 150px 10px 150px;
-
     margin: 50px auto;
-
 }

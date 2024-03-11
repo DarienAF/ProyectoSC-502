@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="./View/style/fragments/NavStylePrivate.css">
 
 <section id="nav" style="background-color: rgba(1, 1, 1, 1);">
@@ -7,11 +8,13 @@
                 <img src="./View/img/logos/Logo.svg" alt="Home" style="height: 96px; width: 96px;">
             </a>
 
-            <a class="profile-pic" href="./">
-                <img src="./View/img/users/default_user.png" alt="Home" style="height: 64px; width: 64px;">
+
+            <a class="user-a" href="./">
+                <img src="./View/img/users/default_user.png" alt="Home" style="height: 64px; width: 64px; border-radius: 50%;">
+
             </a>
-            <p>
-                <?php echo $current_user , $current_page ?>.
+            <p class="userNameLabel">
+                <?php echo $current_user?>
             </p>
         </div>
 
@@ -22,6 +25,7 @@
                         INICIO
                     </a>
                 </li>
+
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle <?php echo ($current_page == 'ProfilePage' || $current_page == 'SchedulePage') ? 'active' : ''; ?>"
@@ -120,6 +124,7 @@
                         <!-- Agregar mas opciones segun su CRUD -->
                     </ul>
                 </li>
+
 
                 <li class="nav-item">
                     <a class="nav-link"
