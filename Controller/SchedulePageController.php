@@ -14,6 +14,7 @@ class SchedulePageController
 
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
+            $user_rol = $_SESSION['rol'];
             require_once './View/views/private/SchedulePage.php';
         } else {
             $current_user = null;

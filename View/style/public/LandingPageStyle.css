@@ -1,40 +1,37 @@
-.LandingPage {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100em;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: black;
+    overflow-x: hidden;
 }
 
-
-.Logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10%;
-    height: 100%;
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: initial;
 }
 
 .active {
     border-bottom: 1px solid #D43B3B;
 }
 
-.redButton {
-    text-decoration: none;
-    color: white;
-    padding: 5px;
-    border-radius: 10px;
-    background-color: #D43B3B;
-    font-family: 'Montserrat Alternates', sans-serif;
+.LandingPage {
+    background-image: url('../../img/public/landingPage/landing-page-background.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 1300px;
+    margin-bottom: 100px;
 }
 
-body {
-    background-color: #000000;
-    user-select: none;
-    margin: 0;
-    overflow-x: hidden;
+
+.landing-container {
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 100px;
 }
 
 .TextLandingPage {
@@ -56,6 +53,11 @@ body {
     margin-top: -50px;
 }
 
+.EsloganText {
+    margin-left: 30px;
+    margin-top: -55px;
+}
+
 .EsloganText > * {
     text-transform: capitalize;
     font-size: 20px;
@@ -68,155 +70,186 @@ body {
     color: #F5D3D5;
 }
 
-.EsloganText {
-    margin-left: 30px;
-    margin-top: -55px;
-}
-
-
-.bento-grid {
-    background-color: #000000;
-    margin: 20px 1px 0 5px;
+.dashboard {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-gap: 5px;
+    gap: 1ch;
 }
 
-.header {
-    grid-column: span 12;
+.dashboard > * {
+    background: var(--bg, #EEE);
+    border-radius: 2ch;
+    color: hsl(215, 75%, 10%);
+    container-type: inline-size;
+    grid-column: var(--gc, auto);
+    grid-row: var(--gr, auto);
+    padding: 2ch;
+}
+
+.dashboard > * h2 {
+    margin-block: 0 1ch;
+}
+
+.dashboard ul {
+    all: unset;
     display: grid;
-    grid-template-columns:  auto auto auto;
-    grid-gap: 5px;
+    gap: 1.5ch;
 }
 
-.header img {
-    display: inline-block;
-    margin: 0 20px;
+.dashboard ul li {
+    list-style-position: inside;
 }
 
-.text-image {
-    grid-column: span 6;
+.title-box {
+    --bg: rgb(29, 29, 29);
+    background: var(--bg);
+    font-family: "Zen Dots", sans-serif;
+    font-size: 1.5em;
+    text-align: center;
+    color: #D43B3B;
 }
 
-.text-image .Img1 {
-    display: block;
+.title-box h2 {
+    font-size: 2.5em;
+}
+
+.no-excuses-image-box {
+    background-image: url('../../../View/img/public/landingPage/BentoImg1.png');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 75%;
-    margin-top: 0;>
 }
 
-@media (max-width: 1785px) {
-    .text-image .Img1 {
-        display: block;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100%;
-        height: 82%;
-        margin-top: 0;
-    }
-}
-
-.text-image p {
-    width: 100%;
-    background-color: #1D1D1D;
-    margin-right: 20px;
-    margin-bottom: 5px;
-}
-
-.image-content {
-    grid-column: span 6;
-}
-
-.image-content img {
-    width: 100%;
-}
-
-.content h2 {
-    margin: 5px 0 5px 0;
-    background-color: #1D1D1D;
-}
-
-.boxes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5px;
-}
-
-.box {
-    background-color: #1D1D1D;
-    padding: 10px;
-
-}
-
-.box h3 {
-    margin-bottom: 5px;
-}
-
-.box p {
-    margin-bottom: 0;
-}
-
-.BentoText {
+.mission-box {
+    --bg: linear-gradient(180deg, #1E1E1E 0%, #282828 20%, #323232 39%, #3C3C3C 76%, #787878 100%);
+    font-family: 'Saira Condensed', sans-serif;
     color: white;
-    font-size: 20px;
-    font-family: "Stick No Bills", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: bold;
-    font-style: normal;
+    text-align: center;
 }
 
+.mission-box h2 {
+    font-size: 2.5em;
+    font-weight: bolder;
+}
 
-.BentoTitle {
-    color: #D43B3B;
-    font-size: 56px;
-    font-family: "Zen Dots", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    text-transform: capitalize;
-    text-shadow: 2px 2px 5px #000000;
+.mission-box p {
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+.words-box {
+    color: white;
+    font-family: 'Saira Condensed', sans-serif;
+    --bg: linear-gradient(45deg, #1E1E1E 0%, #282828 20%, #787878 39%, #3C3C3C 76%, #323232 100%);
+    display: grid;
+    gap: 1ch;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+}
+
+.words-box h2 {
+    grid-column: span 2;
+    font-size: 2.5em;
+    font-weight: bolder;
+}
+
+.words-box div {
+    aspect-ratio: 1;
+    background-color: hsla(0, 64%, 53%, .33);
+    border-radius: 50%;
+    border: 2px solid;
+    display: grid;
+    text-align: center;
+    font-size: 3.5em;
+    font-weight: lighter;
+    font-variant: small-caps;
+    text-transform: lowercase;
+    place-content: center;
+}
+
+.words-box div:first-of-type {
+    grid-column: span 2;
+    place-self: center;
+    width: 55%;
+}
+
+.compromise-box {
+    background: linear-gradient(75deg, #1E1E1E 0%, #282828 20%, #323232 39%, #3C3C3C 76%, #787878 100%);
+
+}
+
+.why-vfit-box {
+    background: linear-gradient(225deg, #1E1E1E 0%, #282828 20%, #323232 39%, #3C3C3C 76%, #787878 100%);
+}
+
+.compromise-box, .why-vfit-box {
+    font-family: 'Saira Condensed', sans-serif;
+    text-align: center;
+}
+
+.compromise-box h2, .why-vfit-box h2 {
+    color: white;
+    font-weight: bolder;
+}
+
+.compromise-box li, .why-vfit-box li {
+    color: rgb(29, 29, 29);
+    font-weight: normal;
+    background: hsl(185, 100%, 98%, .8);
+    border-radius: 2.5ch;
+    display: block;
+    padding: 1ch 2ch;
+}
+
+.home-gym-image-box {
+    background-image: url('../../../View/img/public/landingPage/BentoImg2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .JoinBanner {
     margin-top: 20px;
-    width: 100%;
 }
 
 .imgJoinBanner:after {
     display: block;
+    background-image: url("../../../View/img/public/landingPage/JoinBanner.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     content: "";
     width: 100%;
-    height: 400px;
+    height: 30vh;
     margin: 0;
+
 }
 
-.textJoinBanner {
+.textJoinBanner-box {
     color: white;
-    font-size: 15px;
-    font-family: "Zen Dots", sans-serif;
-    font-weight: 400;
-    font-style: normal;
     text-transform: capitalize;
     margin-left: -12px;
     background-color: #000000;
-    height: 392px;
-
+    height: 30vh;
 }
 
-.textJoinBanner > * {
+.textJoinBanner-box > * {
     margin: 20px 0 0 30px;
 }
 
 .titleJoinBanner {
-    font-size: 35px;
+    font-family: 'Saira Condensed', sans-serif;
+    font-weight: bolder;
+    font-size: 3.5em;
+    text-transform: uppercase;
     padding-left: 10px;
     border-left: 5px solid #D43B3B;
+
+}
+
+.textJoinBanner {
+    font-family: 'Saira Condensed', sans-serif;
+    font-size: 1.3em;
+    padding-left: 10px;
 }
 
 .JoinButton {
@@ -230,22 +263,81 @@ body {
 
 .ContactUsBanner {
     text-align: center;
+    background-image: url('../../../View/img/public/landingPage/ContactUs.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 350PX;
+    height: 30vh;
     z-index: 1;
 }
 
 .ContactUsBanner > * {
     color: white;
-    font-family: "Zen Dots", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+    font-family: 'Saira Condensed', sans-serif;
     text-transform: capitalize;
     margin-left: 200px;
     width: 70%;
+}
+
+.contact-p1-box {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50px;
+}
+
+.contact-p1 {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: lighter;
+    padding: 20px;
+}
+
+.contact-p2 {
+    font-size: 1.75em;
+}
+
+.contact-p3 {
+    font-size: 3em;
+    font-weight: bolder;
+    font-style: italic;
+}
+
+
+
+@media (min-width: 768px) {
+    .home-gym-image-box {
+        --gc: span 4;
+    }
+
+    .words-box {
+        --gc: span 2;
+        --gr: span 2;
+    }
+
+    .why-vfit-box {
+        --gc: span 3;
+    }
+
+    .dashboard {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .mission-box {
+        --gc: span 2;
+        --gr: span 2;
+    }
+
+    .compromise-box {
+        --gc: span 3;
+    }
+
+    .title-box {
+        --gc: span 4;
+    }
+
+    .no-excuses-image-box {
+        --gc: span 3;
+        --gr: span 2;
+    }
 }
