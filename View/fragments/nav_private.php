@@ -38,24 +38,24 @@
 
                 <!-- NAVEGADORES PARA LAS TABLAS (PENDIENTE SUS VISTAS POR ENDE HREF)-->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle <?php echo ($current_page == 'SchedulePage') ? 'active' : ''; ?>"
+                    <a class="nav-link dropdown-toggle <?php echo ($current_page == 'LookUserPage') ? 'active' : ''; ?>"
                         href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         USUARIOS
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="./index.php?controller=SchedulePage&action=index">Horario</a>
+                        <li><a class="dropdown-item" href="./index.php?controller=LookUserPage&action=index">Ver Usuarios</a>
                         </li>
                         <!-- Agregar mas opciones segun su CRUD -->
                     </ul>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle <?php echo ($current_page == 'SchedulePage') ? 'active' : ''; ?>"
+                    <a class="nav-link dropdown-toggle <?php echo ($current_page == 'NewMeasurePage') ? 'active' : ''; ?>"
                         href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         MEDIDAS
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="./index.php?controller=SchedulePage&action=index">Horario</a>
+                        <li><a class="dropdown-item" href="./index.php?controller=NewMeasurePage&action=index">Registrar</a>
                         </li>
                         <!-- Agregar mas opciones segun su CRUD -->
                     </ul>
