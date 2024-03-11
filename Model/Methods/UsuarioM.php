@@ -217,4 +217,38 @@ class UsuarioM
         return $usuario;
     }
 
+    function usernameExists($username) {
+        $exists = false;
+
+        $query = "SELECT id_usuario FROM `USUARIOS` WHERE `username` = ? LIMIT 1";
+        $statement = $this->connection->Prepare($query);
+        $statement->bind_param("s", $username);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        if ($result->num_rows > 0) {
+            $exists = true;
+        }
+
+        $statement->close();
+        return $exists;
+    }
+
+    function emailExists($email) {
+        $exists = false;
+
+        $query = "SELECT id_usuario FROM `USUARIOS` WHERE `correo` = ? LIMIT 1";
+        $statement = $this->connection->Prepare($query);
+        $statement->bind_param("s", $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        if ($result->num_rows > 0) {
+            $exists = true;
+        }
+
+        $statement->close();
+        return $exists;
+    }
+
 }

@@ -32,7 +32,7 @@
 
                 <div class="col-md-12">
                     <label for="exampleFormControlInput1" class="form-label">Ingresa tu Correo Electrónico</label>
-                    <input type="text" class="form-control" id="correoElectronico" placeholder="Correo Electrónico">
+                    <input type="email" class="form-control" id="correoElectronico" placeholder="Correo Electrónico">
                 </div>
 
                 <div class="row">
@@ -44,14 +44,19 @@
 
                     <div class="col-md-6">
                         <label for="exampleFormControlInput1" class="form-label">Número de Contacto</label>
-                        <input type="text" class="form-control" id="numeroContacto" placeholder="Número de Contacto">
+                        <input type="number" class="form-control" id="numeroContacto" placeholder="Número de Contacto">
 
                     </div>
                 </div>
 
                 <div class="col-md-12">
                     <label for="exampleFormControlInput1" class="form-label">Ingresa tu contraseña</label>
-                    <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña">
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña">
+                        <button id="togglePassword" class="btn btn-outline-secondary" type="button">
+                            <i class="bi bi-eye-slash"></i>
+                        </button>
+                    </div>
                     <a class="AlreadyAccount" href="./index.php?controller=LoginPage&action=index">¿Ya tienes una
                         cuenta?</a>
                 </div>

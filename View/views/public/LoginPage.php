@@ -39,8 +39,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label class="form-label">Ingresa tu contraseña</label>
-                            <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña"
-                                   required>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña">
+                                <button id="togglePassword" class="btn btn-outline-secondary" type="button">
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
