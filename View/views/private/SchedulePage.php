@@ -24,7 +24,7 @@
     <section id="ClassSchedule">
         <div class="container">
             <h1 class="text-center mb-4">Horarios de Clases</h1>
-            <div class="schedule-table">
+            <div class="no-excuses-image-box">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
