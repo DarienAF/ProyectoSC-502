@@ -12,6 +12,7 @@
     body {
         display: flex;
         flex-direction: column;
+        min-height: 100vh;
         background-repeat: no-repeat;
         background-size: cover;
         background-image: url('https://img.freepik.com/foto-gratis/filas-pesas-metal-rack-gimnasio-club-deportivo-equipo-entrenamiento-peso_1439-11.jpg?t=st=1710123568~exp=1710127168~hmac=43b16f32a698db38a55075c73222e8abcdee7349997c3019b20b0adcece54f22&w=996');
@@ -25,6 +26,7 @@
 
     <?php require './View/fragments/nav_private.php'; ?>
 
+<div class="content">
     <section id="Contenido" class="d-flex justify-content-center align-items-center">
         <div class="container">
             <div class="row align-items-start">
@@ -83,7 +85,7 @@
 
 
     </section>
-
+</div>
     <?php require './View/fragments/footer.php'; ?>
 
 </body>
