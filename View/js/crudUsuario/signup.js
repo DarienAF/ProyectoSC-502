@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-$(document).ready(function (){
-    $("#signUpBtn").click(async function(){
-
-        var nombre = $("#Nombre").val()
-        var apellidos = $("#Apellidos").val()
-        var correo = $("#correoElectronico").val()
-        var usuario = $("#nombreUsuario").val()
-        var numero = $("#numeroContacto").val()
-        var contrasena = $("#Contrasena").val()
-
-        if(nombre && apellidos && correo && usuario && numero && contrasena){
-            const response = await fetch('./index.php?controller=SignUpPage&action=SignUp',{
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-=======
 $(document).ready(function () {
     // Al hacer clic en el botón de registro, se ejecuta esta función.
     $("#signUpBtn").click(async function (event) {
@@ -62,7 +44,6 @@ $(document).ready(function () {
             const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},
->>>>>>> Darien
                 body: JSON.stringify({
                     nombre    : nombre   ,
                     apellidos : apellidos,
@@ -73,22 +54,6 @@ $(document).ready(function () {
                 }),
             });
 
-<<<<<<< HEAD
-            const data = await response.json()
-
-            if(data.success){
-                location.href='./index.php?controller=indexPage&action=index'
-            }else
-                alert(data.message)
-
-        } else{
-            alert("Rellene los campos.")
-        }
-
-    })
-
-})
-=======
             const data = await response.json();
 
             // Si la respuesta es exitosa, redirige al usuario a la página principal.
@@ -128,4 +93,3 @@ $(document).ready(function () {
     });
 });
 
->>>>>>> Darien

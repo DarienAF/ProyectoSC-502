@@ -43,17 +43,6 @@ class SignUpPageController {
         $usuarioNuevo->setActivo    (1    );
         $usuarioNuevo->setIdRol     (4);
 
-<<<<<<< HEAD
-
-        if ($usuarioM->Create($usuarioNuevo)){
-            $response = ['success' => true, 'message' => '¡Registro Correcto!'];
-            $_SESSION["usuario"] = $nombre." ".$apellidos;
-            $_SESSION["rol"] = 4;
-        } else{
-            $response = ['success' => false, 'message' => '¡Registro Fallido!'];
-        }
-
-=======
         if (!$usuarioM->emailExists($usuarioNuevo->getCorreo())){
             if (!$usuarioM->usernameExists($usuarioNuevo->getUsername())){
                 if ($usuarioM->Create($usuarioNuevo)){
@@ -69,7 +58,6 @@ class SignUpPageController {
         } else{
             $response = ['success' => false, 'error'=>'correo', 'message' => '¡Correo ya está registrado!'];
         }
->>>>>>> Darien
         header('Content-Type: application/json');
         echo json_encode($response);
     }

@@ -4,19 +4,6 @@ class Rutas
 {
     function LoadController($Controller)
     {
-<<<<<<< HEAD
-        $nombreController= ucwords(strtolower($Controller)) . "Controller";
-        $archivoController="./Controller/".ucwords(strtolower($Controller))."Controller.php";
-
-        if(!is_file($archivoController))
-        {
-            $nombreController=MAIN_CONTROLLER;
-            $archivoController=FIXED_PATH;
-        }
-
-        require_once $archivoController;
-        $ControllerObjeto= new $nombreController();
-=======
         // Formatea el nombre del controlador para seguir la convención de nomenclatura.
         // Ejemplo: convierte "home" a "HomeController".
         $nombreController = ucwords(strtolower($Controller)) . "Controller";
@@ -38,7 +25,6 @@ class Rutas
         $ControllerObjeto = new $nombreController();
 
         // Devuelve la instancia del controlador.
->>>>>>> Darien
         return $ControllerObjeto;
     }
 

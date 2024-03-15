@@ -22,30 +22,17 @@ body {
 	color: #fff;
 }
 
-<<<<<<< HEAD
-.schedule-table {
-	overflow-x: auto;
-}
-
-.schedule-table table {
-=======
 .no-excuses-image-box {
 	overflow-x: auto;
 }
 
 .no-excuses-image-box table {
->>>>>>> Darien
 	width: 100%;
 	border-collapse: collapse;
 }
 
-<<<<<<< HEAD
-.schedule-table th,
-.schedule-table td {
-=======
 .no-excuses-image-box th,
 .no-excuses-image-box td {
->>>>>>> Darien
 	padding: 15px;
 	text-align: center;
 	vertical-align: middle;
@@ -53,26 +40,11 @@ body {
 	font-weight: bold;
 }
 
-<<<<<<< HEAD
-.schedule-table th {
-=======
 .no-excuses-image-box th {
->>>>>>> Darien
 	background-color: #dc3545;
 	color: #fff;
 }
 
-<<<<<<< HEAD
-.schedule-table tbody tr:nth-child(even) {
-	background-color: rgba(220, 53, 69, 0.1);
-}
-
-.schedule-table tbody tr:hover {
-	background-color: rgba(220, 53, 69, 0.2);
-}
-
-.schedule-table tbody td {
-=======
 .no-excuses-image-box tbody tr:nth-child(even) {
 	background-color: rgba(220, 53, 69, 0.1);
 }
@@ -82,7 +54,6 @@ body {
 }
 
 .no-excuses-image-box tbody td {
->>>>>>> Darien
 	color: #000;
 }
 

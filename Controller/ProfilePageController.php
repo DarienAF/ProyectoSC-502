@@ -14,10 +14,7 @@ class ProfilePageController
 
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
-<<<<<<< HEAD
-=======
             $user_rol = $_SESSION['rol'];
->>>>>>> Darien
             require_once './View/views/private/ProfilePage.php';
         } else {
             $current_user = null;

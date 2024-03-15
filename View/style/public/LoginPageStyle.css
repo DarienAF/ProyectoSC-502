@@ -1,17 +1,6 @@
 body {
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: cover;
-    height: 100vh;
-    background-color: #000000;
-}
-
-#Contenido{
-    flex-grow: 1;
-=======
     min-height: 100vh;
     background-image: url('../../../view/img/public/login-signUp/auth-pages-background.png');
     background-size: cover;
@@ -26,22 +15,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
->>>>>>> Darien
 }
 
 .active {
     border-bottom: 1px solid #D43B3B;
 }
 
-<<<<<<< HEAD
-=======
 .row.align-items-center {
     width: 60%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
->>>>>>> Darien
 .redButton {
     text-decoration: none;
     color: white;
@@ -52,20 +37,12 @@ body {
 }
 
 
-<<<<<<< HEAD
-.Login{
-=======
 .Login {
->>>>>>> Darien
     background-color: rgba(255, 255, 255, 0.88);
     border-radius: 20px;
 }
 
-<<<<<<< HEAD
-.Login .Titulo{
-=======
 .Login .Titulo {
->>>>>>> Darien
     font-family: "Poppins", sans-serif;
     font-weight: bold;
     font-style: normal;
@@ -75,20 +52,12 @@ body {
     margin-left: 30px;
 }
 
-<<<<<<< HEAD
-.Opciones{
-=======
 .Opciones {
->>>>>>> Darien
     margin-left: 30px;
     display: flex;
 }
 
-<<<<<<< HEAD
-.Google{
-=======
 .Google {
->>>>>>> Darien
     text-decoration: none;
     color: black;
     margin-right: 60px;
@@ -98,41 +67,24 @@ body {
     font-size: 20px;
 }
 
-<<<<<<< HEAD
-.NoAccount{
-text-align: start;
-    display: inline-grid;
-}
-
-.NoAccount *{
-=======
 .NoAccount {
     text-align: start;
     display: inline-grid;
 }
 
 .NoAccount * {
->>>>>>> Darien
     text-decoration: none;
     color: #8D8D8D;
     margin: 0;
 }
 
-<<<<<<< HEAD
-.Form{
-=======
 .Form {
->>>>>>> Darien
     margin-right: 30px;
     margin-left: 30px;
     text-align: start;
 }
 
-<<<<<<< HEAD
-.Form label{
-=======
 .Form label {
->>>>>>> Darien
     margin-top: 30px;
     font-size: 16px;
     font-family: "Poppins", sans-serif;
@@ -140,11 +92,7 @@ text-align: start;
     font-style: normal;
 }
 
-<<<<<<< HEAD
-.Form input{
-=======
 .Form input {
->>>>>>> Darien
     font-size: 12px;
     font-family: "Poppins", sans-serif;
     font-weight: bold;
@@ -152,24 +100,15 @@ text-align: start;
     padding: 15px;
 }
 
-<<<<<<< HEAD
-.passwordForgot{
-    top:0;
-=======
 .passwordForgot {
     top: 0;
->>>>>>> Darien
     position: relative;
     left: 75%;
     text-decoration: none;
     color: #4285F4;
 }
 
-<<<<<<< HEAD
-.Boton{
-=======
 .Boton {
->>>>>>> Darien
     padding: 10px 150px 10px 150px;
     margin-top: 100px;
     margin-bottom: 50px;

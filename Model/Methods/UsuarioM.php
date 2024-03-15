@@ -217,8 +217,6 @@ class UsuarioM
         return $usuario;
     }
 
-<<<<<<< HEAD
-=======
     function usernameExists($username) {
         $exists = false;
 
@@ -253,5 +251,4 @@ class UsuarioM
         return $exists;
     }
 
->>>>>>> Darien
 }

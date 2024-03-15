@@ -1,21 +1,6 @@
 body {
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: cover;
-    height: 100vh;
-    background-color: #000000;
-}
-
-#Contenido{
-    flex-grow: 1;
-}
-
-
-.Login{
-=======
     min-height: 100vh;
     background-image: url('../../../view/img/public/login-signUp/auth-pages-background.png');
     background-size: cover;
@@ -39,16 +24,11 @@ body {
 }
 
 .Login {
->>>>>>> Darien
     background-color: rgba(255, 255, 255, 0.88);
     border-radius: 20px;
 }
 
-<<<<<<< HEAD
-.Login .Titulo{
-=======
 .Login .Titulo {
->>>>>>> Darien
     font-family: "Poppins", sans-serif;
     font-weight: bold;
     font-style: normal;
@@ -58,20 +38,12 @@ body {
     margin-left: 30px;
 }
 
-<<<<<<< HEAD
-.Opciones{
-=======
 .Opciones {
->>>>>>> Darien
     margin-left: 30px;
     display: flex;
 }
 
-<<<<<<< HEAD
-.Google{
-=======
 .Google {
->>>>>>> Darien
     text-decoration: none;
     color: black;
     margin-right: 60px;
@@ -81,11 +53,7 @@ body {
     font-size: 20px;
 }
 
-<<<<<<< HEAD
-.NoAccount{
-=======
 .NoAccount {
->>>>>>> Darien
     text-align: start;
     display: inline-grid;
 }
@@ -94,11 +62,7 @@ body {
 .NoAccount *{
 =======
 .NoAccount * {
->>>>>>> Darien
-    text-decoration: none;
-    color: #8D8D8D;
     margin: 0;
-}
 
 <<<<<<< HEAD
 .Form{
