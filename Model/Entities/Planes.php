@@ -4,9 +4,12 @@ class Planes
 {
     private $id_plan;
     private $nombre_plan;
+<<<<<<< HEAD
     private $descripcion_plan;
     private $duracion;
     private $costo;
+=======
+>>>>>>> Darien
     private $id_usuario;
 
     public function getIdPlan()
@@ -29,6 +32,7 @@ class Planes
         $this->nombre_plan = $nombre_plan;
     }
 
+<<<<<<< HEAD
     public function getDescripcionPlan()
     {
         return $this->descripcion_plan;
@@ -59,6 +63,8 @@ class Planes
         $this->costo = $costo;
     }
 
+=======
+>>>>>>> Darien
     public function getIdUsuario()
     {
         return $this->id_usuario;

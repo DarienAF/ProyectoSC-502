@@ -1,4 +1,5 @@
 body {
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   background-repeat: no-repeat;
@@ -21,10 +22,43 @@ body {
   background: #333;
   color: #fff;
   max-width: 300px;
+=======
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('../../../view/img/public/pricePage/price-page-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active {
+    border-bottom: 1px solid #D43B3B;
+}
+
+.pricing-card {
+    margin-top: 150px;
+    margin-right: 25px;
+    margin-left: 25px;
+    border-radius: 15px;
+    background: #333;
+    color: #fff;
+    max-width: 300px;
+>>>>>>> Darien
 
 }
 
 .card-header {
+<<<<<<< HEAD
   background: #DC3545;
   border-bottom: 0;
 }
@@ -35,10 +69,23 @@ body {
 
 .card_text_container{
   min-height: 250px;
+=======
+    background: #DC3545;
+    border-bottom: 0;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card_text_container {
+    min-height: 250px;
+>>>>>>> Darien
 }
 
 
 .btn-buy {
+<<<<<<< HEAD
   background: #DC3545;
   color: #fff;
   border-radius: 20px;
@@ -48,3 +95,9 @@ body {
 .active {
   border-bottom: 1px solid #D43B3B;
 }
+=======
+    background: #DC3545;
+    color: #fff;
+    border-radius: 20px;
+}
+>>>>>>> Darien

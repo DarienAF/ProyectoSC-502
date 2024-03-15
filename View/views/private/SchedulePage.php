@@ -24,7 +24,11 @@
     <section id="ClassSchedule">
         <div class="container">
             <h1 class="text-center mb-4">Horarios de Clases</h1>
+<<<<<<< HEAD
             <div class="schedule-table">
+=======
+            <div class="no-excuses-image-box">
+>>>>>>> Darien
                 <table class="table table-bordered">
                     <thead>
                         <tr>

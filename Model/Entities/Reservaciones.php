@@ -5,6 +5,10 @@ class Reservaciones
     private $id_reserva;
     private $id_usuario;
     private $id_clase;
+<<<<<<< HEAD
+=======
+    private $cancelar;
+>>>>>>> Darien
 
     public function getIdReserva()
     {
@@ -36,5 +40,17 @@ class Reservaciones
         $this->id_clase = $id_clase;
     }
 
+<<<<<<< HEAD
+=======
+    public function getCancelar()
+    {
+        return $this->cancelar;
+    }
+
+    public function setCancelar($cancelar)
+    {
+        $this->cancelar = $cancelar;
+    }
+>>>>>>> Darien
 
 }

@@ -6,7 +6,14 @@ class Medidas {
     private $fecha_registro;
     private $peso;
     private $altura;
+<<<<<<< HEAD
     private $imc;
+=======
+    private $edad;
+    private $grasa;
+    private $musculo;
+    
+>>>>>>> Darien
 
     public function getIdMedida()
     {
@@ -58,6 +65,7 @@ class Medidas {
         $this->altura = $altura;
     }
 
+<<<<<<< HEAD
     public function getImc()
     {
         return $this->imc;
@@ -68,4 +76,35 @@ class Medidas {
         $this->imc = $imc;
     }
 
+=======
+    public function getEdad()
+    {
+        return $this->edad;
+    }
+
+    public function setEdad($edad)
+    {
+        $this->edad = $edad;
+    }
+
+    public function getGrasa()
+    {
+        return $this->grasa;
+    }
+
+    public function setGrasa($grasa)
+    {
+        $this->grasa = $grasa;
+    }
+
+    public function getMusculo()
+    {
+        return $this->musculo;
+    }
+
+    public function setMusculo($musculo)
+    {
+        $this->musculo = $musculo;
+    }
+>>>>>>> Darien
 }

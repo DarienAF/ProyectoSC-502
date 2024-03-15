@@ -4,6 +4,7 @@ class Rutas
 {
     function LoadController($Controller)
     {
+<<<<<<< HEAD
         $nombreController= ucwords(strtolower($Controller)) . "Controller";
         $archivoController="./Controller/".ucwords(strtolower($Controller))."Controller.php";
 
@@ -15,6 +16,29 @@ class Rutas
 
         require_once $archivoController;
         $ControllerObjeto= new $nombreController();
+=======
+        // Formatea el nombre del controlador para seguir la convención de nomenclatura.
+        // Ejemplo: convierte "home" a "HomeController".
+        $nombreController = ucwords(strtolower($Controller)) . "Controller";
+
+        // Construye la ruta del archivo del controlador basándose en el nombre del controlador.
+        $archivoController = "./Controller/" . ucwords(strtolower($Controller)) . "Controller.php";
+
+        // Verifica si el archivo del controlador existe. Si no, utiliza el controlador predeterminado.
+        if (!is_file($archivoController))
+        {
+            $nombreController = MAIN_CONTROLLER; // Controlador predeterminado
+            $archivoController = FIXED_PATH; // Ruta del controlador predeterminado
+        }
+
+        // Incluye el archivo del controlador.
+        require_once $archivoController;
+
+        // Instancia el controlador.
+        $ControllerObjeto = new $nombreController();
+
+        // Devuelve la instancia del controlador.
+>>>>>>> Darien
         return $ControllerObjeto;
     }
 
@@ -32,3 +56,4 @@ class Rutas
         }
     }
 }
+

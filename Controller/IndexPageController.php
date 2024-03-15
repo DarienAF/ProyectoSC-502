@@ -12,6 +12,10 @@ class IndexPageController
 
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
+<<<<<<< HEAD
+=======
+            $user_rol = $_SESSION['rol'];
+>>>>>>> Darien
             $current_page = 'HomePage';
             require_once './View/views/private/HomePage.php';
         } else {
