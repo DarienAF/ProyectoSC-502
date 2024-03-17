@@ -61,7 +61,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <!-- INSERTAR -->
-                        <li><a class="dropdown-item" href="./index.php?controller=NewMeasurePage&action=index">Registrar</a>
+                        <li><a class="dropdown-item" href="./index.php?controller=NewMeasurePage&action=index">Insertar</a>
                         </li>
                         <!-- OBSERVAR -->
                         <li><a class="dropdown-item" href="./index.php?controller=LookMeasurePage&action=index">Ver Medidas</a>
