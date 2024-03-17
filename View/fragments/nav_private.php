@@ -47,6 +47,7 @@
                         USUARIOS
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
+                        <!-- INSERTAR -->
                         <li><a class="dropdown-item" href="./index.php?controller=LookUserPage&action=index">Ver Usuarios</a>
                         </li>
                         <!-- Agregar mas opciones segun su CRUD -->
@@ -54,12 +55,16 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle <?php echo ($current_page == 'NewMeasurePage') ? 'active' : ''; ?>"
+                    <a class="nav-link dropdown-toggle <?php echo ($current_page == 'NewMeasurePage'|| $current_page == 'LookMeasurePage') ? 'active' : ''; ?>"
                         href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         MEDIDAS
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
+                        <!-- INSERTAR -->
                         <li><a class="dropdown-item" href="./index.php?controller=NewMeasurePage&action=index">Registrar</a>
+                        </li>
+                        <!-- OBSERVAR -->
+                        <li><a class="dropdown-item" href="./index.php?controller=LookMeasurePage&action=index">Ver Medidas</a>
                         </li>
                         <!-- Agregar mas opciones segun su CRUD -->
                     </ul>
