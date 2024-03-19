@@ -5,6 +5,7 @@ class Reservaciones
     private $id_reserva;
     private $id_usuario;
     private $id_clase;
+    private $cancelar;
 
     public function getIdReserva()
     {
@@ -36,5 +37,14 @@ class Reservaciones
         $this->id_clase = $id_clase;
     }
 
+    public function getCancelar()
+    {
+        return $this->cancelar;
+    }
+
+    public function setCancelar($cancelar)
+    {
+        $this->cancelar = $cancelar;
+    }
 
 }
