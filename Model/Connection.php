@@ -6,14 +6,11 @@ class Connection
     private $pdo;
     private $config;
 
-    // Constructor is private to prevent direct instantiation. Initializes the database connection.
     private function __construct()
     {
         $this->config = require 'config.php';
         $this->createConnection();
     }
-
-    // Returns the singleton instance of the Connection class.
 
     public static function getInstance()
     {
@@ -24,7 +21,6 @@ class Connection
         return self::$instance;
     }
 
-    //Creates a PDO connection using the configuration provided.
     private function createConnection()
     {
         try {
@@ -37,7 +33,6 @@ class Connection
         }
     }
 
-    // Prepares a SQL statement for execution.
     public function Prepare($query)
     {
         try {
@@ -51,23 +46,4 @@ class Connection
         }
     }
 
-    //Executes a SQL query and returns the result.
-    public function Query($query)
-    {
-        try {
-            $result = $this->pdo->query($query);
-            if (!$result) {
-                throw new PDOException('Query execution error: ' . $this->pdo->errorInfo()[2]);
-            }
-            return $result;
-        } catch (PDOException $e) {
-            throw new PDOException("Execution error: " . $e->getMessage());
-        }
-    }
-
-    // Closes the PDO connection.
-    public function Close()
-    {
-        $this->pdo = null;
-    }
 }

@@ -36,7 +36,7 @@ async function populateRoleDropdown() {
     const roleSelect = document.getElementById('searchRole');
     roles.forEach(role => {
         const option = document.createElement('option');
-        option.value = role.nombre.toLowerCase(); // Aquí estamos asumiendo que los roles se buscan por nombre, no por ID.
+        option.value = role.nombre.toLowerCase();
         option.textContent = role.nombre;
         roleSelect.appendChild(option);
     });
@@ -151,7 +151,6 @@ async function getUserData(userId) {
 
         const data = await response.json();
 
-        // Suponemos que la respuesta incluye los datos del usuario.
         return data;
     } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -160,7 +159,7 @@ async function getUserData(userId) {
 
 async function getRoles() {
     try {
-        const response = await fetch('./index.php?controller=LookUserPage&action=getRoles', { // Ajusta la URL según tu implementación
+        const response = await fetch('./index.php?controller=LookUserPage&action=getRoles', {
             method: 'GET',
         });
 
@@ -200,7 +199,6 @@ async function saveUserData() {
         const result = await response.json();
 
         if (result.success) {
-            // Actualiza los valores en la fila
             document.getElementById(`userId-${userId}`).textContent = userId;
             document.getElementById(`userRole-${userId}`).textContent = rolesMap[role];
             document.getElementById(`username-${userId}`).textContent = username;
@@ -209,7 +207,6 @@ async function saveUserData() {
             document.getElementById(`email-${userId}`).textContent = email;
             document.getElementById(`phone-${userId}`).textContent = phone;
 
-            // Muestra un Sweet Alert
             Swal.fire({
                 title: '¡Éxito!',
                 text: 'Los cambios fueron guardados con éxito.',
@@ -217,7 +214,6 @@ async function saveUserData() {
                 confirmButtonText: 'Aceptar'
             })
         } else {
-            // Mostrar un mensaje de error si la actualización falla
             Swal.fire({
                 title: 'Error',
                 text: result.message || 'Hubo un problema al guardar los cambios.',
@@ -227,7 +223,6 @@ async function saveUserData() {
         }
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
-        // Mostrar un mensaje de error si la solicitud falla
         Swal.fire({
             title: 'Error',
             text: 'Hubo un problema al conectar con el servidor.',
