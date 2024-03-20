@@ -24,4 +24,10 @@ class Rol
     {
         $this->nombre = $nombre;
     }
+
+    function setRolFields(array $row)
+    {
+        $this->setIdRol($row["id_rol"]);
+        $this->setNombre($row["nombre"]);
+    }
 }

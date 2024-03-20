@@ -33,19 +33,19 @@ class SignUpPageController {
 
         $usuarioNuevo = new Usuario();
 
-        $usuarioNuevo->setUsername  ($usuario  );
-        $usuarioNuevo->setPassword  ($contraseña  );
-        $usuarioNuevo->setNombre    ($nombre    );
-        $usuarioNuevo->setApellidos ($apellidos );
-        $usuarioNuevo->setCorreo    ($correo    );
-        $usuarioNuevo->setTelefono  ($numero  );
+        $usuarioNuevo->setUsername($usuario);
+        $usuarioNuevo->setPassword($contraseña);
+        $usuarioNuevo->setNombre($nombre);
+        $usuarioNuevo->setApellidos($apellidos);
+        $usuarioNuevo->setCorreo($correo);
+        $usuarioNuevo->setTelefono($numero);
         $usuarioNuevo->setRutaImagen("./View/img/users/default_user.png");
-        $usuarioNuevo->setActivo    (1    );
+        $usuarioNuevo->setActivo(1);
         $usuarioNuevo->setIdRol     (4);
 
         if (!$usuarioM->emailExists($usuarioNuevo->getCorreo())){
             if (!$usuarioM->usernameExists($usuarioNuevo->getUsername())){
-                if ($usuarioM->Create($usuarioNuevo)){
+                if ($usuarioM->create($usuarioNuevo)) {
                     $response = ['success' => true, 'message' => '¡Registro Correcto!'];
                     $_SESSION["usuario"] = $nombre." ".$apellidos;
                     $_SESSION["rol"] = 4;

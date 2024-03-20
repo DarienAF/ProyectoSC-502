@@ -3,9 +3,6 @@ $(document).ready(function () {
     $("#signUpBtn").click(async function (event) {
         event.preventDefault();
 
-        // Reiniciar los estilos de los campos para cada intento de envío
-        $("#correoElectronico, #nombreUsuario, #Contrasena").css('border', '');
-
         var nombre = $("#Nombre").val();
         var apellidos = $("#Apellidos").val();
         var correo = $("#correoElectronico").val();
@@ -13,65 +10,105 @@ $(document).ready(function () {
         var numero = $("#numeroContacto").val();
         var contrasena = $("#Contrasena").val();
 
+        // Limpiar border rojos (si existen)
+        $("#Nombre, #Apellidos, #correoElectronico, #nombreUsuario, #numeroContacto, #Contrasena").css('border', '');
+
+        // Buscar campos en blanco y marcar borde de rojo
+        var isFormValid = true;
+        $("#Nombre, #Apellidos, #correoElectronico, #nombreUsuario, #numeroContacto, #Contrasena").each(function () {
+            if (!$(this).val()) {
+                $(this).css('border', '1px solid red');
+                isFormValid = false;
+            }
+        });
+
+        if (!isFormValid) {
+            Swal.fire({
+                title: "Todos los campos deben ser completados.",
+                icon: "error",
+                confirmButtonColor: 'rgb(29, 29, 29)',
+                confirmButtonText: 'Aceptar'
+            });
+            return;
+        }
 
         // Validación del correo electrónico
         var regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!regexCorreo.test(correo)) {
-            alert("Ingrese un correo electrónico válido.");
             $("#correoElectronico").css('border', '1px solid red');
-            return;
+            Swal.fire({
+                title: "¡Correo electrónico inválido!",
+                icon: "error",
+                confirmButtonColor: 'rgb(29, 29, 29)',
+                confirmButtonText: 'Aceptar'
+            });
+            return;// Detiene la ejecución si el email no es válido
         }
 
         // Validación del nombre de usuario
         var regexUsuario = /^[a-zA-Z0-9_-]+$/;
         if (!regexUsuario.test(usuario)) {
-            alert("El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.");
             $("#nombreUsuario").css('border', '1px solid red');
-            return; // Detiene la ejecución si el nombre de usuario no es válido
+
+            Swal.fire({
+                title: "¡Nombre de usuario inválido!",
+                text: "El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.",
+                icon: "error",
+                confirmButtonColor: 'rgb(29, 29, 29)',
+                confirmButtonText: 'Aceptar'
+            });
+            return;// Detiene la ejecución si el nombre de usuario no es válido
         }
 
         // Validación de la contraseña
         var regexContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!regexContrasena.test(contrasena)) {
-            alert("La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número.");
             $("#Contrasena").css('border', '1px solid red');
-            return; // Detiene la ejecución si la contraseña no es válida
+
+            Swal.fire({
+                title: "¡Contraseña inválida!",
+                text: "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número.",
+                icon: "error",
+                confirmButtonColor: 'rgb(29, 29, 29)',
+                confirmButtonText: 'Aceptar'
+            });
+            return;// Detiene la ejecución si el nombre de usuario no es válido
         }
 
-        // Verifica si todos los campos están llenos.
-        if (nombre && apellidos && correo && usuario && numero && contrasena) {
-            // Realiza una solicitud POST al servidor con los datos del formulario.
-            const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    nombre    : nombre   ,
-                    apellidos : apellidos,
-                    correo    : correo   ,
-                    usuario   : usuario  ,
-                    numero    : numero   ,
-                    contraseña: contrasena
-                }),
-            });
+        // Realiza una solicitud POST al servidor con los datos del formulario.
+        const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                nombre: nombre,
+                apellidos: apellidos,
+                correo: correo,
+                usuario: usuario,
+                numero: numero,
+                contraseña: contrasena
+            }),
+        });
 
-            const data = await response.json();
+        const data = await response.json();
 
-            // Si la respuesta es exitosa, redirige al usuario a la página principal.
-            if (data.success) {
-                location.href = './index.php?controller=indexPage&action=index';
-            } else {
-                if (data.error == 'correo'){
-                    $("#correoElectronico").css('border', '1px solid red');
-                }
-                if (data.error == 'usuario'){
-                    $("#nombreUsuario").css('border', '1px solid red');
-                }
-                // Si hay un error, muestra un mensaje y no redirige.
-                alert(data.message);
-            }
+        // Si la respuesta es exitosa, redirige al usuario a la página principal.
+        if (data.success) {
+            location.href = './index.php?controller=indexPage&action=index';
         } else {
-            // Si algún campo está vacío, muestra un mensaje de error y no redirige.
-            alert("Rellene los campos.");
+            if (data.error == 'correo') {
+                $("#correoElectronico").css('border', '1px solid red');
+            }
+            if (data.error == 'usuario') {
+                $("#nombreUsuario").css('border', '1px solid red');
+            }
+            // Si hay un error, muestra un mensaje y no redirige.
+            Swal.fire({
+                title: "¡Hubo un error!",
+                text: data.message,
+                icon: "error",
+                confirmButtonColor: 'rgb(29, 29, 29)',
+                confirmButtonText: 'Aceptar'
+            });
         }
     });
 });

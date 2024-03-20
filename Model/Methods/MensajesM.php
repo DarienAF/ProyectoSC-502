@@ -12,34 +12,31 @@ class MensajesM
         $this->connection = Connection::getInstance();
     }
 
-    function Create(Mensajes $mensajes)
+    function create(Mensajes $mensajes)
     {
         $retVal = false;
 
         try {
-            $query = "INSERT INTO Mensajes (
-                      nombreM, 
-                      correo, 
-                      titulo, 
-                      contexto,  
-                      leido) VALUES (?, ?, ?, ?, ?)";
+            $query = "INSERT INTO `Mensajes` (
+                      `nombreM`, 
+                      `correo`, 
+                      `titulo`, 
+                      `contexto`,  
+                      `leido`) VALUES (?, ?, ?, ?, ?)";
 
             $statement = $this->connection->Prepare($query);
 
-            $nombrem = $mensajes->getNombreM();
-            $correo = $mensajes->getCorreo();
-            $titulo = $mensajes->getTitulo();
-            $contexto = $mensajes->getContexto();
-            $leido = $mensajes->getLeido();
-
-            $statement->bind_param("sssss", $nombrem, $correo, $titulo, $contexto, $leido);
+            // Vincular  valores a los placeholders correspondientes en la sentencia.
+            $statement->bindValue(1, $mensajes->getNombreM());
+            $statement->bindValue(2, $mensajes->getCorreo());
+            $statement->bindValue(3, $mensajes->getTitulo());
+            $statement->bindValue(4, $mensajes->getContexto());
+            $statement->bindValue(5, $mensajes->getLeido()); //int
 
             if ($statement->execute()) {
                 $retVal = true;
             }
-
-            $statement->close();
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             error_log($e->getMessage());
             $retVal = false;
         }

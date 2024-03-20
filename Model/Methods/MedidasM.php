@@ -1,8 +1,8 @@
 <?php
 require_once './Model/Connection.php';
-require_once './Model/Entities/Usuario.php';
+require_once './Model/Entities/Medidas.php';
 
-class UsuarioM
+class MedidasM
 {
     private $connection;
 
@@ -11,7 +11,7 @@ class UsuarioM
         $this->connection = Connection::getInstance();
     }
 
-    function create(Usuario $usuario)
+    function create(Medidas $medida)
     {
         $retVal = false;
 
@@ -52,7 +52,7 @@ class UsuarioM
     }
 
 
-    function update_old(Usuario $usuario)
+    function update(Medidas $medida)
     {
         $retVal = false;
 
@@ -90,54 +90,6 @@ class UsuarioM
             $retVal = false;
         }
         return $retVal;
-    }
-
-
-    function update(Usuario $usuarioActualizado, Usuario $usuarioOriginal)
-    {
-        $updates = [];
-        $params = [];
-
-        if ($usuarioActualizado->getUsername() != $usuarioOriginal->getUsername()) {
-            $updates[] = "`username` = ?";
-            $params[] = $usuarioActualizado->getUsername();
-        }
-        if ($usuarioActualizado->getNombre() != $usuarioOriginal->getNombre()) {
-            $updates[] = "`nombre` = ?";
-            $params[] = $usuarioActualizado->getNombre();
-        }
-        if ($usuarioActualizado->getApellidos() != $usuarioOriginal->getApellidos()) {
-            $updates[] = "`apellidos` = ?";
-            $params[] = $usuarioActualizado->getApellidos();
-        }
-        if ($usuarioActualizado->getCorreo() != $usuarioOriginal->getCorreo()) {
-            $updates[] = "`correo` = ?";
-            $params[] = $usuarioActualizado->getCorreo();
-        }
-        if ($usuarioActualizado->getTelefono() != $usuarioOriginal->getTelefono()) {
-            $updates[] = "`telefono` = ?";
-            $params[] = $usuarioActualizado->getTelefono();
-        }
-        if ($usuarioActualizado->getIdRol() != $usuarioOriginal->getIdRol()) {
-            $updates[] = "`id_rol` = ?";
-            $params[] = $usuarioActualizado->getIdRol();
-        }
-
-        if (count($updates) > 0) {
-            $query = "UPDATE `Usuarios` SET " . implode(", ", $updates) . " WHERE `id_usuario` = ?";
-            $params[] = $usuarioActualizado->getIdUsuario();
-
-            try {
-                $statement = $this->connection->prepare($query);
-                $statement->execute($params);
-                return $statement->rowCount() > 0;
-            } catch (PDOException $e) {
-                error_log($e->getMessage());
-                return false;
-            }
-        }
-
-        return false;
     }
 
 
@@ -185,7 +137,7 @@ class UsuarioM
     }
 
 
-    function activate($id_usuario)
+    function delete($id_medida)
     {
         $retVal = false;
 
@@ -204,87 +156,5 @@ class UsuarioM
 
         return $retVal;
     }
-
-
-    function deactivate($id_usuario)
-    {
-        $retVal = false;
-
-        try {
-            $query = "UPDATE `Usuarios` SET `activo` = 0 WHERE `id_usuario` = ?";
-            $statement = $this->connection->Prepare($query);
-            $statement->bindValue(1, $id_usuario, PDO::PARAM_INT); //int
-
-            if ($statement->execute()) {
-                $retVal = true;
-            }
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            $retVal = false;
-        }
-
-        return $retVal;
-    }
-
-    function userLogin($username)
-    {
-        $usuario = null;
-        try {
-            $query = "SELECT * FROM `Usuarios` WHERE `username` = ?";
-            $statement = $this->connection->Prepare($query);
-            $statement->bindValue(1, $username);
-            $statement->execute();
-
-            if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                $usuario = new Usuario();
-                $usuario->setUserFields($row);
-            }
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-        }
-
-        return $usuario;
-    }
-
-    function usernameExists($username)
-    {
-        $exists = false;
-
-        try {
-            $query = "SELECT COUNT(*) FROM `Usuarios` WHERE `username` = ?";
-            $statement = $this->connection->Prepare($query);
-            $statement->bindValue(1, $username);
-            $statement->execute();
-
-            if ($statement->fetchColumn() > 0) {
-                $exists = true;
-            }
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-        }
-
-        return $exists;
-    }
-
-    function emailExists($email)
-    {
-        $exists = false;
-
-        try {
-            $query = "SELECT COUNT(*) FROM `Usuarios` WHERE `correo` = ?";
-            $statement = $this->connection->Prepare($query);
-            $statement->bindValue(1, $email);
-            $statement->execute();
-
-            if ($statement->fetchColumn() > 0) {
-                $exists = true;
-            }
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-        }
-
-        return $exists;
-    }
-
 
 }

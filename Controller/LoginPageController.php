@@ -32,7 +32,7 @@ class LoginPageController {
             $username = $data['usuario'];
             $password = $data['contrasena'];
 
-            $usuario = $usuarioM->UserLogin($username);
+            $usuario = $usuarioM->userLogin($username);
 
             if ($usuario) {
                 if (password_verify($password, $usuario->getPassword())) {

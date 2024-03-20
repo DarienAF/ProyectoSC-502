@@ -11,48 +11,66 @@ class RolM{
         $this->connection = Connection::getInstance();
     }
 
-
-    function ViewAll()
+    function view($id_rol)
     {
-        $roles = [];
+        $rol = null;
 
-        $query = 'SELECT * FROM `ROL`';
-        $result = $this->connection->Query($query);
+        try {
+            $query = "SELECT * FROM `Rol` WHERE `id_rol` = ?";
+            $statement = $this->connection->Prepare($query);
+            $statement->bindValue(1, $id_rol, PDO::PARAM_INT);
+            $statement->execute();
 
-        while ($row = $result->fetch_assoc()) {
-            $rol = new Rol();
-            $this->setRolFields($rol, $row);
-            $roles[] = $rol;
-        }
-
-        return $roles;
-    }
-
-    function View($id)
-    {
-        $rol = new Rol();
-
-        $query = "SELECT * FROM `ROL` WHERE `id_rol` = ?";
-
-        $statement = $this->connection->Prepare($query);
-        $statement->bind_param("i", $id);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $this->setRolFields($rol, $row);
-        } else {
-            $rol = null;
+            if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $rol = new Rol();
+                $rol->setRolFields($row);
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
         }
 
         return $rol;
     }
 
-
-    function setRolFields(Rol $rol, array $row)
+    function viewAll()
     {
-        $rol->setIdRol  ($row["id_rol"]);
-        $rol->setNombre ($row["nombre"]);
+        $roles = [];
+
+        try {
+            $query = "SELECT * FROM `Rol`";
+            $statement = $this->connection->Prepare($query);
+            $statement->execute();
+
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $rol = new Rol();
+                $rol->setRolFields($row);
+                $roles[] = $rol;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $roles;
     }
+
+    function viewRolesNames()
+    {
+        $roles = [];
+
+        try {
+            $query = "SELECT id_rol, nombre FROM `Rol`";
+            $statement = $this->connection->Prepare($query);
+            $statement->execute();
+
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $roles[$row['id_rol']] = $row['nombre'];
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $roles;
+    }
+
+
 }

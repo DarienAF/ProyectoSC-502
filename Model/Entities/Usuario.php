@@ -114,7 +114,33 @@ class Usuario
     }
 
 
+    public function setUserFields($row)
+    {
+        $this->setIdUsuario($row['id_usuario']);
+        $this->setUsername($row['username']);
+        $this->setPassword($row['password']);
+        $this->setNombre($row['nombre']);
+        $this->setApellidos($row['apellidos']);
+        $this->setCorreo($row['correo']);
+        $this->setTelefono($row['telefono']);
+        $this->setRutaImagen($row['ruta_imagen']);
+        $this->setActivo($row['activo']);
+        $this->setIdRol($row['id_rol']);
+    }
 
+    public function toArray()
+    {
+        return [
+            'id' => $this->getIdUsuario(),
+            'rol' => $this->getIdRol(),
+            'username' => $this->getUsername(),
+            'nombre' => $this->getNombre(),
+            'apellidos' => $this->getApellidos(),
+            'correo' => $this->getCorreo(),
+            'telefono' => $this->getTelefono(),
+            'ruta_imagen' => $this->getRutaImagen()
+        ];
+    }
 }
 
 

@@ -2,18 +2,87 @@
     border-bottom: 3px solid #D43B3B;
 }
 
-.content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('https://images.pexels.com/photos/669585/pexels-photo-669585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-image: url('https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?cs=srgb&dl=pexels-leon-ardho-1552252.jpg&fm=jpg');
+}
+
+
+.filter-container {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    background-color: white;
+    border-radius: 5px;
+    padding-top: 50px;
+}
+
+
+.table-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 0 100px;
+    overflow-x: auto;
+    font-family: "Poppins", sans-serif;
+}
+
+thead {
+    font-size: 20px;
+}
+
+.table td,
+.table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.btn-toggle {
+    width: 100%;
+    min-width: 120px;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+}
+
+.btn-toggle[data-state="activo"] {
+    background-color: green;
+    color: white;
+    font-weight: bolder;
+}
+
+.btn-toggle[data-state="inactivo"] {
+    background-color: #D43B3B;
+    color: white;
+    font-weight: bolder;
+}
+
+
+#tablaUsuario tr td:last-child {
+    background-color: transparent;
+    box-shadow: none;
+    border-color: transparent;
+    padding-left: 5px;
+    padding-right: 0;
+
+
+}
+
+.btn-warning {
+    display: flex;
+    align-items: center;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.image-container {
+    text-align: center;
 }

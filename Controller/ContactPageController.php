@@ -27,20 +27,20 @@ class ContactPageController
     {
         $mensajesM = new MensajesM();
         $data = json_decode(file_get_contents('php://input'), true);
-    
-        $nombrem     = $data['nombre'];
-        $correo  = $data['correo'];
-        $titulo     = $data['titulo'];
-        $contexto    = $data['contexto'];
+
+        $nombrem = $data['nombre'];
+        $correo = $data['correo'];
+        $titulo = $data['titulo'];
+        $contexto = $data['contexto'];
     
         $mensajesNuevo = new Mensajes();
-    
-        $mensajesNuevo->setNombreM  ($nombrem );
-        $mensajesNuevo->setCorreo  ($correo  );
-        $mensajesNuevo->setTitulo    ($titulo    );
-        $mensajesNuevo->setContexto ($contexto );
-      //  $mensajesNuevo->setFechaEnvio( 'now() ');
-        $mensajesNuevo->setLeido    (0);
+
+        $mensajesNuevo->setNombreM($nombrem);
+        $mensajesNuevo->setCorreo($correo);
+        $mensajesNuevo->setTitulo($titulo);
+        $mensajesNuevo->setContexto($contexto);
+        //$mensajesNuevo->setFechaEnvio( 'now() ');
+        $mensajesNuevo->setLeido(0);
     
         // Guardar el mensaje en la base de datos
         if ($mensajesM->Create($mensajesNuevo)){

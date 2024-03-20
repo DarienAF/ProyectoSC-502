@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once './Model/Connection.php';
-require_once './Model/Methods/MedidaM.php';
+require_once './Model/Methods/MedidasM.php';
 
 
 class NewMeasurePageController
