@@ -1,14 +1,14 @@
 <link rel="stylesheet" href="./View/style/fragments/NavStyle.css">
 
 
-<div class="nav">
-    <div class="nav-icon">
+<div class="nav-container">
+    <div class="nav-left">
         <a href="./">
-            <img src="./View/img/logos/Logo.svg" alt="Home" style="height: 96px; width: 96px;">
+            <img src="./View/img/logos/Logo2.png" alt="Home" class="nav-logo">
         </a>
     </div>
 
-    <div class="nav-menu">
+    <div class="nav-right">
         <ul class="nav justify-content-end container-fluid">
             <li>
                 <a class="nav-link <?php echo ($current_page == 'IndexPage') ? 'active' : ''; ?>"

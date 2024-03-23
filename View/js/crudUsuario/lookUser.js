@@ -1,34 +1,107 @@
 function filterTable() {
-    const searchId = document.getElementById('searchId').value;
+    // Valores de los filtros
+    const searchId = document.getElementById('searchId').value.trim();
     const searchRole = document.getElementById('searchRole').value;
     const searchUsername = document.getElementById('searchUsername').value.trim().toLowerCase();
     const searchFirstName = document.getElementById('searchFirstName').value.toLowerCase();
     const searchLastName = document.getElementById('searchLastName').value.toLowerCase();
-    const searchEmail = document.getElementById('searchEmail').value.toLowerCase();
-    const searchPhone = document.getElementById('searchPhone').value.toLowerCase();
-    const searchStatus = document.getElementById('searchStatus').value.trim().toLowerCase();
-    ;
+    const searchEmail = document.getElementById('searchEmail').value.trim().toLowerCase();
+    const searchPhone = document.getElementById('searchPhone').value.trim().toLowerCase();
+    const searchStatus = document.getElementById('searchStatus').value.toLowerCase();
 
-    document.querySelectorAll('#tablaUsuario tbody tr').forEach(row => {
-        const idText = row.children[0].textContent;
+    let visibleRows = 0;
+
+    // Solo aplica la lógica de filtrado a las filas con id que comienza con 'userRow-' (ignora la fila de "sin resultados")
+    document.querySelectorAll('#tablaUsuario tbody tr[id^="userRow-"]').forEach(row => {
+        const idText = row.children[0].textContent.trim();
         const roleText = row.children[1].textContent.trim().toLowerCase();
-        const usernameText = row.children[2].textContent.toLowerCase();
+        const usernameText = row.children[2].textContent.trim().toLowerCase();
         const firstNameText = row.children[3].textContent.toLowerCase();
         const lastNameText = row.children[4].textContent.toLowerCase();
-        const emailText = row.children[5].textContent.toLowerCase();
-        const phoneText = row.children[6].textContent.toLowerCase();
+        const emailText = row.children[5].textContent.trim().toLowerCase();
+        const phoneText = row.children[6].textContent.trim().toLowerCase();
         const statusText = row.children[7].textContent.trim().toLowerCase();
 
-        row.style.display = (searchId === "" || idText === searchId) &&
-        (searchRole === "" || roleText === searchRole) &&
-        (searchUsername === "" || usernameText.includes(searchUsername)) &&
-        (searchFirstName === "" || firstNameText.includes(searchFirstName)) &&
-        (searchLastName === "" || lastNameText.includes(searchLastName)) &&
-        (searchEmail === "" || emailText.includes(searchEmail)) &&
-        (searchPhone === "" || phoneText.includes(searchPhone)) &&
-        (searchStatus === "" || statusText === searchStatus) ? '' : 'none';
+        const isRowVisible = (searchId === "" || idText === searchId) &&
+            (searchRole === "" || roleText === searchRole) &&
+            (searchUsername === "" || usernameText.includes(searchUsername)) &&
+            (searchFirstName === "" || firstNameText.includes(searchFirstName)) &&
+            (searchLastName === "" || lastNameText.includes(searchLastName)) &&
+            (searchEmail === "" || emailText.includes(searchEmail)) &&
+            (searchPhone === "" || phoneText.includes(searchPhone)) &&
+            (searchStatus === "" || statusText === searchStatus);
+
+        row.style.display = isRowVisible ? '' : 'none';
+        if (isRowVisible) visibleRows++;
     });
+
+    // Comprueba si hay filas visibles y muestra u oculta la fila "sin resultado"
+    const noResultRow = document.getElementById('no-result');
+    noResultRow.style.display = visibleRows === 0 ? '' : 'none';
 }
+
+
+let sortOrder = 1; // 1 para ascendente, -1 para descendente
+let currentSortColumn = null;
+
+function sortTable(columnIndex, columnId) {
+    const table = document.getElementById('tablaUsuario');
+    const tbody = table.getElementsByTagName('tbody')[0];
+    let rows = Array.from(tbody.rows);
+
+    // Remueve el icono de flecha del anterior th, si existe
+    if (currentSortColumn && currentSortColumn !== columnId) {
+        const previousArrowSpan = document.getElementById(currentSortColumn).querySelector('.sort-arrow');
+        previousArrowSpan.classList.remove('bi-caret-up-fill', 'bi-caret-down-fill'); // Remueve las clases de iconos
+    }
+
+    rows.sort((a, b) => {
+        let cellA = a.cells[columnIndex].textContent.trim().toLowerCase();
+        let cellB = b.cells[columnIndex].textContent.trim().toLowerCase();
+
+        cellA = !isNaN(cellA) && !isNaN(parseFloat(cellA)) ? parseFloat(cellA) : cellA;
+        cellB = !isNaN(cellB) && !isNaN(parseFloat(cellB)) ? parseFloat(cellB) : cellB;
+
+        if (cellA < cellB) {
+            return -1 * sortOrder;
+        }
+        if (cellA > cellB) {
+            return 1 * sortOrder;
+        }
+        return 0;
+    });
+
+    sortOrder *= -1; // Invierte la dirección del orden para el próximo click
+
+    // Actualiza la flecha en el th actual
+    const arrowSpan = document.getElementById(columnId).querySelector('.sort-arrow');
+
+    // Limpia las clases previas
+    arrowSpan.classList.remove('bi-caret-up-fill', 'bi-caret-down-fill');
+
+    // Agrega la clase correspondiente al estado del orden
+    if (sortOrder === 1) {
+        arrowSpan.classList.add('bi-caret-down-fill');
+    } else {
+        arrowSpan.classList.add('bi-caret-up-fill');
+    }
+
+    // Guarda el th actual como el último clickeado
+    currentSortColumn = columnId;
+
+    // Reinserta las filas ordenadas
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+// Agrega el controlador de eventos al th (ordenamiento)
+document.getElementById('sortID').addEventListener('click', () => sortTable(0, 'sortID'));
+document.getElementById('sortRol').addEventListener('click', () => sortTable(1, 'sortRol'));
+document.getElementById('sortUsername').addEventListener('click', () => sortTable(2, 'sortUsername'));
+document.getElementById('sortName').addEventListener('click', () => sortTable(3, 'sortName'));
+document.getElementById('sortSurnames').addEventListener('click', () => sortTable(4, 'sortSurnames'));
+document.getElementById('sortMail').addEventListener('click', () => sortTable(5, 'sortMail'));
+document.getElementById('sortPhone').addEventListener('click', () => sortTable(6, 'sortPhone'));
+document.getElementById('sortStatus').addEventListener('click', () => sortTable(7, 'sortStatus'));
 
 
 async function populateRoleDropdown() {
@@ -64,7 +137,7 @@ document.querySelectorAll('.btn-toggle').forEach(button => {
                 },
                 body: formData
             });
-            const data = await response.json(); // Asumiendo que la respuesta es JSON.
+            const data = await response.json();
 
             if (data.success) {
                 // Actualizar el estado del botón y el texto.
@@ -126,7 +199,7 @@ document.querySelectorAll('.edit-btn').forEach(button => {
             document.getElementById('lastName').value = userData.apellidos;
             document.getElementById('email').value = userData.correo;
             document.getElementById('phone').value = userData.telefono;
-            document.getElementById('userProfileImage').src = userData.ruta_imagen || 'ruta/a/imagen/por/defecto.png';
+            document.getElementById('userProfileImage').src = userData.ruta_imagen || './View/img/users/default_user.png';
         }
     });
 });

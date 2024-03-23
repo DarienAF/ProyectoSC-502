@@ -18,7 +18,6 @@ $(document).ready(function () {
                 isFormValid = false;
             }
         });
-
         if (!isFormValid) {
             Swal.fire({
                 title: "Todos los campos deben ser completados.",

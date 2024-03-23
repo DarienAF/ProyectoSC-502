@@ -8,7 +8,7 @@ body {
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?cs=srgb&dl=pexels-leon-ardho-1552252.jpg&fm=jpg');
+    background-image: url('../../img/private/private_bg.jpg');
 }
 
 
@@ -26,13 +26,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: start;
-    padding: 0 100px;
+    padding: 50px 100px 50px 100px;
     overflow-x: auto;
     font-family: "Poppins", sans-serif;
 }
 
+
 thead {
     font-size: 20px;
+}
+
+.table th#sortID, .table td#sortID {
+    width: 120px;
+}
+
+.table th#sortStatus, .table td#sortStatus {
+    width: 200px;
 }
 
 .table td,
@@ -41,6 +50,31 @@ thead {
     vertical-align: middle;
 }
 
+.table td,
+.table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    min-width: 50px;
+    position: relative;
+}
+
+.sort-arrow {
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 0.5em;
+    text-align: center;
+}
+
+th span {
+    display: inline-block;
+    width: calc(100% - 25px);
+    color: #8D8D8D;
+}
 
 .btn-toggle {
     width: 100%;
@@ -64,14 +98,13 @@ thead {
 }
 
 
-#tablaUsuario tr td:last-child {
+#tablaUsuario tr td:last-child,
+#tablaUsuario tr th:last-child {
     background-color: transparent;
     box-shadow: none;
     border-color: transparent;
     padding-left: 5px;
     padding-right: 0;
-
-
 }
 
 .btn-warning {
@@ -85,4 +118,33 @@ thead {
 
 .image-container {
     text-align: center;
+}
+
+
+.no-result-container {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 0;
+    margin-right: 73px;
+    background-color: black;
+    position: relative;
+
+}
+
+.no-result-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, transparent, black 30%);
+    pointer-events: none;
+}
+
+.no-result-container img {
+    max-width: 40%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }

@@ -13,10 +13,7 @@
 
 <div class="content">
     <div class="row align-items-center">
-        <div class="col">
-            <img src="./View/img/logos/Logo.svg" width=500px height="50%" style="user-select: none">
-        </div>
-        <div class="col Login ">
+        <div class="col Login-container">
             <p class="mt-5 mb-5 Titulo">Iniciar Sesión</p>
             <div class="Opciones">
                 <a class=" mb-5 Google" href="#"><img
