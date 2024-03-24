@@ -9,15 +9,9 @@ class NewMeasurePageController
 
     function Index()
     {
-        // Get the current page name
         $current_page = 'NewMeasurePage';
-
-        if (isset($_SESSION['usuario'])) {
-            $current_user = $_SESSION['usuario'];
-            require_once './View/views/private/NewMeasurePage.php';
-        } else {
-            $current_user = null;
-            require_once './View/views/private/LandingPage.php';
-        }
+        $current_user = $_SESSION['usuario'];
+        $user_rol = $_SESSION['rol'];
+        require_once './View/views/private/NewMeasurePage.php';
     }
 }

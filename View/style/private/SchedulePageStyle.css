@@ -1,25 +1,33 @@
 body {
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
 	background-repeat: no-repeat;
-	background-position: 50% 50%;
 	background-size: cover;
-	height: 100vh;
-	background-color: #000000;
+	background-image: url('../../img/private/private_bg1.jpg');
 }
 
-#ClassSchedule {
+.content {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: initial;
+
 	padding: 50px;
 	border-radius: 20px;
-	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 	color: #000;
 	margin-bottom: 100px;
 	overflow-x: hidden;
-	flex-grow: 1;
 }
 
-#ClassSchedule h1 {
+.title-container {
 	color: #fff;
+	font-family: "Poppins", sans-serif;
+}
+
+.title-container h1 {
+	text-align: center;
 }
 
 .no-excuses-image-box {

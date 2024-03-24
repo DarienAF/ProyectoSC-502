@@ -2,12 +2,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url('https://img.freepik.com/foto-gratis/pesas-ejercicio-mancuernas-hierro-placas-extra_1423-223.jpg?t=st=1710019651~exp=1710023251~hmac=3c1db2240c179652219aced2a696ba6d04bdc7302833481b2f911561dfa1b483&w=996');
-    background-size: cover;
-    background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    overflow-x: hidden;
+    background-size: cover;
+    background-image: url('../../img/private/private_bg1.jpg');
 }
 
 .content {
@@ -25,6 +22,8 @@ body {
     font-size: xx-large;
     opacity: 0.50;
     animation: animate 1s ease-in-out 1 forwards;
+    color: white;
+    font-family: "Poppins", sans-serif;
 }
 
 @keyframes animate {

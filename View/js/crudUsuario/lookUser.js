@@ -47,14 +47,13 @@ let currentSortColumn = null;
 function sortTable(columnIndex, columnId) {
     const table = document.getElementById('tablaUsuario');
     const tbody = table.getElementsByTagName('tbody')[0];
-    let rows = Array.from(tbody.rows);
+    let rows = Array.from(tbody.querySelectorAll('tr:not(#no-result)'));
 
     // Remueve el icono de flecha del anterior th, si existe
     if (currentSortColumn && currentSortColumn !== columnId) {
         const previousArrowSpan = document.getElementById(currentSortColumn).querySelector('.sort-arrow');
         previousArrowSpan.classList.remove('bi-caret-up-fill', 'bi-caret-down-fill'); // Remueve las clases de iconos
     }
-
     rows.sort((a, b) => {
         let cellA = a.cells[columnIndex].textContent.trim().toLowerCase();
         let cellB = b.cells[columnIndex].textContent.trim().toLowerCase();
@@ -103,7 +102,6 @@ document.getElementById('sortMail').addEventListener('click', () => sortTable(5,
 document.getElementById('sortPhone').addEventListener('click', () => sortTable(6, 'sortPhone'));
 document.getElementById('sortStatus').addEventListener('click', () => sortTable(7, 'sortStatus'));
 
-
 async function populateRoleDropdown() {
     const roles = await getRoles();
     const roleSelect = document.getElementById('searchRole');
@@ -117,7 +115,6 @@ async function populateRoleDropdown() {
 
 // Llamar a la función cuando la página se carga.
 document.addEventListener('DOMContentLoaded', populateRoleDropdown);
-
 
 document.querySelectorAll('.btn-toggle').forEach(button => {
     button.addEventListener('click', async function () {
@@ -179,6 +176,9 @@ document.querySelectorAll('.edit-btn').forEach(button => {
         const userId = this.getAttribute('data-user-id');
         const userData = await getUserData(userId);
         const roles = await getRoles();
+
+        // Limpiar border rojos (si existen)
+        $("#email, #username").css('border', '');
 
         const roleSelect = document.getElementById('userRole');
         roleSelect.innerHTML = ''; // Limpia las opciones existentes
@@ -243,25 +243,132 @@ async function getRoles() {
 }
 
 async function saveUserData() {
+
+
     const userId = document.getElementById('userId').value;
+    const role = document.getElementById('userRole').value;
     const username = document.getElementById('username').value;
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
-    const role = document.getElementById('userRole').value;
 
-    const formData = new URLSearchParams();
-    formData.append('userId', userId);
-    formData.append('username', username);
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('role', role);
+
+    const userData = {
+        userId: userId,
+        role: role,
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        password: document.getElementById('contrasena').value
+    };
 
     try {
         const response = await fetch('./index.php?controller=LookUserPage&action=updateUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            document.getElementById(`userRole-${userId}`).textContent = rolesMap[role];
+            document.getElementById(`username-${userId}`).textContent = username;
+            document.getElementById(`firstName-${userId}`).textContent = firstName;
+            document.getElementById(`lastName-${userId}`).textContent = lastName;
+            document.getElementById(`email-${userId}`).textContent = email;
+            document.getElementById(`phone-${userId}`).textContent = phone;
+
+            $('#editUserModal').modal('hide');
+
+            if (result.changed) {
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: 'Los cambios fueron guardados con éxito.',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                })
+            } else {
+                Swal.fire({
+                    title: 'Sin cambios',
+                    text: 'No se ingresaron cambios al usuario.',
+                    icon: 'info',
+                    confirmButtonText: 'Aceptar'
+                })
+            }
+        } else {
+            if (result.error == 'usuario') {
+                $("#username").css('border', '1px solid red');
+            } else if (result.error == 'correo') {
+                $("#email").css('border', '1px solid red');
+            }
+
+            // Configura el mensaje de error según el tipo de error
+            let errorMessage = result.message || 'Hubo un problema al guardar los cambios.';
+            let errorIcon = 'error';
+
+            if (result.error == 'usuario' || result.error == 'correo') {
+                errorIcon = 'warning';
+            }
+
+            Swal.fire({
+                title: 'Error',
+                text: errorMessage,
+                icon: errorIcon,
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    } catch (error) {
+        console.error('Error al actualizar el usuario:', error);
+        Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al conectar con el servidor.',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.btn-shuffle-pw').forEach(button => {
+        button.addEventListener('click', function () {
+            const newPassword = generateRandomPassword(12); // Genera una contraseña de 12 caracteres
+            document.getElementById('contrasena').type = 'text'; // Cambia a texto para mostrar la contraseña generada
+            console.log(newPassword);
+            document.getElementById('contrasena').value = newPassword;
+
+            // Opcional: cambiar de nuevo a tipo password después de un tiempo
+            setTimeout(() => {
+                document.getElementById('contrasena').type = 'password';
+            }, 5000); // Muestra la contraseña por 5 segundos
+        });
+    });
+});
+
+function generateRandomPassword(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+async function updatePassword(userId) {
+    const newPassword = document.getElementById('newPassword').value;
+    const formData = new URLSearchParams();
+    formData.append('userId', userId);
+    formData.append('newPassword', newPassword);
+
+    console.log("AAAAAA");
+
+    try {
+        const response = await fetch('./index.php?controller=LookUserPage&action=updatePassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -272,30 +379,22 @@ async function saveUserData() {
         const result = await response.json();
 
         if (result.success) {
-            document.getElementById(`userId-${userId}`).textContent = userId;
-            document.getElementById(`userRole-${userId}`).textContent = rolesMap[role];
-            document.getElementById(`username-${userId}`).textContent = username;
-            document.getElementById(`firstName-${userId}`).textContent = firstName;
-            document.getElementById(`lastName-${userId}`).textContent = lastName;
-            document.getElementById(`email-${userId}`).textContent = email;
-            document.getElementById(`phone-${userId}`).textContent = phone;
-
             Swal.fire({
                 title: '¡Éxito!',
-                text: 'Los cambios fueron guardados con éxito.',
+                text: 'La contraseña fue actualizada.',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
-            })
+            });
         } else {
             Swal.fire({
                 title: 'Error',
-                text: result.message || 'Hubo un problema al guardar los cambios.',
+                text: result.message,
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
             });
         }
     } catch (error) {
-        console.error('Error al actualizar el usuario:', error);
+        console.error('Error al actualizar la contraseña:', error);
         Swal.fire({
             title: 'Error',
             text: 'Hubo un problema al conectar con el servidor.',

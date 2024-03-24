@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="./View/style/fragments/NavStylePrivate.css">
-
 <div class="nav">
     <div class="nav-left">
         <a href="./"><img class="nav-logo" src="./View/img/logos/Logo2.png" alt="Home"></a>
@@ -16,9 +14,10 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle <?php echo ($current_page == 'ProfilePage' || $current_page == 'SchedulePage') ? 'active' : ''; ?>"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
-                    <?php echo ($current_page == 'ProfilePage' || $current_page == 'SchedulePage') ? 'active' : ''; ?>>MI
+                >MI
                     PERFIL
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
@@ -29,9 +28,10 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle <?php echo ($current_page == 'NewMeasurePage' || $current_page == 'LookMeasurePage') ? 'active' : ''; ?>"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
-                    <?php echo ($current_page == 'NewMeasurePage' || $current_page == 'LookMeasurePage') ? 'active' : ''; ?>>MEDIDAS
+                >MEDIDAS
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
                     <a class="dropdown-item" href="./index.php?controller=NewMeasurePage&action=index">Insertar</a>
@@ -40,21 +40,24 @@
                 </div>
             </li>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                   aria-expanded="false"
-                    <?php echo ($current_page == 'LookUserPage') ? 'active' : ''; ?>>USUARIOS
-                </a>
-                <div class="dropdown-menu dropdown-menu-dark">
-                    <a class="dropdown-item" href="./index.php?controller=LookUserPage&action=index">Ver Usuarios</a>
-                </div>
-            </li>
+
+            <?php echo ($user_rol == 2 or $user_rol == 1) ?
+                ('<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle ' . (($current_page == 'LookUserPage') ? 'active' : '') . '" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                       aria-expanded="false">USUARIOS
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-dark">
+                        <a class="dropdown-item" href="./index.php?controller=LookUserPage&action=index">Ver Usuarios</a>
+                    </div>
+                </li>')
+                : '' ?>
 
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle <?php echo ($current_page == 'ClassesPage') ? 'active' : ''; ?>"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
-                    <?php echo ($current_page == 'ClassesPage') ? 'active' : ''; ?>>CLASES
+                >CLASES
                     <!-- No tiene Controller -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
@@ -63,9 +66,10 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle <?php echo ($current_page == 'TrainingPlansPage') ? 'active' : ''; ?>"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
-                    <?php echo ($current_page == 'TrainingPlansPage') ? 'active' : ''; ?>>PLANES
+                >PLANES
                     <!-- No tiene Controller -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
@@ -74,9 +78,10 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle <?php echo ($current_page == 'ReservesPage') ? 'active' : ''; ?>"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
-                    <?php echo ($current_page == 'ReservesPage') ? 'active' : ''; ?>>RESERVAS
+                >RESERVAS
                     <!-- No tiene Controller -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
@@ -85,9 +90,10 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle <?php echo ($current_page == 'MessagesPage') ? 'active' : ''; ?>"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
-                    <?php echo ($current_page == 'MessagesPage') ? 'active' : ''; ?>>MENSAJES
+                >MENSAJES
                     <!-- No tiene Controller -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
@@ -96,9 +102,10 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle <?php echo ($current_page == 'ReportsPage') ? 'active' : ''; ?>"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
-                    <?php echo ($current_page == 'ReportsPage') ? 'active' : ''; ?>>REPORTES
+                >REPORTES
                     <!-- No tiene Controller -->
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
@@ -112,6 +119,7 @@
                     <?php echo ($current_user != null) ? 'CERRAR SESION' : 'INICIAR SESION'; ?>
                 </a>
             </li>
+
         </ul>
     </div>
 </div>

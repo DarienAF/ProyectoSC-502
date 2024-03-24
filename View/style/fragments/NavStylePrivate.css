@@ -9,6 +9,13 @@
     font-family: 'Saira Condensed', sans-serif;
 }
 
+.nav-link,
+.nav-link:hover,
+.nav-item a:hover {
+    color: #f5abab;
+}
+
+
 .nav-left {
     display: flex;
     padding: 2px;
@@ -42,6 +49,7 @@
 }
 
 .nav-menu {
+    list-style: none;
     display: flex;
 }
 
@@ -51,10 +59,8 @@
     color: white;
 }
 
-.nav-item a:hover {
-    color: #f5abab;
-}
 
 .nav-item.dropdown:hover .dropdown-menu {
     display: block;
 }
+

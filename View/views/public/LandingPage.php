@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>v-Fit Studio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="./View/style/public/LandingPageStyle.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
+<?php require './View/fragments/head.php'; ?>
 <body>
-
 <?php require './View/fragments/nav.php'; ?>
 
 <div class="LandingPage">
@@ -64,9 +57,15 @@
     <div class="compromise-box">
         <h2>Tus Metas, Nuestro Compromiso</h2>
         <ul>
-            <li>Con ejercicios variados y dinámicos, te ayudamos a mejorar tu resistencia cardiovascular para que sientas más energía en tu día a día.</li>
-            <li>Fomentamos un equilibrio en tu entrenamiento que no solo construye músculo, sino que también mejora la flexibilidad y movilidad.</li>
-            <li>Nuestros programas se adaptan para incrementar tu fuerza a un ritmo que es desafiante pero alcanzable, sea cual sea tu nivel inicial.</li>
+            <li>Con ejercicios variados y dinámicos, te ayudamos a mejorar tu resistencia cardiovascular para que
+                sientas más energía en tu día a día.
+            </li>
+            <li>Fomentamos un equilibrio en tu entrenamiento que no solo construye músculo, sino que también mejora la
+                flexibilidad y movilidad.
+            </li>
+            <li>Nuestros programas se adaptan para incrementar tu fuerza a un ritmo que es desafiante pero alcanzable,
+                sea cual sea tu nivel inicial.
+            </li>
         </ul>
     </div>
 
@@ -75,10 +74,12 @@
         <ul>
             <li>Planes de entrenamiento personalizados: Adaptados a Tus objetivos,
                 porque Tu viaje fitness es
-                único.</li>
+                único.
+            </li>
             <li>Instalaciones de última generación: Equipadas para todos tus deseos —
                 desde colchonetas de
-                yoga hasta pesas, lo tenemos todo.</li>
+                yoga hasta pesas, lo tenemos todo.
+            </li>
             <li>Comunidad vibrante: Únete a un grupo de personas con ideas afines que se
                 apoyan e inspiran
                 mutuamente cada día.
@@ -96,7 +97,8 @@
         <div class="col-6 imgJoinBanner">
         </div>
         <div class="col-6 textJoinBanner-box">
-            <p class="titleJoinBanner">Tu mejor yo te espera en <span style="color: #F5D3D5"><br>VerveFIT Studio.</span></p>
+            <p class="titleJoinBanner">Tu mejor yo te espera en <span style="color: #F5D3D5"><br>VerveFIT Studio.</span>
+            </p>
             <p class="textJoinBanner mb-4">
                 Da el primer paso hoy.
                 Únete a nosotros y descubre cómo VerveFit Studio puede transformar tu cuerpo, mente y espíritu.
@@ -116,7 +118,8 @@
                     ¿Tienes preguntas, necesitas asistencia o simplemente quieres hablar sobre cómo podemos mejorar tu
                     experiencia en nuestro estudio? No dudes en ponerte en contacto con nuestro equipo de soporte al
                     cliente.
-                    Estamos comprometidos en proporcionarte el mejor servicio y apoyo en cada paso de tu viaje de bienestar
+                    Estamos comprometidos en proporcionarte el mejor servicio y apoyo en cada paso de tu viaje de
+                    bienestar
                     y
                     fitness.
                 </p>

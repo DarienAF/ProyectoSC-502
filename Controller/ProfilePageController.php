@@ -9,7 +9,6 @@ class ProfilePageController
 
     function Index()
     {
-        // Get the current page name
         $current_page = 'ProfilePage';
 
         if (isset($_SESSION['usuario'])) {

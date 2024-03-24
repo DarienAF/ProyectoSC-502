@@ -3,16 +3,16 @@ session_start();
 require_once './Model/Connection.php';
 require_once './Model/Methods/UsuarioM.php';
 
-class LoginPageController {
 
-    // Método para cargar la vista de la página de inicio de sesión.
+class LoginPageController
+{
     function Index()
     {
         $current_page = 'LoginPage';
 
-        // Verifica si el usuario ya está en sesión.
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
+            $user_rol = $_SESSION['rol'];
             require_once './View/views/public/LoginPage.php';
         } else {
             $current_user = null;
@@ -27,27 +27,29 @@ class LoginPageController {
         // Obtiene los datos enviados en formato JSON y los convierte en un array asociativo.
         $data = json_decode(file_get_contents('php://input'), true);
 
-        // Verifica si se han enviado el usuario y la contraseña
-        if (isset($data['usuario']) && isset($data['contrasena'])) {
-            $username = $data['usuario'];
-            $password = $data['contrasena'];
 
-            $usuario = $usuarioM->userLogin($username);
+        $username = $data['usuario'];
+        $password = $data['contrasena'];
 
-            if ($usuario) {
+        $usuario = $usuarioM->userLogin($username);
+
+
+        if ($usuario) {
+            if ($usuario->getActivo()) {
                 if (password_verify($password, $usuario->getPassword())) {
                     $response = ['success' => true, 'message' => '¡Usuario validado exitosamente!'];
-                    $_SESSION['usuario'] = $usuario->getNombre()." ".$usuario->getApellidos();
+                    $_SESSION['usuario'] = $usuario->getNombre() . " " . $usuario->getApellidos();
                     $_SESSION['rol'] = $usuario->getIdRol();
                 } else {
-                    $response = ['success' => false, 'error'=>'contraseña', 'message' => 'Contraseña incorrecta'];
+                    $response = ['success' => false, 'error' => 'contraseña', 'icon' => 'error', 'message' => 'Contraseña incorrecta'];
                 }
             } else {
-                $response = ['success' => false,'error'=>'usuario', 'message' => 'Usuario incorrecto'];
+                $response = ['success' => false, 'error' => 'usuario', 'icon' => 'warning', 'message' => 'Usuario no se encuentra activo. Contacte a la administración.'];
             }
         } else {
-            $response = ['success' => false, 'error'=>'ambos', 'message' => 'Rellene las credenciales'];
+            $response = ['success' => false, 'error' => 'usuario', 'icon' => 'error', 'message' => 'Usuario incorrecto'];
         }
+
 
         header('Content-Type: application/json');
         echo json_encode($response);

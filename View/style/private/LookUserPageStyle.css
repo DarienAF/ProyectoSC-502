@@ -8,16 +8,7 @@ body {
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('../../img/private/private_bg.jpg');
-}
-
-
-.filter-container {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: auto;
-    background-color: white;
-    border-radius: 5px;
-    padding-top: 50px;
+    background-image: url('../../img/private/private_bg2.jpg');
 }
 
 
@@ -31,34 +22,12 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
-
 thead {
     font-size: 20px;
 }
 
-.table th#sortID, .table td#sortID {
-    width: 120px;
-}
-
-.table th#sortStatus, .table td#sortStatus {
-    width: 200px;
-}
-
-.table td,
-.table th {
-    text-align: center;
-    vertical-align: middle;
-}
-
-.table td,
-.table th {
-    text-align: center;
-    vertical-align: middle;
-}
-
-th {
-    min-width: 50px;
-    position: relative;
+.table-titles {
+    user-select: none;
 }
 
 .sort-arrow {
@@ -70,6 +39,25 @@ th {
     text-align: center;
 }
 
+.table th#sortID, .table td#sortID {
+    width: 120px;
+}
+
+.table th#sortStatus, .table td#sortStatus {
+    width: 200px;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    align-content: center;
+}
+
+th {
+    min-width: 50px;
+    position: relative;
+}
+
 th span {
     display: inline-block;
     width: calc(100% - 25px);
@@ -79,10 +67,10 @@ th span {
 .btn-toggle {
     width: 100%;
     min-width: 120px;
-    height: 100%;
-    border: 0;
-    margin: 0;
-    border-radius: 0;
+}
+
+#tablaUsuario tr td {
+    padding: 4px 0 4px 0;
 }
 
 .btn-toggle[data-state="activo"] {
@@ -97,35 +85,14 @@ th span {
     font-weight: bolder;
 }
 
-
-#tablaUsuario tr td:last-child,
-#tablaUsuario tr th:last-child {
-    background-color: transparent;
-    box-shadow: none;
-    border-color: transparent;
-    padding-left: 5px;
-    padding-right: 0;
-}
-
 .btn-warning {
-    display: flex;
-    align-items: center;
-    margin-top: 1px;
-    margin-bottom: 1px;
     font-size: 20px;
     font-weight: bolder;
 }
 
-.image-container {
-    text-align: center;
-}
-
-
 .no-result-container {
     text-align: center;
-    padding-top: 30px;
-    padding-bottom: 0;
-    margin-right: 73px;
+    padding: 0;
     background-color: black;
     position: relative;
 
@@ -147,4 +114,18 @@ th span {
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.modal-dialog {
+    font-family: "Poppins", sans-serif;
+}
+
+.modal-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image {
+    width: 30%;
 }

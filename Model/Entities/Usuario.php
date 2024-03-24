@@ -13,10 +13,13 @@ class Usuario
     private $activo;
     private $id_rol;
 
+    private $password_flag;
+
     public function getIdUsuario()
     {
         return $this->id_usuario;
     }
+
 
     public function setIdUsuario($id_usuario)
     {
@@ -113,6 +116,16 @@ class Usuario
         $this->id_rol = $id_rol;
     }
 
+    public function getPasswordFlag()
+    {
+        return $this->password_flag;
+    }
+
+    public function setPasswordFlag($password_flag)
+    {
+        $this->password_flag = $password_flag;
+    }
+
 
     public function setUserFields($row)
     {
@@ -126,6 +139,7 @@ class Usuario
         $this->setRutaImagen($row['ruta_imagen']);
         $this->setActivo($row['activo']);
         $this->setIdRol($row['id_rol']);
+        $this->setPasswordFlag($row['password_flag']);
     }
 
     public function toArray()

@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="./View/style/fragments/NavStyle.css">
-
-
 <div class="nav-container">
     <div class="nav-left">
         <a href="./">
@@ -49,4 +46,3 @@
     </div>
 
 </div>
-

@@ -3,6 +3,8 @@ session_start();
 require_once './Model/Connection.php';
 require_once  './Model/Methods/UsuarioM.php';
 require_once  './Model/Entities/Usuario.php';
+
+
 class SignUpPageController {
 
     function Index()
@@ -12,6 +14,7 @@ class SignUpPageController {
 
         if (isset($_SESSION['usuario'])) {
             $current_user = $_SESSION['usuario'];
+            $user_rol = $_SESSION['rol'];
             require_once './View/views/public/SignUpPage.php';
         } else {
             $current_user = null;
@@ -42,6 +45,7 @@ class SignUpPageController {
         $usuarioNuevo->setRutaImagen("./View/img/users/default_user.png");
         $usuarioNuevo->setActivo(1);
         $usuarioNuevo->setIdRol     (4);
+        $usuarioNuevo->setPasswordFlag(0);
 
         if (!$usuarioM->emailExists($usuarioNuevo->getCorreo())){
             if (!$usuarioM->usernameExists($usuarioNuevo->getUsername())){

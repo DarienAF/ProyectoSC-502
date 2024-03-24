@@ -21,7 +21,7 @@ $(document).ready(function () {
         if (!isFormValid) {
             Swal.fire({
                 title: "Todos los campos deben ser completados.",
-                icon: "error",
+                icon: "warning",
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'
             });
@@ -36,24 +36,24 @@ $(document).ready(function () {
         });
 
         // Espera la respuesta del servidor en formato JSON
-        const data = await response.json();
+        const result = await response.json();
 
 
         // Si la respuesta es exitosa, redirige al usuario a la página principal
-        if (data.success) {
+        if (result.success) {
             location.href = './index.php?controller=indexPage&action=index'
         } else {
-            if (data.error == 'usuario' || data.error == 'ambos') {
+            if (result.error == 'usuario' || result.error == 'ambos') {
                 $("#nombreUsuario").css('border', '1px solid red');
             }
-            if (data.error == 'contraseña' || data.error == 'ambos') {
+            if (result.error == 'contraseña' || result.error == 'ambos') {
                 $("#Contrasena").css('border', '1px solid red');
             }
             // Si hay un error, muestra un mensaje y no redirige
             Swal.fire({
                 title: "¡Hubo un error!",
-                text: data.message,
-                icon: "error",
+                text: result.message,
+                icon: result.icon,
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'
             });
