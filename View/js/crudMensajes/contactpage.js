@@ -3,19 +3,19 @@ $(document).ready(function () {
     $("#contactBtn").click(async function (event) {
         event.preventDefault();
 
-        var nombreM = $("#nombreM").val();
-        var apellidoM = $("#apellidoM").val();
-        var correo = $("#correo").val();
-        var titulo = $("#titulo").val();
-        var contexto = $("#contexto").val();
+        var firstNameMsg = $("#firstNameMsg").val();
+        var lastNameMsg = $("#lastNameMsg").val();
+        var emailMsg = $("#emailMsg").val();
+        var titleMsg = $("#titleMsg").val();
+        var contextMsg = $("#contextMsg").val();
 
 
         // Limpiar border rojos (si existen)
-        $("#nombreM, #apellidoM, #correo, #titulo, #contexto").css('border', '');
+        $("#firstNameMsg, #lastNameMsg, #emailMsg, #titleMsg, #contextMsg").css('border', '');
 
         // Buscar campos en blanco y marcar borde de rojo
         var isFormValid = true;
-        $("#nombreM, #apellidoM, #correo, #titulo, #contexto").each(function () {
+        $("#firstNameMsg, #lastNameMsg, #emailMsg, #titleMsg, #contextMsg").each(function () {
             if (!$(this).val()) {
                 $(this).css('border', '1px solid red');
                 isFormValid = false;
@@ -34,11 +34,11 @@ $(document).ready(function () {
 
         // Validación del correo electrónico
         var regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!regexCorreo.test(correo)) {
-            $("#correo").css('border', '1px solid red');
+        if (!regexCorreo.test(emailMsg)) {
+            $("#emailMsg").css('border', '1px solid red');
             Swal.fire({
                 title: "¡Hubo un error!",
-                text: "Ingrese un correo electrónico válido.",
+                text: "Ingrese un emailMsg electrónico válido.",
                 icon: "error",
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'
@@ -51,17 +51,17 @@ $(document).ready(function () {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                nombre: nombreM + " " + apellidoM,
-                correo: correo,
-                titulo: titulo,
-                contexto: contexto
+                fullNameMsg: firstNameMsg + " " + lastNameMsg,
+                emailMsg: emailMsg,
+                titleMsg: titleMsg,
+                contextMsg: contextMsg
             }),
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
         // Si la respuesta es exitosa, muestra un mensaje de éxito y limpia los campos.
-        if (data.success) {
+        if (result.success) {
             Swal.fire({
                 title: "¡Pronto te contactaremos!",
                 text: "Tu mensaje ha sido enviado correctamente.",
@@ -69,12 +69,12 @@ $(document).ready(function () {
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'
             });
-            $("#nombreM, #apellidoM, #correo, #titulo, #contexto").val('');
+            $("#firstNameMsg, #lastNameMsg, #emailMsg, #titleMsg, #contextMsg").val('');
         } else {
             // Si hay un error, muestra un mensaje de error.
             Swal.fire({
                 title: "¡Hubo un error!",
-                text: data.message,
+                text: result.message,
                 icon: "error",
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'

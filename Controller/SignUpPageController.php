@@ -19,24 +19,26 @@ class SignUpPageController {
         $usuarioM = new UsuarioM();
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $usuarioNuevo = new Usuario();
-        $usuarioNuevo->setUsername($data['usuario']);
-        $usuarioNuevo->setPassword($data['contrasena']);
-        $usuarioNuevo->setNombre($data['nombre']);
-        $usuarioNuevo->setApellidos($data['apellidos']);
-        $usuarioNuevo->setCorreo($data['correo']);
-        $usuarioNuevo->setTelefono($data['numero']);
-        $usuarioNuevo->setRutaImagen("./View/img/users/default_user.png");
-        $usuarioNuevo->setActivo(1);
-        $usuarioNuevo->setIdRol(4);
-        $usuarioNuevo->setPasswordFlag(0);
+        $newUser = new Usuario();
 
-        if (!$usuarioM->emailExists($usuarioNuevo->getCorreo())){
-            if (!$usuarioM->usernameExists($usuarioNuevo->getUsername())){
-                if ($usuarioM->create($usuarioNuevo)) {
+        $newUser->setUsername($data['username']);
+        $newUser->setPassword($data['password']);
+        $newUser->setNombre($data['firstName']);
+        $newUser->setApellidos($data['lastName']);
+        $newUser->setCorreo($data['email']);
+        $newUser->setTelefono($data['phone']);
+        $newUser->setRutaImagen("./View/img/users/default_user.png");
+        $newUser->setActivo(1);
+        $newUser->setIdRol(4);
+        $newUser->setPasswordFlag(0);
+
+
+        if (!$usuarioM->emailExists($newUser->getCorreo())) {
+            if (!$usuarioM->usernameExists($newUser->getUsername())) {
+                if ($usuarioM->create($newUser)) {
+                    $userCreated = $usuarioM->userLogin($newUser->getUsername());
+                    $_SESSION['user_id'] = $userCreated->getIdUsuario();
                     $response = ['success' => true, 'message' => '¡Registro Correcto!'];
-                    $_SESSION["usuario"] = $data['usuario'];
-                    $_SESSION["rol"] = 4;
                 } else{
                     $response = ['success' => false, 'message' => '¡Registro Fallido!'];
                 }

@@ -3,19 +3,19 @@ $(document).ready(function () {
     $("#signUpBtn").click(async function (event) {
         event.preventDefault();
 
-        var nombre = $("#Nombre").val();
-        var apellidos = $("#Apellidos").val();
-        var correo = $("#correoElectronico").val();
-        var usuario = $("#nombreUsuario").val();
-        var numero = $("#numeroContacto").val();
-        var contrasena = $("#Contrasena").val();
-
         // Limpiar border rojos (si existen)
-        $("#Nombre, #Apellidos, #correoElectronico, #nombreUsuario, #numeroContacto, #Contrasena").css('border', '');
+        $("#firstName, #lastName, #email, #username, #phone, #password").css('border', '');
+
+        var firstName = $("#firstName").val();
+        var lastName = $("#lastName").val();
+        var email = $("#email").val();
+        var username = $("#username").val();
+        var phone = $("#phone").val();
+        var password = $("#password").val();
 
         // Buscar campos en blanco y marcar borde de rojo
         var isFormValid = true;
-        $("#Nombre, #Apellidos, #correoElectronico, #nombreUsuario, #numeroContacto, #Contrasena").each(function () {
+        $("#firstName, #lastName, #email, #username, #phone, #password").each(function () {
             if (!$(this).val()) {
                 $(this).css('border', '1px solid red');
                 isFormValid = false;
@@ -32,10 +32,10 @@ $(document).ready(function () {
             return;
         }
 
-        // Validación del correo electrónico
+        // Validación del email electrónico
         var regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!regexCorreo.test(correo)) {
-            $("#correoElectronico").css('border', '1px solid red');
+        if (!regexCorreo.test(email)) {
+            $("#email").css('border', '1px solid red');
             Swal.fire({
                 title: "¡Correo electrónico inválido!",
                 icon: "error",
@@ -45,25 +45,25 @@ $(document).ready(function () {
             return;// Detiene la ejecución si el email no es válido
         }
 
-        // Validación del nombre de usuario
+        // Validación del firstName de username
         var regexUsuario = /^[a-zA-Z0-9_-]+$/;
-        if (!regexUsuario.test(usuario)) {
-            $("#nombreUsuario").css('border', '1px solid red');
+        if (!regexUsuario.test(username)) {
+            $("#username").css('border', '1px solid red');
 
             Swal.fire({
-                title: "¡Nombre de usuario inválido!",
-                text: "El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.",
+                title: "¡Nombre de username inválido!",
+                text: "El firstName de username solo puede contener letras, números, guiones y guiones bajos.",
                 icon: "error",
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'
             });
-            return;// Detiene la ejecución si el nombre de usuario no es válido
+            return;// Detiene la ejecución si el username no es válido
         }
 
         // Validación de la contraseña
         var regexContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-        if (!regexContrasena.test(contrasena)) {
-            $("#Contrasena").css('border', '1px solid red');
+        if (!regexContrasena.test(password)) {
+            $("#password").css('border', '1px solid red');
 
             Swal.fire({
                 title: "¡Contraseña inválida!",
@@ -72,37 +72,36 @@ $(document).ready(function () {
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'
             });
-            return;// Detiene la ejecución si el nombre de usuario no es válido
+            return;// Detiene la ejecución si la contraseña
         }
-
-        const userData = {
-            nombre: nombre,
-            apellidos: apellidos,
-            correo: correo,
-            usuario: usuario,
-            numero: numero,
-            contrasena: contrasena
-        };
-
 
         // Realiza una solicitud POST al servidor con los datos del formulario.
         const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(userData)
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone
+            })
         });
 
         const result = await response.json();
 
-        // Si la respuesta es exitosa, redirige al usuario a la página principal.
+        console.log(result)
+
+        // Si la respuesta es exitosa, redirige al username a la página principal.
         if (result.success) {
             location.href = './index.php?controller=indexPage&action=index';
         } else {
             if (result.error == 'correo') {
-                $("#correoElectronico").css('border', '1px solid red');
+                $("#email").css('border', '1px solid red');
             }
             if (result.error == 'usuario') {
-                $("#nombreUsuario").css('border', '1px solid red');
+                $("#username").css('border', '1px solid red');
             }
             // Si hay un error, muestra un mensaje y no redirige.
             Swal.fire({
@@ -119,15 +118,15 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#togglePassword").click(function () {
         // Verifica el tipo actual del campo de contraseña
-        var tipo = $("#Contrasena").attr("type");
+        var tipo = $("#password").attr("type");
         var icon = $(this).find('i'); // Encuentra el ícono dentro del botón
 
         // Cambia el tipo del campo y alterna entre los íconos
         if (tipo === "password") {
-            $("#Contrasena").attr("type", "text");
+            $("#password").attr("type", "text");
             icon.removeClass('bi-eye-slash').addClass('bi-eye'); // Cambia al ícono de ojo abierto
         } else {
-            $("#Contrasena").attr("type", "password");
+            $("#password").attr("type", "password");
             icon.removeClass('bi-eye').addClass('bi-eye-slash'); // Cambia al ícono de ojo cerrado
         }
     });

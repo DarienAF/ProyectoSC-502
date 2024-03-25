@@ -29,7 +29,6 @@ class UsuarioM
                         `password_flag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $statement = $this->connection->Prepare($query);
-
             // Vincular  valores a los placeholders correspondientes en la sentencia.
             $statement->bindValue(1, $usuario->getUsername());
             $statement->bindValue(2, password_hash($usuario->getPassword(), PASSWORD_DEFAULT));
@@ -114,6 +113,30 @@ class UsuarioM
             // Si son diferentes, actualiza la contraseña y el password_flag
             $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
             $updateQuery = "UPDATE usuarios SET password = :newPassword, password_flag = 1 WHERE id_usuario = :userId";
+            $updateStmt = $this->connection->prepare($updateQuery);
+            $updateStmt->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
+            $updateStmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            return $updateStmt->execute();
+        }
+        return false;
+    }
+
+
+    public function updatePassword($userId, $newPassword)
+    {
+
+        // Obtener la contraseña actual del usuario
+        $currentPasswordQuery = "SELECT password FROM usuarios WHERE id_usuario = :userId";
+        $stmt = $this->connection->prepare($currentPasswordQuery);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $currentPassword = $stmt->fetchColumn();
+
+        // Comparar la contraseña actual con la nueva
+        if (!password_verify($newPassword, $currentPassword)) {
+            // Si son diferentes, actualiza la contraseña y el password_flag
+            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $updateQuery = "UPDATE usuarios SET password = :newPassword, password_flag = 0 WHERE id_usuario = :userId";
             $updateStmt = $this->connection->prepare($updateQuery);
             $updateStmt->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
             $updateStmt->bindParam(':userId', $userId, PDO::PARAM_INT);

@@ -19,9 +19,12 @@ class LookUserPageController
     public function index()
     {
         $current_page = 'LookUserPage';
-        $current_user = $_SESSION['usuario'];
-        $current_name = $_SESSION['nombre'];
-        $user_rol = $_SESSION['rol'];
+
+        $user_id = $_SESSION['user_id'];
+        $usuarioM = new UsuarioM();
+        $current_user = $usuarioM->view($user_id);
+        $userFullName = $current_user->getFullName();
+        $userRole = $current_user->getIdRol();
         $users = $this->usuarioM->viewAll();
         $roles = $this->rolM->viewRolesNames();
         require_once './View/views/private/LookUserPage.php';
@@ -90,6 +93,40 @@ class LookUserPageController
         echo json_encode($rolesArray);
     }
 
+    public function createUser()
+    {
+        $usuarioM = new UsuarioM();
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $usuarioNuevo = new Usuario();
+        $usuarioNuevo->setIdRol($data['role']);
+        $usuarioNuevo->setUsername($data['username']);
+        $usuarioNuevo->setCorreo($data['email']);
+        $usuarioNuevo->setNombre($data['firstName']);
+        $usuarioNuevo->setApellidos($data['lastName']);
+        $usuarioNuevo->setTelefono($data['phone']);
+        $usuarioNuevo->setPassword($data['password']);
+        $usuarioNuevo->setRutaImagen("./View/img/users/default_user.png");
+        $usuarioNuevo->setActivo(1);
+        $usuarioNuevo->setPasswordFlag(1);
+
+        if (!$usuarioM->emailExists($usuarioNuevo->getCorreo())) {
+            if (!$usuarioM->usernameExists($usuarioNuevo->getUsername())) {
+                if ($usuarioM->create($usuarioNuevo)) {
+                    $response = ['success' => true, 'message' => '¡Registro Correcto!'];
+                } else {
+                    $response = ['success' => false, 'message' => '¡Registro Fallido!'];
+                }
+            } else {
+                $response = ['success' => false, 'error' => 'usuario', 'message' => '¡Usuario ya se encuentra en uso!'];
+            }
+        } else {
+            $response = ['success' => false, 'error' => 'correo', 'message' => '¡Correo ya está registrado!'];
+        }
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
     public function updateUser()
     {
         $usuarioM = new UsuarioM();
@@ -136,26 +173,6 @@ class LookUserPageController
 
         header('Content-Type: application/json');
         echo json_encode($response);
-    }
-
-    public function updatePassword()
-    {
-        if (isset($_POST['userId']) && isset($_POST['newPassword'])) {
-            $userId = $_POST['userId'];
-            $newPassword = $_POST['newPassword'];
-
-            // Lógica para actualizar la contraseña y activar el password_flag
-            $result = $this->usuarioM->updatePassword($userId, $newPassword);
-            $this->usuarioM->updatePasswordFlag($userId);
-
-            if ($result) {
-                echo json_encode(['success' => true, 'message' => 'Contraseña actualizada correctamente']);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Error al actualizar la contraseña']);
-            }
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
-        }
     }
 
 }

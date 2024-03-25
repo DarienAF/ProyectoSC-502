@@ -12,28 +12,28 @@
             <form class="Form">
                 <div class="row">
                     <div class="col-md-6">
-                        <label class="form-label label_bold">Nombre</label>
-                        <input type="text" class="form-control" id="nombreM" placeholder="Nombre">
+                        <label for="firstNameMsg" class="form-label label_bold">Nombre</label>
+                        <input type="text" class="form-control" id="firstNameMsg" placeholder="Nombre">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label label_bold">Apellidos</label>
-                        <input type="text" class="form-control" id="apellidoM" placeholder="Apellidos">
+                        <label for="lastNameMsg" class="form-label label_bold">Apellidos</label>
+                        <input type="text" class="form-control" id="lastNameMsg" placeholder="Apellidos">
                     </div>
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label label_bold">Ingresa tu Correo Electrónico</label>
-                    <input type="text" class="form-control" id="correo" placeholder="Correo Electrónico">
+                    <label for="emailMsg" class="form-label label_bold">Ingresa tu Correo Electrónico</label>
+                    <input type="text" class="form-control" id="emailMsg" placeholder="Correo Electrónico">
                 </div>
 
                 <div class="col-md-6">
-                    <label class="form-label label_bold">Título</label>
-                    <input type="text" class="form-control" id="titulo" placeholder="Título">
+                    <label for="titleMsg" class="form-label label_bold">Título</label>
+                    <input type="text" class="form-control" id="titleMsg" placeholder="Título">
                 </div>
 
                 <div class="col-md-12">
-                    <label class="form-label label_bold">Descripción</label>
-                    <textarea type="text" class="form-control" id="contexto"
+                    <label for="contextMsg" class="form-label label_bold">Descripción</label>
+                    <textarea type="text" class="form-control" id="contextMsg"
                               placeholder="Envíanos tu duda y nos pondremos en contacto contigo lo antes posible."></textarea>
                 </div>
 

@@ -11,11 +11,14 @@ class IndexPageController
     {
         $current_page = 'LandingPage';
 
-        if (isset($_SESSION['usuario'])) {
+        if (isset($_SESSION['user_id'])) {
             $current_page = 'HomePage';
-            $current_user = $_SESSION['usuario'];
-            $current_name = $_SESSION['nombre'];
-            $user_rol = $_SESSION['rol'];
+            $user_id = $_SESSION['user_id'];
+            $usuarioM = new UsuarioM();
+            $current_user = $usuarioM->view($user_id);
+            $userFullName = $current_user->getFullName();
+            $userRole = $current_user->getIdRol();
+
             require_once './View/views/private/HomePage.php';
         } else {
             $usuario = null;
