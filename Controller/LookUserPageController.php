@@ -20,6 +20,7 @@ class LookUserPageController
     {
         $current_page = 'LookUserPage';
         $current_user = $_SESSION['usuario'];
+        $current_name = $_SESSION['nombre'];
         $user_rol = $_SESSION['rol'];
         $users = $this->usuarioM->viewAll();
         $roles = $this->rolM->viewRolesNames();

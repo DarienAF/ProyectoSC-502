@@ -75,21 +75,21 @@ $(document).ready(function () {
             return;// Detiene la ejecución si el nombre de usuario no es válido
         }
 
-
         const userData = {
             nombre: nombre,
             apellidos: apellidos,
             correo: correo,
             usuario: usuario,
             numero: numero,
-            contraseña: contrasena
+            contrasena: contrasena
         };
+
 
         // Realiza una solicitud POST al servidor con los datos del formulario.
         const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({userData}),
+            body: JSON.stringify(userData)
         });
 
         const result = await response.json();

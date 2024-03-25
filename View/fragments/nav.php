@@ -8,7 +8,7 @@
     <div class="nav-right">
         <ul class="nav justify-content-end container-fluid">
             <li>
-                <a class="nav-link <?php echo ($current_page == 'IndexPage') ? 'active' : ''; ?>"
+                <a class="nav-link <?php echo ($current_page == 'LandingPage') ? 'active' : ''; ?>"
                    href="./">
                     INICIO
                 </a>
@@ -16,8 +16,8 @@
 
             <li>
                 <a class="nav-link <?php echo ($current_page == 'LoginPage') ? 'active' : ''; ?>"
-                   href="./index.php?controller=LoginPage&action=<?php echo ($current_user != null) ? 'LogOut' : 'index'; ?>">
-                    <?php echo ($current_user != null) ? 'CERRAR SESION' : 'INICIAR SESION'; ?>
+                   href="./index.php?controller=LoginPage&action=index">
+                    INICIAR SESION
                 </a>
             </li>
 

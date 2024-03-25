@@ -103,8 +103,3 @@ INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, r
 ('taylorwilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Taylor', 'Wilson', 'taylor.wilson@example.com', '6926720005', './View/img/users/default_user.png', TRUE, 4, FALSE),
 ('samjones', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Jones', 'sam.jones@example.com', '9225565362', './View/img/users/default_user.png', TRUE, 4, FALSE),
 ('caseywilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Wilson', 'casey.wilson@example.com', '7288996943', './View/img/users/default_user.png', TRUE, 4, FALSE);
-
-
-
-morganbrown1
-6DS5QH)iPS3a

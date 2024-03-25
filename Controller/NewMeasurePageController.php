@@ -11,6 +11,7 @@ class NewMeasurePageController
     {
         $current_page = 'NewMeasurePage';
         $current_user = $_SESSION['usuario'];
+        $current_name = $_SESSION['nombre'];
         $user_rol = $_SESSION['rol'];
         require_once './View/views/private/NewMeasurePage.php';
     }

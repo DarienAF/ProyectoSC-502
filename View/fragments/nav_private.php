@@ -2,7 +2,7 @@
     <div class="nav-left">
         <a href="./"><img class="nav-logo" src="./View/img/logos/Logo2.png" alt="Home"></a>
         <a href="./"><img class="nav-profile-pic" src="./View/img/users/default_user.png" alt="Home"></a>
-        <p><?php echo $current_user ?></p>
+        <p><?php echo $current_name ?></p>
     </div>
 
     <div class="nav-right">

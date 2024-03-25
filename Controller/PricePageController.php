@@ -7,16 +7,8 @@ class PricePageController {
 
     function Index()
     {
-        // Get the current page name
         $current_page = 'PricePage';
+        require_once './View/views/public/PricePage.php';
 
-        if (isset($_SESSION['usuario'])) {
-            $current_user = $_SESSION['usuario'];
-            $user_rol = $_SESSION['rol'];
-            require_once './View/views/public/PricePage.php';
-        } else {
-            $current_user = null;
-            require_once './View/views/public/PricePage.php';
-        }
     }
 }

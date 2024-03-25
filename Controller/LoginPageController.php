@@ -9,15 +9,8 @@ class LoginPageController
     function Index()
     {
         $current_page = 'LoginPage';
+        require_once './View/views/public/LoginPage.php';
 
-        if (isset($_SESSION['usuario'])) {
-            $current_user = $_SESSION['usuario'];
-            $user_rol = $_SESSION['rol'];
-            require_once './View/views/public/LoginPage.php';
-        } else {
-            $current_user = null;
-            require_once './View/views/public/LoginPage.php';
-        }
     }
 
     function LogIn()
@@ -38,7 +31,8 @@ class LoginPageController
             if ($usuario->getActivo()) {
                 if (password_verify($password, $usuario->getPassword())) {
                     $response = ['success' => true, 'message' => '¡Usuario validado exitosamente!'];
-                    $_SESSION['usuario'] = $usuario->getNombre() . " " . $usuario->getApellidos();
+                    $_SESSION['nombre'] = $usuario->getNombre() . " " . $usuario->getApellidos();
+                    $_SESSION['usuario'] = $usuario->getUsername();
                     $_SESSION['rol'] = $usuario->getIdRol();
                 } else {
                     $response = ['success' => false, 'error' => 'contraseña', 'icon' => 'error', 'message' => 'Contraseña incorrecta'];
