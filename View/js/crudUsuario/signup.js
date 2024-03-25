@@ -25,7 +25,7 @@ $(document).ready(function () {
         if (!isFormValid) {
             Swal.fire({
                 title: "Todos los campos deben ser completados.",
-                icon: "error",
+                icon: "warning",
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'
             });
@@ -75,36 +75,39 @@ $(document).ready(function () {
             return;// Detiene la ejecución si el nombre de usuario no es válido
         }
 
+        const userData = {
+            nombre: nombre,
+            apellidos: apellidos,
+            correo: correo,
+            usuario: usuario,
+            numero: numero,
+            contrasena: contrasena
+        };
+
+
         // Realiza una solicitud POST al servidor con los datos del formulario.
         const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                nombre: nombre,
-                apellidos: apellidos,
-                correo: correo,
-                usuario: usuario,
-                numero: numero,
-                contraseña: contrasena
-            }),
+            body: JSON.stringify(userData)
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
         // Si la respuesta es exitosa, redirige al usuario a la página principal.
-        if (data.success) {
+        if (result.success) {
             location.href = './index.php?controller=indexPage&action=index';
         } else {
-            if (data.error == 'correo') {
+            if (result.error == 'correo') {
                 $("#correoElectronico").css('border', '1px solid red');
             }
-            if (data.error == 'usuario') {
+            if (result.error == 'usuario') {
                 $("#nombreUsuario").css('border', '1px solid red');
             }
             // Si hay un error, muestra un mensaje y no redirige.
             Swal.fire({
                 title: "¡Hubo un error!",
-                text: data.message,
+                text: result.message,
                 icon: "error",
                 confirmButtonColor: 'rgb(29, 29, 29)',
                 confirmButtonText: 'Aceptar'

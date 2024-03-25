@@ -25,7 +25,8 @@ class UsuarioM
                       `telefono`, 
                       `ruta_imagen`, 
                       `activo`, 
-                      `id_rol`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                      `id_rol`,
+                        `password_flag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $statement = $this->connection->Prepare($query);
 
@@ -39,6 +40,7 @@ class UsuarioM
             $statement->bindValue(7, $usuario->getRutaImagen());
             $statement->bindValue(8, $usuario->getActivo(), PDO::PARAM_INT); //int
             $statement->bindValue(9, $usuario->getIdRol(), PDO::PARAM_INT); //int
+            $statement->bindValue(10, $usuario->getPasswordFlag());
 
             if ($statement->execute()) {
                 $retVal = true;
@@ -50,48 +52,6 @@ class UsuarioM
 
         return $retVal;
     }
-
-
-    function update_old(Usuario $usuario)
-    {
-        $retVal = false;
-
-        try {
-            $query = "UPDATE `Usuarios` SET 
-                      `username` = ?, 
-                      `password` = ?, 
-                      `nombre` = ?, 
-                      `apellidos` = ?, 
-                      `correo` = ?, 
-                      `telefono` = ?, 
-                      `ruta_imagen` = ?, 
-                      `activo` = ?, 
-                      `id_rol` = ? WHERE `id_usuario` = ?";
-
-            $statement = $this->connection->Prepare($query);
-
-            // Vincular  valores a los placeholders correspondientes en la sentencia.
-            $statement->bindValue(1, $usuario->getUsername());
-            $statement->bindValue(2, password_hash($usuario->getPassword(), PASSWORD_DEFAULT));
-            $statement->bindValue(3, $usuario->getNombre());
-            $statement->bindValue(4, $usuario->getApellidos());
-            $statement->bindValue(5, $usuario->getCorreo());
-            $statement->bindValue(6, $usuario->getTelefono());
-            $statement->bindValue(7, $usuario->getRutaImagen());
-            $statement->bindValue(8, $usuario->getActivo(), PDO::PARAM_INT); //int
-            $statement->bindValue(9, $usuario->getIdRol(), PDO::PARAM_INT); //int
-            $statement->bindValue(10, $usuario->getIdUsuario(), PDO::PARAM_INT); //int
-
-            if ($statement->execute()) {
-                $retVal = true;
-            }
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            $retVal = false;
-        }
-        return $retVal;
-    }
-
 
     function update(Usuario $usuarioActualizado, Usuario $usuarioOriginal)
     {
@@ -136,10 +96,31 @@ class UsuarioM
                 return false;
             }
         }
-
         return false;
     }
 
+    public function updatePasswordAdmin($userId, $newPassword)
+    {
+
+        // Obtener la contraseña actual del usuario
+        $currentPasswordQuery = "SELECT password FROM usuarios WHERE id_usuario = :userId";
+        $stmt = $this->connection->prepare($currentPasswordQuery);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $currentPassword = $stmt->fetchColumn();
+
+        // Comparar la contraseña actual con la nueva
+        if (!password_verify($newPassword, $currentPassword)) {
+            // Si son diferentes, actualiza la contraseña y el password_flag
+            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $updateQuery = "UPDATE usuarios SET password = :newPassword, password_flag = 1 WHERE id_usuario = :userId";
+            $updateStmt = $this->connection->prepare($updateQuery);
+            $updateStmt->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
+            $updateStmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            return $updateStmt->execute();
+        }
+        return false;
+    }
 
     function view($id_usuario)
     {
@@ -158,7 +139,6 @@ class UsuarioM
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $usuario;
     }
 

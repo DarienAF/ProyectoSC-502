@@ -4,6 +4,7 @@ require_once './Model/Connection.php';
 require_once './Model/Methods/UsuarioM.php';
 require_once './Model/Methods/RolM.php';
 
+
 class LookUserPageController
 {
     private $usuarioM;
@@ -17,18 +18,13 @@ class LookUserPageController
 
     public function index()
     {
-        // Get the current page name
         $current_page = 'LookUserPage';
-
-        if (isset($_SESSION['usuario'])) {
-            $current_user = $_SESSION['usuario'];
-            $users = $this->usuarioM->viewAll();
-            $roles = $this->rolM->viewRolesNames();
-            require_once './View/views/private/LookUserPage.php';
-        } else {
-            $current_user = null;
-            require_once './View/views/private/LandingPage.php';
-        }
+        $current_user = $_SESSION['usuario'];
+        $current_name = $_SESSION['nombre'];
+        $user_rol = $_SESSION['rol'];
+        $users = $this->usuarioM->viewAll();
+        $roles = $this->rolM->viewRolesNames();
+        require_once './View/views/private/LookUserPage.php';
     }
 
     public function activate()
@@ -96,25 +92,70 @@ class LookUserPageController
 
     public function updateUser()
     {
-        if (isset($_POST['userId'], $_POST['username'], $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['phone'], $_POST['role'])) {
+        $usuarioM = new UsuarioM();
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (isset($data['username'], $data['firstName'], $data['lastName'], $data['email'], $data['phone'], $data['role'])) {
             $usuarioActualizado = new Usuario();
-            $usuarioActualizado->setIdUsuario($_POST['userId']);
-            $usuarioActualizado->setUsername($_POST['username']);
-            $usuarioActualizado->setNombre($_POST['firstName']);
-            $usuarioActualizado->setApellidos($_POST['lastName']);
-            $usuarioActualizado->setCorreo($_POST['email']);
-            $usuarioActualizado->setTelefono($_POST['phone']);
-            $usuarioActualizado->setIdRol($_POST['role']);
+            $usuarioActualizado->setIdUsuario($data['userId']);
+            $usuarioActualizado->setUsername($data['username']);
+            $usuarioActualizado->setNombre($data['firstName']);
+            $usuarioActualizado->setApellidos($data['lastName']);
+            $usuarioActualizado->setCorreo($data['email']);
+            $usuarioActualizado->setTelefono($data['phone']);
+            $usuarioActualizado->setIdRol($data['role']);
+            $usuarioActualizado->setPassword($data['password']);
 
-            $usuarioOriginal = $this->usuarioM->view($_POST['userId']);
+            $usuarioOriginal = $this->usuarioM->view($data['userId']);
 
-            if ($this->usuarioM->update($usuarioActualizado, $usuarioOriginal)) {
-                echo json_encode(['success' => true, 'message' => 'Usuario actualizado con éxito']);
+            if (!$usuarioM->emailExists($usuarioActualizado->getCorreo()) || $usuarioOriginal->getCorreo() == $usuarioActualizado->getCorreo()) {
+                if (!$usuarioM->usernameExists($usuarioActualizado->getUsername()) || $usuarioOriginal->getUsername() == $usuarioActualizado->getUsername()) {
+                    $updateResult = $this->usuarioM->update($usuarioActualizado, $usuarioOriginal);
+                    $passwordUpdateResult = false;
+
+                    if (!empty($data['password'])) {
+                        $passwordUpdateResult = $this->usuarioM->updatePasswordAdmin($data['userId'], $data['password']);
+                    }
+
+                    if ($updateResult || $passwordUpdateResult) {
+                        $response = ['success' => true, 'changed' => true, 'message' => 'Usuario y contraseña actualizados con éxito'];
+                    } else {
+
+                        $response = ['success' => true, 'false' => true, 'message' => 'No se agregaron cambios al usuario'];
+                    }
+                } else {
+                    $response = ['success' => false, 'error' => 'usuario', 'message' => '¡Nombre de usuario ya se encuentra en uso!'];
+                }
             } else {
-                echo json_encode(['success' => false, 'message' => 'Error al actualizar el usuario']);
+                $response = ['success' => false, 'error' => 'correo', 'message' => '¡Correo electrónico ya está registrado!'];
+            }
+
+        } else {
+            $response = ['success' => false, 'message' => 'Faltan datos'];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
+    public function updatePassword()
+    {
+        if (isset($_POST['userId']) && isset($_POST['newPassword'])) {
+            $userId = $_POST['userId'];
+            $newPassword = $_POST['newPassword'];
+
+            // Lógica para actualizar la contraseña y activar el password_flag
+            $result = $this->usuarioM->updatePassword($userId, $newPassword);
+            $this->usuarioM->updatePasswordFlag($userId);
+
+            if ($result) {
+                echo json_encode(['success' => true, 'message' => 'Contraseña actualizada correctamente']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Error al actualizar la contraseña']);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Faltan datos']);
+            echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
         }
     }
+
 }

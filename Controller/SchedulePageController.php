@@ -9,16 +9,10 @@ class SchedulePageController
 
     function Index()
     {
-        // Get the current page name
         $current_page = 'SchedulePage';
-
-        if (isset($_SESSION['usuario'])) {
-            $current_user = $_SESSION['usuario'];
-            $user_rol = $_SESSION['rol'];
-            require_once './View/views/private/SchedulePage.php';
-        } else {
-            $current_user = null;
-            require_once './View/views/private/LandingPage.php';
-        }
+        $current_user = $_SESSION['usuario'];
+        $current_name = $_SESSION['nombre'];
+        $user_rol = $_SESSION['rol'];
+        require_once './View/views/private/SchedulePage.php';
     }
 }

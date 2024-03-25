@@ -3,20 +3,15 @@ session_start();
 require_once './Model/Connection.php';
 require_once  './Model/Methods/UsuarioM.php';
 require_once  './Model/Entities/Usuario.php';
+
+
 class SignUpPageController {
 
     function Index()
     {
-        // Get the current page name
         $current_page = 'SignUpPage';
+        require_once './View/views/public/SignUpPage.php';
 
-        if (isset($_SESSION['usuario'])) {
-            $current_user = $_SESSION['usuario'];
-            require_once './View/views/public/SignUpPage.php';
-        } else {
-            $current_user = null;
-            require_once './View/views/public/SignUpPage.php';
-        }
     }
 
     function SignUp()
@@ -24,30 +19,23 @@ class SignUpPageController {
         $usuarioM = new UsuarioM();
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $nombre     = $data['nombre'    ];
-        $apellidos  = $data['apellidos' ];
-        $correo     = $data['correo'    ];
-        $usuario    = $data['usuario'   ];
-        $numero     = $data['numero'    ];
-        $contraseña = $data['contraseña'];
-
         $usuarioNuevo = new Usuario();
-
-        $usuarioNuevo->setUsername($usuario);
-        $usuarioNuevo->setPassword($contraseña);
-        $usuarioNuevo->setNombre($nombre);
-        $usuarioNuevo->setApellidos($apellidos);
-        $usuarioNuevo->setCorreo($correo);
-        $usuarioNuevo->setTelefono($numero);
+        $usuarioNuevo->setUsername($data['usuario']);
+        $usuarioNuevo->setPassword($data['contrasena']);
+        $usuarioNuevo->setNombre($data['nombre']);
+        $usuarioNuevo->setApellidos($data['apellidos']);
+        $usuarioNuevo->setCorreo($data['correo']);
+        $usuarioNuevo->setTelefono($data['numero']);
         $usuarioNuevo->setRutaImagen("./View/img/users/default_user.png");
         $usuarioNuevo->setActivo(1);
-        $usuarioNuevo->setIdRol     (4);
+        $usuarioNuevo->setIdRol(4);
+        $usuarioNuevo->setPasswordFlag(0);
 
         if (!$usuarioM->emailExists($usuarioNuevo->getCorreo())){
             if (!$usuarioM->usernameExists($usuarioNuevo->getUsername())){
                 if ($usuarioM->create($usuarioNuevo)) {
                     $response = ['success' => true, 'message' => '¡Registro Correcto!'];
-                    $_SESSION["usuario"] = $nombre." ".$apellidos;
+                    $_SESSION["usuario"] = $data['usuario'];
                     $_SESSION["rol"] = 4;
                 } else{
                     $response = ['success' => false, 'message' => '¡Registro Fallido!'];
