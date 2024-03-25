@@ -18,3 +18,5 @@ if (isset($_GET['controller'])) {
     $controller = $ruta->LoadController(MAIN_CONTROLLER);
     $ruta->LoadAction($controller, MAIN_ACTION);
 }
+
+

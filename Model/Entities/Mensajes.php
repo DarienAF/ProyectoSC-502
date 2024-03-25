@@ -81,4 +81,14 @@ class Mensajes
     }
 
 
+    public function setMessageFields($row)
+    {
+        $this->setIdMensaje($row['id_mensaje']);
+        $this->setNombreM($row['nombreM']);
+        $this->setCorreo($row['correo']);
+        $this->setTitulo($row['titulo']);
+        $this->setContexto($row['contexto']);
+        $this->setFechaEnvio($row['fecha_envio']);
+        $this->setLeido($row['leido']);
+    }
 }

@@ -8,15 +8,12 @@ class LookMeasurePageController {
 
     function Index()
     {
-        // Get the current page name
         $current_page = 'LookMeasurePage';
-
-        if (isset($_SESSION['usuario'])) {
-            $current_user = $_SESSION['usuario'];
-            require_once './View/views/private/LookMeasurePage.php';
-        } else {
-            $current_user = null;
-            require_once './View/views/private/LookMeasurePage.php';
-        }
+        $user_id = $_SESSION['user_id'];
+        $usuarioM = new UsuarioM();
+        $current_user = $usuarioM->view($user_id);
+        $userFullName = $current_user->getFullName();
+        $userRole = $current_user->getIdRol();
+        require_once './View/views/private/LookMeasurePage.php';
     }
 }
