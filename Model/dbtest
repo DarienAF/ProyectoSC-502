@@ -1,0 +1,105 @@
+CREATE TABLE IF NOT EXISTS Rol (
+id_rol INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Usuarios (
+id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+username VARCHAR(50) NOT NULL UNIQUE,
+password VARCHAR(512) NOT NULL,
+nombre VARCHAR(50) NOT NULL,
+apellidos VARCHAR(50) NOT NULL,
+correo VARCHAR(100) NOT NULL UNIQUE,
+telefono VARCHAR(20),
+ruta_imagen VARCHAR(1024),
+activo BOOLEAN NOT NULL DEFAULT TRUE,
+id_rol INT,
+password_flag BOOLEAN NOT NULL DEFAULT FALSE,
+FOREIGN KEY (id_rol) REFERENCES Rol(id_rol)
+);
+
+CREATE TABLE IF NOT EXISTS Medidas (
+id_medida INT AUTO_INCREMENT PRIMARY KEY,
+id_usuario INT,
+fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+peso FLOAT,
+altura FLOAT,
+edad INT,
+grasa FLOAT,
+musculo FLOAT,
+FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
+);
+
+CREATE TABLE IF NOT EXISTS Clases (
+id_clase INT AUTO_INCREMENT PRIMARY KEY,
+id_usuario INT,
+hora_inicio TIME,
+hora_fin TIME,
+dia VARCHAR(50),
+nombre_clase VARCHAR(100),
+FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
+);
+
+CREATE TABLE IF NOT EXISTS ReservaClases (
+id_reserva INT AUTO_INCREMENT PRIMARY KEY,
+id_usuario INT,
+id_clase INT,
+cancelar BOOLEAN DEFAULT FALSE,
+FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
+FOREIGN KEY (id_clase) REFERENCES Clases(id_clase)
+);
+
+CREATE TABLE IF NOT EXISTS Ejercicio (
+id_ejercicio INT AUTO_INCREMENT PRIMARY KEY,
+nombre_ejercicio VARCHAR (100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Planes (
+id_plan INT AUTO_INCREMENT PRIMARY KEY,
+nombre_plan VARCHAR(100),
+id_usuario INT,
+FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
+);
+
+CREATE TABLE IF NOT EXISTS PlanEjercicio (
+id_plan INT,
+id_ejercicio INT,
+series INT,
+repeticiones INT,
+PRIMARY KEY (id_plan, id_ejercicio),
+FOREIGN KEY (id_plan) REFERENCES Planes(id_plan),
+FOREIGN KEY (id_ejercicio) REFERENCES Ejercicio(id_ejercicio)
+);
+
+CREATE TABLE IF NOT EXISTS Mensajes (
+id_mensaje INT AUTO_INCREMENT PRIMARY KEY,
+nombreM VARCHAR(50),
+correo VARCHAR(100),
+titulo VARCHAR(100),
+contexto TEXT,
+fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+leido BOOLEAN DEFAULT FALSE
+);
+
+INSERT INTO `rol` (`id_rol`, `nombre`) VALUES (NULL, 'Administrador'), (NULL, 'Recepcionista'), (NULL, 'Entrenador'), (NULL, 'Miembro');
+
+INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, ruta_imagen, activo, id_rol, password_flag) VALUES
+('eddyhc22-admin','$2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Eddy', 'Hernández', 'eddyh1@gmail.com', '1234567890', './View/img/users/default_user.png', TRUE, 1, FALSE),
+('drewsmith-admin', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Drew', 'Smith', 'drew.smith@example.com', '7879791004', './View/img/users/default_user.png', TRUE, 1, FALSE),
+('eddyhc22-recep','$2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Eddy', 'Hernández', 'eddyh2@gmail.com', '2345678901', './View/img/users/default_user.png', TRUE, 2, FALSE),
+('morgansmith-recep', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Morgan', 'Smith', 'morgan.smith@example.com', '5504449618', './View/img/users/default_user.png', TRUE, 2, FALSE),
+('morganwilson-recep', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Morgan', 'Wilson', 'morgan.wilson@example.com', '8518732981', './View/img/users/default_user.png', TRUE, 2, FALSE),
+('eddyhc22-train','$2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Eddy', 'Hernández', 'eddyh3@gmail.com', '3456789012', './View/img/users/default_user.png', TRUE, 3, FALSE),
+('eddyhc22','$2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Eddy', 'Hernández', 'eddyh4@gmail.com', '1234567890', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('patjohnson-train', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Pat', 'Johnson', 'pat.johnson@example.com', '7318014727', './View/img/users/default_user.png', TRUE, 3, FALSE),
+('taylorbrown-train', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Taylor', 'Brown', 'taylor.brown@example.com', '6138248274', './View/img/users/default_user.png', TRUE, 3, FALSE),
+('samtaylor-train', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Taylor', 'sam.taylor@example.com', '1053802784', './View/img/users/default_user.png', TRUE, 3, FALSE),
+('chrismiller-train', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Chris', 'Miller', 'chris.miller@example.com', '8156538357', './View/img/users/default_user.png', TRUE, 3, FALSE),
+('caseymoore', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Moore', 'casey.moore@example.com', '9117945986', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('samdavis', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Davis', 'sam.davis@example.com', '7896897257', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('taylorsmith', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Taylor', 'Smith', 'taylor.smith@example.com', '6469928762', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('morganbrown', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Morgan', 'Brown', 'morgan.brown@example.com', '8892216218', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('morganmiller', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Morgan', 'Miller', 'morgan.miller@example.com', '4976654716', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('taylorwilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Taylor', 'Wilson', 'taylor.wilson@example.com', '6926720005', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('samjones', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Jones', 'sam.jones@example.com', '9225565362', './View/img/users/default_user.png', TRUE, 4, FALSE),
+('caseywilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Wilson', 'casey.wilson@example.com', '7288996943', './View/img/users/default_user.png', TRUE, 4, FALSE);

@@ -13,10 +13,13 @@ class Usuario
     private $activo;
     private $id_rol;
 
+    private $password_flag;
+
     public function getIdUsuario()
     {
         return $this->id_usuario;
     }
+
 
     public function setIdUsuario($id_usuario)
     {
@@ -61,6 +64,11 @@ class Usuario
     public function setApellidos($apellidos)
     {
         $this->apellidos = $apellidos;
+    }
+
+    public function getFullName()
+    {
+        return $this->nombre . " " . $this->apellidos;
     }
 
     public function getCorreo()
@@ -113,8 +121,45 @@ class Usuario
         $this->id_rol = $id_rol;
     }
 
+    public function getPasswordFlag()
+    {
+        return $this->password_flag;
+    }
+
+    public function setPasswordFlag($password_flag)
+    {
+        $this->password_flag = $password_flag;
+    }
 
 
+    public function setUserFields($row)
+    {
+        $this->setIdUsuario($row['id_usuario']);
+        $this->setUsername($row['username']);
+        $this->setPassword($row['password']);
+        $this->setNombre($row['nombre']);
+        $this->setApellidos($row['apellidos']);
+        $this->setCorreo($row['correo']);
+        $this->setTelefono($row['telefono']);
+        $this->setRutaImagen($row['ruta_imagen']);
+        $this->setActivo($row['activo']);
+        $this->setIdRol($row['id_rol']);
+        $this->setPasswordFlag($row['password_flag']);
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getIdUsuario(),
+            'rol' => $this->getIdRol(),
+            'username' => $this->getUsername(),
+            'nombre' => $this->getNombre(),
+            'apellidos' => $this->getApellidos(),
+            'correo' => $this->getCorreo(),
+            'telefono' => $this->getTelefono(),
+            'ruta_imagen' => $this->getRutaImagen()
+        ];
+    }
 }
 
 

@@ -1,18 +1,19 @@
 <?php
 
-class Connection {
+class Connection
+{
     private static $instance = null;
-    private $mysqli;
+    private $pdo;
     private $config;
 
-    // Constructor privado para prevenir la creación de instancias directamente
-    private function __construct() {
+    private function __construct()
+    {
         $this->config = require 'config.php';
         $this->createConnection();
     }
 
-    // Método para obtener la instancia de la clase
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance == null) {
             self::$instance = new Connection();
         }
@@ -20,53 +21,29 @@ class Connection {
         return self::$instance;
     }
 
-    // Método para crear una conexión a la base de datos
-    private function createConnection() {
+    private function createConnection()
+    {
         try {
             $dbConfig = $this->config['db'];
-            $this->mysqli = new mysqli($dbConfig['host'], $dbConfig['user'], $dbConfig['password'], $dbConfig['dbname']);
-            if ($this->mysqli->connect_error) {
-                throw new Exception('Error de conexión: ' . $this->mysqli->connect_error);
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            exit;
+            $dsn = 'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'];
+            $this->pdo = new PDO($dsn, $dbConfig['user'], $dbConfig['password']);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            throw new PDOException("Connection error: " . $e->getMessage());
         }
     }
 
-    // Método para preparar una consulta SQL
-    public function Prepare($query) {
+    public function Prepare($query)
+    {
         try {
-            $stmt = $this->mysqli->prepare($query);
+            $stmt = $this->pdo->prepare($query);
             if (!$stmt) {
-                throw new Exception('Error en la preparación de la consulta: ' . $this->mysqli->error);
+                throw new PDOException('Query preparation error: ' . $this->pdo->errorInfo()[2]);
             }
             return $stmt;
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            exit;
+        } catch (PDOException $e) {
+            throw new PDOException("Preparation error: " . $e->getMessage());
         }
     }
 
-    // Método para ejecutar una consulta SQL (simple, parámetros estáticos)
-    public function Query($query) {
-        try {
-            $resultado = $this->mysqli->query($query);
-            if (!$resultado) {
-                throw new Exception('Error en la ejecución de la consulta: ' . $this->mysqli->error);
-            }
-            return $resultado;
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            exit;
-        }
-    }
-
-    // Método para cerrar la conexión a la base de datos
-    public function Close() {
-        if ($this->mysqli != null) {
-            $this->mysqli->close();
-            $this->mysqli = null;
-        }
-    }
 }

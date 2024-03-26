@@ -11,42 +11,40 @@ class UsuarioM
         $this->connection = Connection::getInstance();
     }
 
-    function Create(Usuario $usuario)
+    function create(Usuario $usuario)
     {
         $retVal = false;
 
         try {
-            $query = "INSERT INTO Usuarios (
-                      username, 
-                      password, 
-                      nombre, 
-                      apellidos, 
-                      correo, 
-                      telefono, 
-                      ruta_imagen, 
-                      activo, 
-                      id_rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO `Usuarios` (
+                      `username`, 
+                      `password`, 
+                      `nombre`, 
+                      `apellidos`, 
+                      `correo`, 
+                      `telefono`, 
+                      `ruta_imagen`, 
+                      `activo`, 
+                      `id_rol`,
+                        `password_flag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $statement = $this->connection->Prepare($query);
-
-            $username = $usuario->getUsername();
-            $password = password_hash($usuario->getPassword(), PASSWORD_DEFAULT);
-            $nombre = $usuario->getNombre();
-            $apellidos = $usuario->getApellidos();
-            $correo = $usuario->getCorreo();
-            $telefono = $usuario->getTelefono();
-            $rutaImagen = $usuario->getRutaImagen();
-            $activo = $usuario->getActivo();
-            $idRol = $usuario->getIdRol();
-
-            $statement->bind_param("sssssssii", $username, $password, $nombre, $apellidos, $correo, $telefono, $rutaImagen, $activo, $idRol);
+            // Vincular  valores a los placeholders correspondientes en la sentencia.
+            $statement->bindValue(1, $usuario->getUsername());
+            $statement->bindValue(2, password_hash($usuario->getPassword(), PASSWORD_DEFAULT));
+            $statement->bindValue(3, $usuario->getNombre());
+            $statement->bindValue(4, $usuario->getApellidos());
+            $statement->bindValue(5, $usuario->getCorreo());
+            $statement->bindValue(6, $usuario->getTelefono());
+            $statement->bindValue(7, $usuario->getRutaImagen());
+            $statement->bindValue(8, $usuario->getActivo(), PDO::PARAM_INT); //int
+            $statement->bindValue(9, $usuario->getIdRol(), PDO::PARAM_INT); //int
+            $statement->bindValue(10, $usuario->getPasswordFlag());
 
             if ($statement->execute()) {
                 $retVal = true;
             }
-
-            $statement->close();
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             error_log($e->getMessage());
             $retVal = false;
         }
@@ -54,167 +52,242 @@ class UsuarioM
         return $retVal;
     }
 
-
-    function Update(Usuario $usuario)
+    function update(Usuario $usuarioActualizado, Usuario $usuarioOriginal)
     {
-        $retVal = false;
+        $updates = [];
+        $params = [];
 
-        try {
-            $query = "UPDATE `Usuarios` SET 
-                          `username`=?, 
-                          `password`=?, 
-                          `nombre`=?, 
-                          `apellidos`=?, 
-                          `correo`=?, 
-                          `telefono`=?, 
-                          `ruta_imagen`=?, 
-                          `id_rol`=? WHERE `id_usuario` = ?";
-
-            $statement = $this->connection->Prepare($query);
-
-            $username = $usuario->getUsername();
-            $password = password_hash($usuario->getPassword(), PASSWORD_DEFAULT);
-            $nombre = $usuario->getNombre();
-            $apellidos = $usuario->getApellidos();
-            $correo = $usuario->getCorreo();
-            $telefono = $usuario->getTelefono();
-            $rutaImagen = $usuario->getRutaImagen();
-            $idRol = $usuario->getIdRol();
-            $idUsuario = $usuario->getIdUsuario();
-
-            $statement->bind_param("sssssssii", $username, $password, $nombre, $apellidos, $correo, $telefono, $rutaImagen, $idRol, $idUsuario);
-
-            if ($statement->execute()) {
-                $retVal = true;
-            }
-
-            $statement->close();
-        } catch (Exception $e) {
-            error_log($e->getMessage());
-            $retVal = false;
+        if ($usuarioActualizado->getUsername() != $usuarioOriginal->getUsername()) {
+            $updates[] = "`username` = ?";
+            $params[] = $usuarioActualizado->getUsername();
+        }
+        if ($usuarioActualizado->getNombre() != $usuarioOriginal->getNombre()) {
+            $updates[] = "`nombre` = ?";
+            $params[] = $usuarioActualizado->getNombre();
+        }
+        if ($usuarioActualizado->getApellidos() != $usuarioOriginal->getApellidos()) {
+            $updates[] = "`apellidos` = ?";
+            $params[] = $usuarioActualizado->getApellidos();
+        }
+        if ($usuarioActualizado->getCorreo() != $usuarioOriginal->getCorreo()) {
+            $updates[] = "`correo` = ?";
+            $params[] = $usuarioActualizado->getCorreo();
+        }
+        if ($usuarioActualizado->getTelefono() != $usuarioOriginal->getTelefono()) {
+            $updates[] = "`telefono` = ?";
+            $params[] = $usuarioActualizado->getTelefono();
+        }
+        if ($usuarioActualizado->getIdRol() != $usuarioOriginal->getIdRol()) {
+            $updates[] = "`id_rol` = ?";
+            $params[] = $usuarioActualizado->getIdRol();
         }
 
-        return $retVal;
+        if (count($updates) > 0) {
+            $query = "UPDATE `Usuarios` SET " . implode(", ", $updates) . " WHERE `id_usuario` = ?";
+            $params[] = $usuarioActualizado->getIdUsuario();
+
+            try {
+                $statement = $this->connection->prepare($query);
+                $statement->execute($params);
+                return $statement->rowCount() > 0;
+            } catch (PDOException $e) {
+                error_log($e->getMessage());
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public function updatePasswordAdmin($userId, $newPassword)
+    {
+
+        // Obtener la contraseña actual del usuario
+        $currentPasswordQuery = "SELECT password FROM usuarios WHERE id_usuario = :userId";
+        $stmt = $this->connection->prepare($currentPasswordQuery);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $currentPassword = $stmt->fetchColumn();
+
+        // Comparar la contraseña actual con la nueva
+        if (!password_verify($newPassword, $currentPassword)) {
+            // Si son diferentes, actualiza la contraseña y el password_flag
+            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $updateQuery = "UPDATE usuarios SET password = :newPassword, password_flag = 1 WHERE id_usuario = :userId";
+            $updateStmt = $this->connection->prepare($updateQuery);
+            $updateStmt->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
+            $updateStmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            return $updateStmt->execute();
+        }
+        return false;
     }
 
 
-    function View($id)
+    public function updatePassword($userId, $newPassword)
     {
-        $usuario = new Usuario();
 
-        $query = "SELECT * FROM `USUARIOS` WHERE `id_usuario` = ?";
+        // Obtener la contraseña actual del usuario
+        $currentPasswordQuery = "SELECT password FROM usuarios WHERE id_usuario = :userId";
+        $stmt = $this->connection->prepare($currentPasswordQuery);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $currentPassword = $stmt->fetchColumn();
 
-        $statement = $this->connection->Prepare($query);
-        $statement->bind_param("i", $id);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $this->setUserFields($usuario, $row);
-        } else {
-            $usuario = null;
+        // Comparar la contraseña actual con la nueva
+        if (!password_verify($newPassword, $currentPassword)) {
+            // Si son diferentes, actualiza la contraseña y el password_flag
+            $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $updateQuery = "UPDATE usuarios SET password = :newPassword, password_flag = 0 WHERE id_usuario = :userId";
+            $updateStmt = $this->connection->prepare($updateQuery);
+            $updateStmt->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
+            $updateStmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            return $updateStmt->execute();
         }
+        return false;
+    }
 
-        $statement->close();
+    function view($id_usuario)
+    {
+        $usuario = null;
+
+        try {
+            $query = "SELECT * FROM `Usuarios` WHERE `id_usuario` = ?";
+            $statement = $this->connection->Prepare($query);
+            $statement->bindValue(1, $id_usuario, PDO::PARAM_INT);
+            $statement->execute();
+
+            if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $usuario = new Usuario();
+                $usuario->setUserFields($row);
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
         return $usuario;
     }
 
-    function ViewAll()
+
+    function viewAll()
     {
         $usuarios = [];
 
-        $query = 'SELECT * FROM `USUARIOS`';
-        $result = $this->connection->Query($query);
+        try {
+            $query = "SELECT * FROM `Usuarios`";
+            $statement = $this->connection->Prepare($query);
+            $statement->execute();
 
-        while ($row = $result->fetch_assoc()) {
-            $usuario = new Usuario();
-            $this->setUserFields($usuario, $row);
-            $usuarios[] = $usuario;
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $usuario = new Usuario();
+                $usuario->setUserFields($row);
+                $usuarios[] = $usuario;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
         }
 
         return $usuarios;
     }
 
-    function setUserFields(Usuario $usuario, array $row)
-    {
-        $usuario->setIdUsuario($row["id_usuario"]);
-        $usuario->setUsername($row["username"]);
-        $usuario->setPassword($row["password"]);
-        $usuario->setNombre($row["nombre"]);
-        $usuario->setApellidos($row["apellidos"]);
-        $usuario->setCorreo($row["correo"]);
-        $usuario->setTelefono($row["telefono"]);
-        $usuario->setRutaImagen($row["ruta_imagen"]);
-        $usuario->setActivo($row["activo"]);
-        $usuario->setIdRol($row["id_rol"]);
-    }
 
-    function Activate($id_usuario)
+    function activate($id_usuario)
     {
         $retVal = false;
 
-        $query = "UPDATE `USUARIOS` SET `activo`=? WHERE `id_usuario` = ?";
-        $statement = $this->connection->Prepare($query);
+        try {
+            $query = "UPDATE `Usuarios` SET `activo` = 1 WHERE `id_usuario` = ?";
+            $statement = $this->connection->Prepare($query);
+            $statement->bindValue(1, $id_usuario, PDO::PARAM_INT); //int
 
-        $activo = 1;
-        $statement->bind_param("ii", $activo, $id_usuario);
-
-        if ($statement->execute()) {
-            $retVal = true;
+            if ($statement->execute()) {
+                $retVal = true;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            $retVal = false;
         }
-
-        $statement->close();
-
-        return $retVal;
-    }
-
-    function Deactivate($id_usuario)
-    {
-        $retVal = false;
-
-        $query = "UPDATE `USUARIOS` SET `activo`=? WHERE `id_usuario` = ?";
-        $statement = $this->connection->Prepare($query);
-
-        $activo = 0;
-        $statement->bind_param("ii", $activo, $id_usuario);
-
-        if ($statement->execute()) {
-            $retVal = true;
-        }
-
-        $statement->close();
 
         return $retVal;
     }
 
 
-    function UserLogin($user)
+    function deactivate($id_usuario)
     {
-        $usuario = new Usuario();
+        $retVal = false;
 
-        $sql = "SELECT * FROM USUARIOS WHERE `username` = ?";
+        try {
+            $query = "UPDATE `Usuarios` SET `activo` = 0 WHERE `id_usuario` = ?";
+            $statement = $this->connection->Prepare($query);
+            $statement->bindValue(1, $id_usuario, PDO::PARAM_INT); //int
 
-        $statement = $this->connection->Prepare($sql);
-        $statement->bind_param("s", $user);
-        $statement->execute();
-        $resultado = $statement->get_result();
-
-        if ($resultado->num_rows > 0) {
-            $fila = $resultado->fetch_assoc();
-            $usuario->setIdUsuario($fila["id_usuario"]);
-            $usuario->setNombre($fila["nombre"]);
-            $usuario->setApellidos($fila["apellidos"]);
-            $usuario->setUsername($fila["username"]);
-            $usuario->setPassword($fila["password"]);
-            $usuario->setIdRol($fila["id_rol"]);
-        } else {
-            $usuario = null;
+            if ($statement->execute()) {
+                $retVal = true;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            $retVal = false;
         }
 
-        $statement->close();
+        return $retVal;
+    }
+
+    function userLogin($username)
+    {
+        $usuario = null;
+        try {
+            $query = "SELECT * FROM `Usuarios` WHERE `username` = ?";
+            $statement = $this->connection->Prepare($query);
+            $statement->bindValue(1, $username);
+            $statement->execute();
+
+            if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $usuario = new Usuario();
+                $usuario->setUserFields($row);
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
 
         return $usuario;
     }
+
+    function usernameExists($username)
+    {
+        $exists = false;
+
+        try {
+            $query = "SELECT COUNT(*) FROM `Usuarios` WHERE `username` = ?";
+            $statement = $this->connection->Prepare($query);
+            $statement->bindValue(1, $username);
+            $statement->execute();
+
+            if ($statement->fetchColumn() > 0) {
+                $exists = true;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $exists;
+    }
+
+    function emailExists($email)
+    {
+        $exists = false;
+
+        try {
+            $query = "SELECT COUNT(*) FROM `Usuarios` WHERE `correo` = ?";
+            $statement = $this->connection->Prepare($query);
+            $statement->bindValue(1, $email);
+            $statement->execute();
+
+            if ($statement->fetchColumn() > 0) {
+                $exists = true;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $exists;
+    }
+
 
 }
