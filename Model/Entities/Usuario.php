@@ -66,6 +66,11 @@ class Usuario
         $this->apellidos = $apellidos;
     }
 
+    public function getFullName()
+    {
+        return $this->nombre . " " . $this->apellidos;
+    }
+
     public function getCorreo()
     {
         return $this->correo;

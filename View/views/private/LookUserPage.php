@@ -4,6 +4,22 @@
 <body>
 <?php require './View/fragments/nav_private.php'; ?>
 
+
+<?php echo ($userRole == 1) ?
+    (' 
+<div class="add-user-container">
+    <button type="button" class="btn btn-light add-user-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#createUserModal">
+    <span class="add-user-icon"><i class="bi bi-person-add"></i></span>Crear Nuevo
+    </button>
+</div>
+
+                ')
+    :
+    '' ?>
+
+
 <div class="table-container">
     <table class="table table-striped table-dark" id="tablaUsuario">
         <thead>
@@ -15,7 +31,7 @@
             <th id="sortSurnames">Apellidos <span class="sort-arrow"></span></th>
             <th id="sortMail">Correo <span class="sort-arrow"></span></th>
             <th id="sortPhone">Teléfono <span class="sort-arrow"></span></th>
-            <?php echo ($user_rol == 1) ?
+            <?php echo ($userRole == 1) ?
                 (' 
                     <th id="sortStatus">Estado <span class="sort-arrow"></span></th>
                     <th></th>
@@ -45,7 +61,7 @@
             </th>
             <th><input type="text" id="searchPhone" placeholder="Buscar" oninput="filterTable()" class="form-control">
             </th>
-            <?php echo ($user_rol == 1) ?
+            <?php echo ($userRole == 1) ?
                 (' 
                 <th>
                     <select id="searchStatus" class="form-select" onchange="filterTable()">
@@ -78,7 +94,7 @@
                 <td id="email-<?php echo $user->getIdUsuario(); ?>"> <?php echo htmlspecialchars($user->getCorreo()); ?></td>
                 <td id="phone-<?php echo $user->getIdUsuario(); ?>"> <?php echo htmlspecialchars($user->getTelefono()); ?></td>
                 <?php
-                if ($user_rol == 1) {
+                if ($userRole == 1) {
                     echo '<td class="' . ($user->getActivo() ? 'estado-activo' : 'estado-inactivo') . '">
                     <button class="btn btn-toggle"
                             data-state="' . ($user->getActivo() ? 'activo' : 'inactivo') . '"
@@ -88,7 +104,7 @@
                     </button>
                   </td>
                   <td>
-                    <button type="button" class="btn btn-warning edit-btn"
+                    <button type="button" class="btn btn-warning edit-user-btn"
                             data-user-id="' . $user->getIdUsuario() . '" data-bs-toggle="modal"
                             data-bs-target="#editUserModal">
                         <i class="bi bi-pencil-square"></i>
@@ -113,15 +129,69 @@
     </table>
 </div>
 
+<!-- Modal Crear-->>
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Crear Nuevo Usuario</h5>
+            </div>
+            <div class="modal-body">
+                <form id="createUserForm">
+                    <div class="mb-3">
+                        <label for="newUserRole" class="form-label">Rol</label>
+                        <select class="form-select" id="newUserRole" name="newUserRole">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newUsername" class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="newUsername" name="newUsername">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newEmail" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="newEmail" name="newEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newFirstName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="newFirstName" name="newFirstName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newLastName" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="newLastName" name="newLastName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPhone" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="newPhone" name="newPhone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Generar contraseña temporal</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="newPassword" name="password" readonly>
+                            <button class="btn btn-outline-secondary btn-shuffle-pw" type="button"
+                                    data-password-field="newPassword" title="Generar contraseña temporal">
+                                <i class="bi bi-shuffle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="createUserData()">
+                    Guardar Cambios
+                </button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script src="./View/js/crudUsuario/lookUser.js"></script>
 
-<!-- Modal-->>
+<!-- Modal Modificar-->>
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
+                <h5 class="modal-title">Editar Usuario</h5>
             </div>
             <div class="modal-body">
                 <form id="editUserForm">
@@ -143,14 +213,8 @@
                         <input type="text" class="form-control" id="username" name="username">
                     </div>
                     <div class="mb-3">
-                        <label for="contrasena" class="form-label">Generar contraseña temporal</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="contrasena" name="contrasena" readonly>
-                            <button class="btn btn-outline-secondary btn-shuffle-pw" type="button"
-                                    title="Generar contraseña temporal">
-                                <i class="bi bi-shuffle"></i>
-                            </button>
-                        </div>
+                        <label for="email" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="email" name="email">
                     </div>
                     <div class="mb-3">
                         <label for="firstName" class="form-label">Nombre</label>
@@ -161,17 +225,23 @@
                         <input type="text" class="form-control" id="lastName" name="lastName">
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="email" name="email">
-                    </div>
-                    <div class="mb-3">
                         <label for="phone" class="form-label">Teléfono</label>
                         <input type="text" class="form-control" id="phone" name="phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Generar contraseña temporal</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="password" name="password" readonly>
+                            <button class="btn btn-outline-secondary btn-shuffle-pw" type="button"
+                                    data-password-field="password" title="Generar contraseña temporal">
+                                <i class="bi bi-shuffle"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" onclick="saveUserData()">
+                <button type="button" class="btn btn-success" onclick="updateUserData()">
                     Guardar Cambios
                 </button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -182,6 +252,7 @@
 
 <?php require './View/fragments/footer.php'; ?>
 
+<script src="./View/js/crudUsuario/lookUserPage.js"></script>
 <script>
     var rolesMap = <?php echo json_encode($roles); ?>;
 </script>

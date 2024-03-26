@@ -11,38 +11,38 @@
             <form class="Form">
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="Nombre" placeholder="Nombre">
+                        <label for="firstName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Nombre">
                     </div>
                     <div class="col-md-6">
-                        <label for="exampleFormControlInput1" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="Apellidos" placeholder="Apellidos">
+                        <label for="lastName" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Apellidos">
                     </div>
                 </div>
 
                 <div class="col-md-12">
-                    <label for="exampleFormControlInput1" class="form-label">Ingresa tu Correo Electrónico</label>
-                    <input type="email" class="form-control" id="correoElectronico" placeholder="Correo Electrónico">
+                    <label for="email" class="form-label">Ingresa tu Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" placeholder="Correo Electrónico">
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="exampleFormControlInput1" class="form-label">Nombre de Usuario</label>
-                        <input type="text" class="form-control" id="nombreUsuario" placeholder="Nombre de Usuario">
+                        <label for="username" class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="username" placeholder="Nombre de Usuario">
 
                     </div>
 
                     <div class="col-md-6">
-                        <label for="exampleFormControlInput1" class="form-label">Número de Contacto</label>
-                        <input type="number" class="form-control" id="numeroContacto" placeholder="Número de Contacto">
+                        <label for="phone" class="form-label">Número de Contacto</label>
+                        <input type="number" class="form-control" id="phone" placeholder="Número de Contacto">
 
                     </div>
                 </div>
 
                 <div class="col-md-12">
-                    <label for="exampleFormControlInput1" class="form-label">Ingresa tu contraseña</label>
+                    <label for="password" class="form-label">Ingresa tu contraseña</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="Contrasena" placeholder="Contraseña">
+                        <input type="password" class="form-control" id="password" placeholder="Contraseña">
                         <button id="togglePassword" class="btn btn-outline-secondary" type="button">
                             <i class="bi bi-eye-slash"></i>
                         </button>

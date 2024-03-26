@@ -12,18 +12,48 @@ body {
 }
 
 
+.add-user-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    font-family: "Poppins", sans-serif;
+    padding-top: 20px;
+}
+
+.add-user-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 20px;
+    font-weight: bolder;
+    font-size: 1.5vh;
+}
+
+.add-user-icon {
+    font-size: 2.5vh;
+    padding: 0 5px 0 0;
+}
+
 .table-container {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: start;
-    padding: 50px 100px 50px 100px;
+    padding: 20px 100px 50px 100px;
     overflow-x: auto;
     font-family: "Poppins", sans-serif;
 }
 
 thead {
-    font-size: 20px;
+    font-size: 1.5vh;
+}
+
+.form-select,
+.form-control,
+td {
+    font-size: 1.4vh;
+
 }
 
 .table-titles {
@@ -77,16 +107,18 @@ th span {
     background-color: green;
     color: white;
     font-weight: bolder;
+    font-size: 1.4vh;
 }
 
 .btn-toggle[data-state="inactivo"] {
     background-color: #D43B3B;
     color: white;
     font-weight: bolder;
+    font-size: 1.4vh;
 }
 
 .btn-warning {
-    font-size: 20px;
+    font-size: 1.5vh;
     font-weight: bolder;
 }
 
@@ -95,7 +127,6 @@ th span {
     padding: 0;
     background-color: black;
     position: relative;
-
 }
 
 .no-result-container::before {

@@ -20,22 +20,21 @@ class ContactPageController
         $mensajesM = new MensajesM();
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $nombrem = $data['nombre'];
-        $correo = $data['correo'];
-        $titulo = $data['titulo'];
-        $contexto = $data['contexto'];
+        $fullNameMsg = $data['fullNameMsg'];
+        $emailMsg = $data['emailMsg'];
+        $titleMsg = $data['titleMsg'];
+        $contextMsg = $data['contextMsg'];
 
-        $mensajesNuevo = new Mensajes();
+        $newMessage = new Mensajes();
 
-        $mensajesNuevo->setNombreM($nombrem);
-        $mensajesNuevo->setCorreo($correo);
-        $mensajesNuevo->setTitulo($titulo);
-        $mensajesNuevo->setContexto($contexto);
-        //$mensajesNuevo->setFechaEnvio( 'now() ');
-        $mensajesNuevo->setLeido(0);
+        $newMessage->setNombreM($fullNameMsg);
+        $newMessage->setCorreo($emailMsg);
+        $newMessage->setTitulo($titleMsg);
+        $newMessage->setContexto($contextMsg);
+        $newMessage->setLeido(0);
 
         // Guardar el mensaje en la base de datos
-        if ($mensajesM->Create($mensajesNuevo)) {
+        if ($mensajesM->Create($newMessage)) {
             $response = ['success' => true, 'message' => '¡Mensaje enviado correctamente!'];
         } else {
             $response = ['success' => false, 'message' => '¡Error al enviar el mensaje!'];

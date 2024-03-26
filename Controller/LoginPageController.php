@@ -6,6 +6,14 @@ require_once './Model/Methods/UsuarioM.php';
 
 class LoginPageController
 {
+
+    private $usuarioM;
+
+    public function __construct()
+    {
+        $this->usuarioM = new UsuarioM();
+    }
+
     function Index()
     {
         $current_page = 'LoginPage';
@@ -13,27 +21,27 @@ class LoginPageController
 
     }
 
+    // Inicia sesión
     function LogIn()
     {
-        $usuarioM = new UsuarioM(); // Crea una instancia de la clase UsuarioM.
-
-        // Obtiene los datos enviados en formato JSON y los convierte en un array asociativo.
         $data = json_decode(file_get_contents('php://input'), true);
+        $username = $data['username'];
+        $password = $data['password'];
 
-
-        $username = $data['usuario'];
-        $password = $data['contrasena'];
-
-        $usuario = $usuarioM->userLogin($username);
-
+        $usuario = $this->usuarioM->userLogin($username);
 
         if ($usuario) {
             if ($usuario->getActivo()) {
                 if (password_verify($password, $usuario->getPassword())) {
-                    $response = ['success' => true, 'message' => '¡Usuario validado exitosamente!'];
-                    $_SESSION['nombre'] = $usuario->getNombre() . " " . $usuario->getApellidos();
-                    $_SESSION['usuario'] = $usuario->getUsername();
-                    $_SESSION['rol'] = $usuario->getIdRol();
+                    $_SESSION['username'] = $usuario->getUsername();
+                    $_SESSION['user_id'] = $usuario->getIdUsuario();
+                    if ($usuario->getPasswordFlag()) {
+                        // El usuario debe cambiar la contraseña
+                        $response = ['success' => true, 'changePassword' => true, 'message' => 'Debe cambiar la contraseña'];
+                    } else {
+                        // Usuario validado correctamente y no necesita cambiar la contraseña
+                        $response = ['success' => true, 'changePassword' => false, 'message' => 'Debe cambiar la contraseña'];
+                    }
                 } else {
                     $response = ['success' => false, 'error' => 'contraseña', 'icon' => 'error', 'message' => 'Contraseña incorrecta'];
                 }
@@ -49,6 +57,37 @@ class LoginPageController
         echo json_encode($response);
     }
 
+    // Cambia contraseña del usario
+    function changePassword()
+    {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $username = $_SESSION['username'];
+        $oldPassword = $data['oldPassword'];
+        $newPassword = $data['newPassword'];
+
+        $usuario = $this->usuarioM->userLogin($username);
+
+        if ($usuario) {
+            if (password_verify($oldPassword, $usuario->getPassword())) {
+                if ($this->usuarioM->updatePassword($usuario->getIdUsuario(), $newPassword)) {
+                    $response = ['success' => true, 'passwordMatch' => true];
+                } else {
+                    $response = ['success' => false, 'passwordMatch' => true];
+                }
+            } else {
+                $response = ['success' => false, 'passwordMatch' => false];
+            }
+        } else {
+            $response = ['success' => false];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
+    // Cierra sesión
     function LogOut()
     {
         session_destroy();
