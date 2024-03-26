@@ -1,102 +1,113 @@
+// Función para los filtros de la tabla
 function filterTable() {
-    // Valores de los filtros
-    var searchId = $('#searchId').val().trim();
-    var searchRole = $('#searchRole').val();
-    var searchUsername = $('#searchUsername').val().trim().toLowerCase();
-    var searchFirstName = $('#searchFirstName').val().toLowerCase();
-    var searchLastName = $('#searchLastName').val().toLowerCase();
-    var searchEmail = $('#searchEmail').val().trim().toLowerCase();
-    var searchPhone = $('#searchPhone').val().trim().toLowerCase();
-    var searchStatus = $('#searchStatus').val().toLowerCase();
-
+    // Obtener valores de los filtros
+    let searchId = $('#searchId').val().trim();
+    let searchRole = $('#searchRole').val();
+    let searchUsername = $('#searchUsername').val().trim().toLowerCase();
+    let searchFirstName = $('#searchFirstName').val().toLowerCase();
+    let searchLastName = $('#searchLastName').val().toLowerCase();
+    let searchEmail = $('#searchEmail').val().trim().toLowerCase();
+    let searchPhone = $('#searchPhone').val().trim().toLowerCase();
+    let searchStatus = $('#searchStatus').val().toLowerCase();
 
     let visibleRows = 0;
 
-    // Solo aplica la lógica de filtrado a las filas con id que comienza con 'userRow-' (ignora la fila de "sin resultados")
+    // Iterar sobre cada fila de la tabla para aplicar los filtros
     $('#tablaUsuario tbody tr[id^="userRow-"]').each(function () {
-        var row = $(this);
-        var idText = row.children().eq(0).text().trim();
-        var roleText = row.children().eq(1).text().trim().toLowerCase();
-        var usernameText = row.children().eq(2).text().trim().toLowerCase();
-        var firstNameText = row.children().eq(3).text().toLowerCase();
-        var lastNameText = row.children().eq(4).text().toLowerCase();
-        var emailText = row.children().eq(5).text().trim().toLowerCase();
-        var phoneText = row.children().eq(6).text().trim().toLowerCase();
-        var statusText = row.children().eq(7).text().trim().toLowerCase();
-
-        var isRowVisible = (searchId === "" || idText === searchId) &&
-            (searchRole === "" || roleText === searchRole) &&
-            (searchUsername === "" || usernameText.includes(searchUsername)) &&
-            (searchFirstName === "" || firstNameText.includes(searchFirstName)) &&
-            (searchLastName === "" || lastNameText.includes(searchLastName)) &&
-            (searchEmail === "" || emailText.includes(searchEmail)) &&
-            (searchPhone === "" || phoneText.includes(searchPhone)) &&
-            (searchStatus === "" || statusText === searchStatus);
-
-        row.css('display', isRowVisible ? '' : 'none');
-        if (isRowVisible) visibleRows++;
+        let isVisible = applyFiltersToRow($(this), {
+            searchId, searchRole, searchUsername, searchFirstName,
+            searchLastName, searchEmail, searchPhone, searchStatus
+        });
+        if (isVisible) visibleRows++;
     });
 
+    // Mostrar u ocultar la fila "sin resultados" basada en la cantidad de filas visibles
+    toggleNoResultRow(visibleRows);
+}
 
-    // Comprueba si hay filas visibles y muestra u oculta la fila "sin resultado"
+// Función para aplicar los filtros a una fila específica
+function applyFiltersToRow(row, filters) {
+    let idText = row.children().eq(0).text().trim();
+    let roleText = row.children().eq(1).text().trim().toLowerCase();
+    let usernameText = row.children().eq(2).text().trim().toLowerCase();
+    let firstNameText = row.children().eq(3).text().toLowerCase();
+    let lastNameText = row.children().eq(4).text().toLowerCase();
+    let emailText = row.children().eq(5).text().trim().toLowerCase();
+    let phoneText = row.children().eq(6).text().trim().toLowerCase();
+    let statusText = row.children().eq(7).text().trim().toLowerCase();
+
+    let isRowVisible = (filters.searchId === "" || idText === filters.searchId) &&
+        (filters.searchRole === "" || roleText === filters.searchRole) &&
+        (filters.searchUsername === "" || usernameText.includes(filters.searchUsername)) &&
+        (filters.searchFirstName === "" || firstNameText.includes(filters.searchFirstName)) &&
+        (filters.searchLastName === "" || lastNameText.includes(filters.searchLastName)) &&
+        (filters.searchEmail === "" || emailText.includes(filters.searchEmail)) &&
+        (filters.searchPhone === "" || phoneText.includes(filters.searchPhone)) &&
+        (filters.searchStatus === "" || statusText === filters.searchStatus);
+
+    row.css('display', isRowVisible ? '' : 'none');
+    return isRowVisible;
+}
+
+// Función para mostrar u ocultar la fila que indica que no hay resultados
+function toggleNoResultRow(visibleRows) {
     const noResultRow = document.getElementById('no-result');
     noResultRow.style.display = visibleRows === 0 ? '' : 'none';
 }
 
-
 let sortOrder = 1; // 1 para ascendente, -1 para descendente
 let currentSortColumn = null;
 
+// Función para ordernar la tabla en función de la columna seleccionada
 function sortTable(columnIndex, columnId) {
+    // Obtiene la tabla y el cuerpo de la tabla
     const table = $('#tablaUsuario');
     const tbody = table.find('tbody').first();
+
+    // Convierte las filas de la tabla en un array para poder ordenarlas
     let rows = tbody.find('tr:not(#no-result)').toArray();
 
-    // Remueve el icono de flecha del anterior th, si existe
+    // Verifica si es necesario cambiar el icono de ordenamiento en la columna
     if (currentSortColumn && currentSortColumn !== columnId) {
         const previousArrowSpan = $('#' + currentSortColumn).find('.sort-arrow');
-        previousArrowSpan.removeClass('bi-caret-up-fill bi-caret-down-fill'); // Remueve las clases de iconos
+        previousArrowSpan.removeClass('bi-caret-up-fill bi-caret-down-fill'); // Limpia los iconos de ordenamiento
     }
 
+    // Ordena las filas basándose en el texto de la celda y el orden actual
     rows.sort((a, b) => {
-        let cellA = $(a).find('td').eq(columnIndex).text().trim().toLowerCase();
-        let cellB = $(b).find('td').eq(columnIndex).text().trim().toLowerCase();
+        let valA = $(a).find('td').eq(columnIndex).text().trim().toLowerCase();
+        let valB = $(b).find('td').eq(columnIndex).text().trim().toLowerCase();
 
-        cellA = !isNaN(cellA) && !isNaN(parseFloat(cellA)) ? parseFloat(cellA) : cellA;
-        cellB = !isNaN(cellB) && !isNaN(parseFloat(cellB)) ? parseFloat(cellB) : cellB;
+        // Convierte a número si es posible
+        valA = !isNaN(valA) && !isNaN(parseFloat(valA)) ? parseFloat(valA) : valA;
+        valB = !isNaN(valB) && !isNaN(parseFloat(valB)) ? parseFloat(valB) : valB;
 
-        if (cellA < cellB) {
-            return -1 * sortOrder;
-        }
-        if (cellA > cellB) {
-            return 1 * sortOrder;
-        }
+        // Determina el orden de clasificación
+        if (valA < valB) return -1 * sortOrder;
+        if (valA > valB) return 1 * sortOrder;
         return 0;
     });
 
-    sortOrder *= -1; // Invierte la dirección del orden para el próximo click
+    // Alterna el orden para el próximo clic
+    sortOrder *= -1;
 
-    // Actualiza la flecha en el th actual
+    // Actualiza el icono de ordenación para mostrar la dirección actual
     const arrowSpan = $('#' + columnId).find('.sort-arrow');
-
-    // Limpia las clases previas
-    arrowSpan.removeClass('bi-caret-up-fill bi-caret-down-fill');
-
-    // Agrega la clase correspondiente al estado del orden
+    arrowSpan.removeClass('bi-caret-up-fill bi-caret-down-fill'); // Limpia los iconos anteriores
     if (sortOrder === 1) {
         arrowSpan.addClass('bi-caret-down-fill');
     } else {
         arrowSpan.addClass('bi-caret-up-fill');
     }
 
-    // Guarda el th actual como el último clickeado
+    // Guarda la columna actual como la última columna clickeada
     currentSortColumn = columnId;
 
-    // Reinserta las filas ordenadas
+    // Reinserta las filas en el cuerpo de la tabla en el orden nuevo
     rows.forEach(row => tbody.append(row));
 }
 
-// Agrega el controlador de eventos al th (ordenamiento)
+// Agregando controladores de eventos para la ordenación al hacer clic en los encabezados de las columnas
 $('#sortID').click(() => sortTable(0, 'sortID'));
 $('#sortRol').click(() => sortTable(1, 'sortRol'));
 $('#sortUsername').click(() => sortTable(2, 'sortUsername'));
@@ -106,177 +117,69 @@ $('#sortMail').click(() => sortTable(5, 'sortMail'));
 $('#sortPhone').click(() => sortTable(6, 'sortPhone'));
 $('#sortStatus').click(() => sortTable(7, 'sortStatus'));
 
+
+// Función para poblar el dropdown de roles
 async function populateRoleDropdown() {
-    const roles = await getRoles();
-    const roleSelect = $('#searchRole');
-    roles.forEach(role => {
-        const option = $('<option></option>').val(role.nombre.toLowerCase()).text(role.nombre);
-        roleSelect.append(option);
-    });
+    try {
+        const roles = await getRoles();
+
+        if (!roles) {
+            console.error('No se recibieron los roles del servidor.');
+            return;
+        }
+
+        const roleSelect = $('#searchRole');
+
+        // Iterar sobre cada rol y añadirlo al dropdown
+        roles.forEach(role => {
+            // Crear un nuevo elemento option
+            const option = $('<option></option>').val(role.nombre.toLowerCase()).text(role.nombre);
+            // Añadir el option al select
+            roleSelect.append(option);
+        });
+    } catch (error) {
+        // Manejar cualquier error que ocurra durante la obtención o procesamiento de los roles
+        console.error('Error al poblar el dropdown de roles:', error);
+        Swal.fire({
+            title: 'Error',
+            text: 'Ocurrió un error al cargar los roles.',
+            icon: 'error',
+            confirmButtonColor: 'rgb(29, 29, 29)',
+            confirmButtonText: 'Aceptar'
+        });
+    }
 }
 
 // Llamar a la función cuando la página se carga.
 document.addEventListener('DOMContentLoaded', populateRoleDropdown);
 
-$('.btn-toggle').on('click', async function () {
-    const userId = $(this).attr('data-user-id');
-    const username = $(this).attr('data-user-name');
-    const action = $(this).attr('data-state') === 'activo' ? 'deactivate' : 'activate';
-
-    const formData = new URLSearchParams();
-    formData.append('userId', userId);
-
-    try {
-        const response = await fetch(`./index.php?controller=LookUserPage&action=${action}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: formData
-        });
-        const data = await response.json();
-
-        if (data.success) {
-            $(this).attr('data-state', action === 'activate' ? 'activo' : 'inactivo');
-            $(this).text($(this).attr('data-state') === 'activo' ? 'Activo' : 'Inactivo');
-
-            Swal.fire({
-                icon: data.icon,
-                title: data.title,
-                text: "El usuario " + username + " ha sido " + data.text + " con éxito.",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
-        } else {
-            Swal.fire({
-                title: "No se pudo cambiar el estado del usuario.",
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-    } catch (error) {
-        Swal.fire({
-            title: "Ocurrió un error al intentar cambiar el estado del usuario.",
-            icon: "error",
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
-    }
-});
-
-
-$('.edit-user-btn').on('click', async function () {
-    const userId = $(this).attr('data-user-id');
-    const userData = await getUserData(userId);
-    const roles = await getRoles();
-
-    // Limpiar border rojos (si existen)
-    $("#email, #username").css('border', '');
-
-    const roleSelect = $('#userRole');
-    roleSelect.empty(); // Limpia las opciones existentes
-
-    // Llena el dropdown con los roles
-    roles.forEach(role => {
-        const option = $('<option></option>').val(role.id).text(role.nombre);
-        roleSelect.append(option);
-    });
-
-    if (userData) {
-        $('#userId').val(userData.id);
-        roleSelect.val(userData.rol);
-        $('#username').val(userData.username);
-        $('#firstName').val(userData.nombre);
-        $('#lastName').val(userData.apellidos);
-        $('#email').val(userData.correo);
-        $('#phone').val(userData.telefono);
-        $('#userProfileImage').attr('src', userData.ruta_imagen || './View/img/users/default_user.png');
-        $('#password').val("");
-    }
-});
-
-
-$('.add-user-btn').on('click', async function () {
-    const roles = await getRoles();
-
-    // Limpiar border rojos (si existen)
-    $("#email, #username").css('border', '');
-
-    const roleSelect = $('#newUserRole');
-    roleSelect.empty(); // Limpia las opciones existentes
-
-    // Llena el dropdown con los roles
-    roles.forEach(role => {
-        const option = $('<option></option>').val(role.id).text(role.nombre);
-        roleSelect.append(option);
-    });
-
-    $('#contrasena').val(""); // Limpia el campo contraseña
-});
-
-
-async function getUserData(userId) {
-    const formData = new URLSearchParams();
-    formData.append('userId', userId);
-
-    try {
-        const response = await fetch('./index.php?controller=LookUserPage&action=getUserData', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: formData
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        return data;
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
-    }
-}
-
-async function getRoles() {
-    try {
-        const response = await fetch('./index.php?controller=LookUserPage&action=getRoles', {
-            method: 'GET',
-        });
-
-        return await response.json();
-    } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
-    }
-}
-
-
+// Función que crea un usuario nuevo
 async function createUserData() {
-    // Limpiar border rojos (si existen)
+    // Limpia los bordes rojos de los campos de formulario, si existen
     $("#Nombre, #Apellidos, #correoElectronico, #nombreUsuario, #numeroContacto, #Contrasena").css('border', '');
 
+    let isFormValid = true;
 
-    var isFormValid = true;
-
+    // Recolecta los datos del formulario y valida cada campo
     const userData = {
-        role: $("#newUserRole").val() || markInvalid('newUserRole'),
-        username: $("#newUsername").val() || markInvalid('newUsername'),
-        email: $("#newEmail").val() || markInvalid('newEmail'),
-        firstName: $("#newFirstName").val() || markInvalid('newFirstName'),
-        lastName: $("#newLastName").val() || markInvalid('newLastName'),
-        phone: $("#newPhone").val() || markInvalid('newPhone'),
-        password: $("#newPassword").val() || markInvalid('newPassword')
+        role: validateField('newUserRole'),
+        username: validateField('newUsername'),
+        email: validateField('newEmail'),
+        firstName: validateField('newFirstName'),
+        lastName: validateField('newLastName'),
+        phone: validateField('newPhone'),
+        password: validateField('newPassword')
     };
 
-    function markInvalid(id) {
-        $(`#${id}`).css('border', '1px solid red');
-        isFormValid = false;
-        return null;
+    // Función para validar un campo individual y marcarlo si es inválido
+    function validateField(id) {
+        let value = $(`#${id}`).val();
+        if (!value) {
+            $(`#${id}`).css('border', '1px solid red');
+            isFormValid = false;
+        }
+        return value;
     }
-
 
     if (!isFormValid) {
         Swal.fire({
@@ -288,34 +191,21 @@ async function createUserData() {
         return;
     }
 
-    // Validación del correo electrónico
-    var regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!regexCorreo.test(userData['email'])) {
+    // Validación  para el correo electrónico
+    if (!validateEmail(userData.email)) {
         $("#newEmail").css('border', '1px solid red');
-        Swal.fire({
-            title: "¡Correo electrónico inválido!",
-            icon: "error",
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
-        return;// Detiene la ejecución si el email no es válido
+        showValidationError("¡Correo electrónico inválido!");
+        return;
     }
 
-    // Validación del nombre de usuario
-    var regexUsuario = /^[a-zA-Z0-9_-]+$/;
-    if (!regexUsuario.test(userData['username'])) {
+    // Validación  para el nombre de usuario
+    if (!validateUsername(userData.username)) {
         $("#newUsername").css('border', '1px solid red');
-
-        Swal.fire({
-            title: "¡Nombre de usuario inválido!",
-            text: "El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.",
-            icon: "error",
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
-        return;// Detiene la ejecución si el nombre de usuario no es válido
+        showValidationError("¡Nombre de usuario inválido! El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.");
+        return;
     }
 
+    // Envía los datos del usuario al servidor
     try {
         const response = await fetch('./index.php?controller=LookUserPage&action=createUser', {
             method: 'POST',
@@ -327,18 +217,16 @@ async function createUserData() {
 
         const result = await response.json();
 
-
         if (result.success) {
-            localStorage.setItem('userCreated', 'true');
-            window.location.reload();
+            localStorage.setItem('userCreated', 'true');  // Almacena un indicador en localStorage
+            window.location.reload();  // Recarga la página para mostrar los nuevos datos
         } else {
             if (result.error == 'correo') {
                 $("#newEmail").css('border', '1px solid red');
             }
             if (result.error == 'usuario') {
-                $("#newEmail").css('border', '1px solid red');
+                $("#newUsername").css('border', '1px solid red');
             }
-            // Si hay un error, muestra un mensaje y no redirige.
             Swal.fire({
                 title: "¡Hubo un error!",
                 text: result.message,
@@ -348,7 +236,7 @@ async function createUserData() {
             });
         }
     } catch (error) {
-        console.error('Error al actualizar el usuario:', error);
+        console.error('Error al crear el usuario:', error);
         Swal.fire({
             title: 'Error',
             text: 'Hubo un problema al conectar con el servidor.',
@@ -359,7 +247,31 @@ async function createUserData() {
     }
 }
 
+// Función para validar el formato del correo electrónico
+function validateEmail(email) {
+    let regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regexCorreo.test(email);
+}
+
+// Función para validar el nombre de usuario
+function validateUsername(username) {
+    let regexUsuario = /^[a-zA-Z0-9_-]+$/;
+    return regexUsuario.test(username);
+}
+
+// Función para mostrar un mensaje de error de validación
+function showValidationError(message) {
+    Swal.fire({
+        title: message,
+        icon: "error",
+        confirmButtonColor: 'rgb(29, 29, 29)',
+        confirmButtonText: 'Aceptar'
+    });
+}
+
+// Función que modifica un usuario existente
 async function updateUserData() {
+    // Recolecta los valores de los campos del formulario
     const userId = $('#userId').val();
     const role = $('#userRole').val();
     const username = $('#username').val();
@@ -369,6 +281,7 @@ async function updateUserData() {
     const phone = $('#phone').val();
     const password = $('#password').val();
 
+    // Intenta enviar la solicitud de actualización al servidor
     try {
         const response = await fetch('./index.php?controller=LookUserPage&action=updateUser', {
             method: 'POST',
@@ -390,30 +303,15 @@ async function updateUserData() {
         const result = await response.json();
 
         if (result.success) {
-            $(`#userRole-${userData.userId}`).text(rolesMap[userData.role]);
-            $(`#username-${userData.userId}`).text(userData.username);
-            $(`#firstName-${userData.userId}`).text(userData.firstName);
-            $(`#lastName-${userData.userId}`).text(userData.lastName);
-            $(`#email-${userData.userId}`).text(userData.email);
-            $(`#phone-${userData.userId}`).text(userData.phone);
-
-            $('#editUserModal').modal('hide');
-
-            if (result.changed) {
-                Swal.fire({
-                    title: '¡Éxito!',
-                    text: 'Los cambios fueron guardados con éxito.',
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar'
-                })
-            } else {
-                Swal.fire({
-                    title: 'Sin cambios',
-                    text: 'No se ingresaron cambios al usuario.',
-                    icon: 'info',
-                    confirmButtonText: 'Aceptar'
-                })
-            }
+            // Actualiza la interfaz de usuario con los nuevos datos
+            updateUI(userId, role, username, firstName, lastName, email, phone);
+            let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
+            Swal.fire({
+                title: '¡Éxito!',
+                text: message,
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            });
         } else {
             if (result.error == 'usuario') {
                 $("#username").css('border', '1px solid red');
@@ -421,25 +319,18 @@ async function updateUserData() {
                 $("#email").css('border', '1px solid red');
             }
 
-            // Configura el mensaje de error según el tipo de error
             let errorMessage = result.message || 'Hubo un problema al guardar los cambios.';
-            let errorIcon = 'error';
-
-            if (result.error == 'usuario' || result.error == 'correo') {
-                errorIcon = 'warning';
-            }
-
             Swal.fire({
                 title: 'Error',
                 text: errorMessage,
-                icon: errorIcon,
+                icon: 'error',
                 confirmButtonText: 'Aceptar'
             });
         }
     } catch (error) {
-        console.error('Error al actualizar el usuario:', error);
+        console.error('Error al actualizar el usuario', error);
         Swal.fire({
-            title: 'Error',
+            title: 'Error al actualizar el usuario',
             text: 'Hubo un problema al conectar con el servidor.',
             icon: 'error',
             confirmButtonText: 'Aceptar'
@@ -447,25 +338,186 @@ async function updateUserData() {
     }
 }
 
+
+// Función que obtiene los datos de un usuario basándose en su ID
+async function getUserData(userId) {
+    const formData = new URLSearchParams();
+    formData.append('userId', userId);
+
+    try {
+        const response = await fetch('./index.php?controller=LookUserPage&action=getUserData', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        return result;
+
+    } catch (error) {
+        console.error('Ha ocurrido un problema con la operación fetch:', error);
+        return null;
+    }
+}
+
+// Función para obtener los roles desde el servidor
+async function getRoles() {
+    try {
+        // Realizar el GET para obtener los roles
+        const response = await fetch('./index.php?controller=LookUserPage&action=getRoles', {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud HTTP: Estado ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Ha ocurrido un problema con la operación fetch:', error);
+        return [];
+    }
+}
+
+// Función para actualizar la interfaz de usuario con los nuevos datos
+function updateUI(userId, role, username, firstName, lastName, email, phone) {
+    $(`#userRole-${userId}`).text(role);
+    $(`#username-${userId}`).text(username);
+    $(`#firstName-${userId}`).text(firstName);
+    $(`#lastName-${userId}`).text(lastName);
+    $(`#email-${userId}`).text(email);
+    $(`#phone-${userId}`).text(phone);
+}
+
+// Función que genera una contraseña aleatoria
+function generateRandomPassword(length) {
+    // Define los caracteres que se utilizarán para generar la contraseña
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%';
+    let result = '';
+
+    for (let i = 0; i < length; i++) {
+        // Selecciona un carácter aleatorio de la cadena de caracteres y lo añade al resultado
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+
+// Botones de activación/desactivación de usuarios
+$(document).ready(function () {
+    $('.btn-toggle').on('click', async function () {
+        // Recuperar datos necesarios del elemento al que se le hizo click
+        const userId = $(this).attr('data-user-id');
+        const username = $(this).attr('data-user-name');
+        const currentState = $(this).attr('data-state');
+        const action = currentState === 'activo' ? 'deactivate' : 'activate';
+
+        try {
+            // Realizar la solicitud POST al servidor
+            const response = await fetch(`./index.php?controller=LookUserPage&action=${action}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({userId: userId})
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                $(this).attr('data-state', action === 'activate' ? 'activo' : 'inactivo');
+                $(this).text(currentState === 'activo' ? 'Inactivo' : 'Activo');
+
+                Swal.fire({
+                    icon: data.icon,
+                    title: data.title,
+                    text: `El usuario ${username} ha sido ${currentState === 'activo' ? 'desactivado' : 'activado'} con éxito.`,
+                    confirmButtonColor: 'rgb(29, 29, 29)',
+                    confirmButtonText: 'Aceptar'
+                });
+            } else {
+                Swal.fire({
+                    title: "No se pudo cambiar el estado del usuario.",
+                    icon: "error",
+                    confirmButtonColor: 'rgb(29, 29, 29)',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: "Ocurrió un error al intentar cambiar el estado del usuario.",
+                icon: "error",
+                confirmButtonColor: 'rgb(29, 29, 29)',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    });
+});
+
+
+// Botones de modificar usuario
+$(document).ready(function () {
+    $('.edit-user-btn').on('click', async function () {
+        // Obtener el ID del usuario y recuperar sus datos y roles
+        const userId = $(this).attr('data-user-id');
+        const userData = await getUserData(userId);
+        const roles = await getRoles();
+
+        // Resetear estilos para indicación de error, si existen
+        $("#email, #username").css('border', '');
+
+        // Limpia las opciones existentes y rellena el dropdown con los roles disponibles
+        const roleSelect = $('#userRole').empty();
+        roles.forEach(role => roleSelect.append($('<option></option>').val(role.id).text(role.nombre)));
+
+        // Si se obtuvieron datos del usuario, actualiza los campos del formulario
+        if (userData) {
+            $('#userId').val(userData.id);
+            $('#userRole').val(userData.rol);
+            $('#username').val(userData.username);
+            $('#firstName').val(userData.nombre);
+            $('#lastName').val(userData.apellidos);
+            $('#email').val(userData.correo);
+            $('#phone').val(userData.telefono);
+            $('#userProfileImage').attr('src', userData.ruta_imagen || './View/img/users/default_user.png');
+            $('#password').val("");
+        }
+    });
+});
+
+
+// Botón de crear usuario
+$(document).ready(function () {
+    $('.add-user-btn').on('click', async function () {
+        // Obtener y mostrar los roles disponibles para un nuevo usuario
+        const roles = await getRoles();
+
+        // Resetear estilos de error, si existen
+        $("#email, #username").css('border', '');
+
+        // Preparar y llenar el dropdown de roles
+        const roleSelect = $('#newUserRole').empty();
+        roles.forEach(role => roleSelect.append($('<option></option>').val(role.id).text(role.nombre)));
+
+        // Limpiar el campo de contraseña
+        $('#contrasena').val("");
+    });
+});
+
+
+// Botón para generar contraseña aleatoria
 $(document).ready(function () {
     $('.btn-shuffle-pw').on('click', function () {
         const passwordFieldId = $(this).attr('data-password-field');
         const newPassword = generateRandomPassword(12);
         const passwordField = $(`#${passwordFieldId}`);
-        passwordField.attr('type', 'text').val(newPassword);
 
-        setTimeout(() => {
-            passwordField.attr('type', 'password');
-        }, 5000);
+        // Muestra la nueva contraseña y oculta después de un intervalo
+        passwordField.attr('type', 'text').val(newPassword);
+        setTimeout(() => passwordField.attr('type', 'password'), 5000);
     });
 });
-
-
-function generateRandomPassword(length) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}

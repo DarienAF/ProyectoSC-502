@@ -160,15 +160,15 @@ $(document).ready(function () {
     $("#togglePassword").click(function () {
         // Verifica el tipo actual del campo de contraseña
         var tipo = $("#password").attr("type");
-        var icon = $(this).find('i'); // Encuentra el ícono dentro del botón
+        var icon = $(this).find('i'); 
 
         // Cambia el tipo del campo y alterna entre los íconos
         if (tipo === "password") {
             $("#password").attr("type", "text");
-            icon.removeClass('bi-eye-slash').addClass('bi-eye'); // Cambia al ícono de ojo abierto
+            icon.removeClass('bi-eye-slash').addClass('bi-eye');
         } else {
             $("#password").attr("type", "password");
-            icon.removeClass('bi-eye').addClass('bi-eye-slash'); // Cambia al ícono de ojo cerrado
+            icon.removeClass('bi-eye').addClass('bi-eye-slash');
         }
     });
 });
