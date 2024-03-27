@@ -129,7 +129,7 @@
     </table>
 </div>
 
-<!-- Modal Crear-->>
+<!-- Modal Crear-->
 <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -186,7 +186,7 @@
 </div>
 
 
-<!-- Modal Modificar-->>
+<!-- Modal Modificar-->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
