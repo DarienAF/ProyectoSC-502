@@ -31,7 +31,7 @@ class MensajesM
             $statement->bindValue(2, $mensajes->getCorreo());
             $statement->bindValue(3, $mensajes->getTitulo());
             $statement->bindValue(4, $mensajes->getContexto());
-            $statement->bindValue(5, $mensajes->getLeido()); //int
+            $statement->bindValue(5, $mensajes->getLeido(), PDO::PARAM_INT); //int
 
             if ($statement->execute()) {
                 $retVal = true;

@@ -91,4 +91,17 @@ class Mensajes
         $this->setFechaEnvio($row['fecha_envio']);
         $this->setLeido($row['leido']);
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getIdMensaje(),
+            'nombre' => $this->getNombreM(),
+            'correo' => $this->getCorreo(),
+            'titulo' => $this->getTitulo(),
+            'contexto' => $this->getContexto(),
+            'fecha' => $this->getFechaEnvio(),
+            'leido' => $this->getLeido(),
+        ];
+    }
 }
