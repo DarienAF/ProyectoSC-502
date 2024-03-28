@@ -233,7 +233,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" id="password" name="password" readonly>
                             <button class="btn btn-outline-secondary btn-shuffle-pw" type="button"
-                                    data-password-field="contrasena" title="Generar contraseña temporal">
+                                    data-password-field="password" title="Generar contraseña temporal">
                                 <i class="bi bi-shuffle"></i>
                             </button>
                         </div>

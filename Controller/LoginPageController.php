@@ -6,6 +6,14 @@ require_once './Model/Methods/UsuarioM.php';
 
 class LoginPageController
 {
+
+    private $usuarioM;
+
+    public function __construct()
+    {
+        $this->usuarioM = new UsuarioM();
+    }
+
     function Index()
     {
         $current_page = 'LoginPage';
@@ -13,19 +21,14 @@ class LoginPageController
 
     }
 
+    // Inicia sesión
     function LogIn()
     {
-        $usuarioM = new UsuarioM(); // Crea una instancia de la clase UsuarioM.
-
-        // Obtiene los datos enviados en formato JSON y los convierte en un array asociativo.
         $data = json_decode(file_get_contents('php://input'), true);
-
-
         $username = $data['username'];
         $password = $data['password'];
 
-        $usuario = $usuarioM->userLogin($username);
-
+        $usuario = $this->usuarioM->userLogin($username);
 
         if ($usuario) {
             if ($usuario->getActivo()) {
@@ -54,23 +57,21 @@ class LoginPageController
         echo json_encode($response);
     }
 
+    // Cambia contraseña del usario
     function changePassword()
     {
-        $usuarioM = new UsuarioM(); // Crea una instancia de la clase UsuarioM.
 
-        // Obtiene los datos enviados en formato JSON y los convierte en un array asociativo.
         $data = json_decode(file_get_contents('php://input'), true);
-
 
         $username = $_SESSION['username'];
         $oldPassword = $data['oldPassword'];
         $newPassword = $data['newPassword'];
 
-        $usuario = $usuarioM->userLogin($username);
+        $usuario = $this->usuarioM->userLogin($username);
 
         if ($usuario) {
             if (password_verify($oldPassword, $usuario->getPassword())) {
-                if ($usuarioM->updatePassword($usuario->getIdUsuario(), $newPassword)) {
+                if ($this->usuarioM->updatePassword($usuario->getIdUsuario(), $newPassword)) {
                     $response = ['success' => true, 'passwordMatch' => true];
                 } else {
                     $response = ['success' => false, 'passwordMatch' => true];
@@ -86,6 +87,7 @@ class LoginPageController
         echo json_encode($response);
     }
 
+    // Cierra sesión
     function LogOut()
     {
         session_destroy();
