@@ -125,8 +125,6 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small>
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -158,11 +156,29 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small>
-                                </p>
+                                <h5 class="card-title">Descripcion</h5>
+                                <p class="card-text">Nuestra membresía mensual ofrece acceso completo a todas nuestras instalaciones y servicios.
+                                Es perfecta para aquellos que buscan mejorar su bienestar general y establecer una rutina de entrenamiento sólida.</p>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul>
+                                            <h6>Incluye:</h6>
+                                            <li>Acceso Ilimitado a Instalaciones</li>
+                                            <li>Clases Grupales</li>
+                                            <li>Asesoramiento Personalizado</li>
+                                            <li>Acceso a Eventos Especiales</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul>
+                                        <h6>No Incluye:</h6>
+                                            <li>Productos de Tienda o Suplementos</li>
+                                            <li>Servicios Premium Adicionales</li>
+
+                                        </ul>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -195,11 +211,28 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small>
-                                </p>
+                                <h5 class="card-title">Descripción</h5>
+                                <p class="card-text">La membresia trimestral está diseñado para ayudarte a alcanzar tus metas fitness en un período de tres meses.
+                                         Ofrece un enfoque intensivo con el apoyo constante de nuestros expertos.</p>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul>
+                                                <h6>Incluye:</h6>
+                                                <li>Seguimiento de Progreso Regular</li>
+                                                <li>Entrenamiento Personalizado</li>
+                                                <li>Acceso a Eventos Especiales</li>
+                                                <li>Asesoramiento Nutricional</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col">
+                                            <ul>
+                                                <h6>No Incluye:</h6>
+                                                <li>Productos de Tienda o Suplementos</li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -231,11 +264,32 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small>
-                                </p>
+                                <h5 class="card-title">Descripción</h5>
+                                
+                                <p class="card-text">Nuestra membresía anual es la inversión más inteligente en tu salud y bienestar a largo plazo. 
+                                        Durante todo un año, tendrás acceso total a todas las instalaciones y servicios del gimnasio,
+                                         lo que te permitirá transformar tu vida y alcanzar tus objetivos fitness.</p>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul>
+                                                <h6>Incluye:</h6>
+                                                <li>Incluye los beneficios de la membresia Trimestral</li>
+                                                <li>Clases Grupales Variadas</li>
+                                                <li>Acceso a Eventos Especiales</li>
+                                                <li>Asesoramiento Nutricional</li>
+                                               
+                                            </ul>
+                                        </div>
+                                        <div class="col">
+                                            <ul>
+                                                <h6>No Incluye:</h6>
+                                                <li>Productos de Tienda o Suplementos</li>
+                                                <li>Acceso a Corto Plazo</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
                             </div>
                         </div>
                     </div>
