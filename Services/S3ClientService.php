@@ -11,6 +11,8 @@ class S3ClientService
 {
     private static $s3Client;
 
+    //AKIAXYKJRYXKFBVIFGG2
+    //rOD4dcGf4n/m5IJfo3/Zb3dnBin0rH2xYzvdCIq6
     public static function create(): S3Client
     {
         if (self::$s3Client === null) {
@@ -18,8 +20,8 @@ class S3ClientService
                 'version' => 'latest',
                 'region' => 'us-east-1',
                 'credentials' => [
-                    'key' => 'AKIAXYKJRYXKFBVIFGG2',
-                    'secret' => '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',
+                    'key' => '',
+                    'secret' => '',
                 ],
             ]);
         }
