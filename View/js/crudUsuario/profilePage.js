@@ -47,13 +47,16 @@ async function updateUserData() {
 
         if (result.success) {
             // Actualiza la interfaz de usuario con los nuevos datos
-            updateUI(userId, firstName, lastName, email, phone);
             let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
             Swal.fire({
                 title: '¡Éxito!',
                 text: message,
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = './index.php?controller=ProfilePage&action=index'
+                }
             });
         } else {
             if (result.error == 'usuario') {
@@ -105,9 +108,119 @@ function showValidationError(message) {
     });
 }
 
-function updateUI(userId, firstName, lastName, email, phone) {
-    $(`#firstName-${userId}`).text(firstName);
-    $(`#lastName-${userId}`).text(lastName);
-    $(`#email-${userId}`).text(email);
-    $(`#phone-${userId}`).text(phone);
-}
+$(document).ready(function () {
+    $('#changePwBtn').click(function () {
+        $('#passwordChangeModal').modal('show');
+    });
+});
+
+$(document).ready(function () {
+    $("#savePasswordBtn").click(async function () {
+        event.preventDefault();
+
+        // Recoge los valores de los campos de usuario y contraseña
+        var oldPassword = $("#oldPassword").val();
+        var newPassword = $("#newPassword").val();
+
+        // Limpiar border rojos (si existen)
+        $("#oldPassword, #newPassword").css('border', '');
+
+        // Buscar campos en blanco y marcar borde de rojo
+        var isFormValid = true;
+        $("#oldPassword, #newPassword").each(function () {
+            if (!$(this).val()) {
+                $(this).css('border', '1px solid red');
+                isFormValid = false;
+            }
+        });
+        if (!isFormValid) {
+            Swal.fire({
+                title: "Todos los campos deben ser completados.",
+                icon: "warning",
+                confirmButtonColor: 'rgb(29, 29, 29)',
+                confirmButtonText: 'Aceptar'
+            });
+            return;
+        }
+        // Realiza una solicitud POST al servidor con los datos del usuario
+        const response = await fetch('./index.php?controller=ProfilePage&action=changePassword', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            }),
+        });
+
+        // Espera la respuesta del servidor en formato JSON
+        const result = await response.json();
+
+        if (result.success) {
+            if (result.passwordMatch) {
+                $('#passwordChangeModal').modal('hide');
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'Tu contraseña ha sido actualizada correctamente.',
+                    icon: 'success',
+                    confirmButtonColor: 'rgb(29, 29, 29)',
+                    confirmButtonText: 'Aceptar'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Contraseña no coincide con la actual.',
+                    icon: 'error',
+                    confirmButtonColor: 'rgb(29, 29, 29)',
+                    confirmButtonText: 'Aceptar'
+                })
+            }
+        } else {
+            if (result.passwordMatch) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error en al actualizar la contraseña.',
+                    icon: 'error',
+                    confirmButtonColor: 'rgb(29, 29, 29)',
+                    confirmButtonText: 'Aceptar'
+                })
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error en el servidor.',
+                    icon: 'error',
+                    confirmButtonColor: 'rgb(29, 29, 29)',
+                    confirmButtonText: 'Aceptar'
+                })
+            }
+        }
+    })
+});
+
+
+$(document).ready(function () {
+    $('.form-control').prop('readonly', true);
+    $('#profileImage-container').hide();
+
+    $('#editBtn').click(function () {
+        $('.form-control').each(function () {
+            if (this.id !== 'userId' && this.id !== 'username' && this.id !== 'role') {
+                $(this).prop('readonly', false);
+            }
+        });
+
+        $('#profileImage-container').show();
+
+        $('#saveBtn').show();
+        $('#cancelBtn').show();
+        $('#editBtn').hide();
+    });
+
+    $('#closeModalBtn').click(function () {
+        $('#passwordChangeModal').modal('hide');
+    });
+
+
+    $('#cancelBtn').click(function () {
+        location.reload();
+    });
+});

@@ -92,4 +92,33 @@ class ProfilePageController
         header('Content-Type: application/json');
         echo json_encode($response);
     }
+
+
+    function changePassword()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $username = $_SESSION['username'];
+        $oldPassword = $data['oldPassword'];
+        $newPassword = $data['newPassword'];
+
+        $usuario = $this->usuarioM->userLogin($username);
+
+        if ($usuario) {
+            if (password_verify($oldPassword, $usuario->getPassword())) {
+                if ($this->usuarioM->updatePassword($usuario->getIdUsuario(), $newPassword)) {
+                    $response = ['success' => true, 'passwordMatch' => true];
+                } else {
+                    $response = ['success' => false, 'passwordMatch' => true];
+                }
+            } else {
+                $response = ['success' => false, 'passwordMatch' => false];
+            }
+        } else {
+            $response = ['success' => false];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }
