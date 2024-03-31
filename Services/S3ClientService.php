@@ -4,24 +4,24 @@ namespace ProyectoSC502\Services;
 
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
-use Exception;
 use finfo;
+
 
 class S3ClientService
 {
     private static $s3Client;
 
-    //AKIAXYKJRYXKFBVIFGG2
-    //rOD4dcGf4n/m5IJfo3/Zb3dnBin0rH2xYzvdCIq6
     public static function create(): S3Client
     {
+        $config = parse_ini_file('config.ini');
+
         if (self::$s3Client === null) {
             self::$s3Client = new S3Client([
                 'version' => 'latest',
                 'region' => 'us-east-1',
                 'credentials' => [
-                    'key' => '',
-                    'secret' => '',
+                    'key' => $config['AWS_ACCESS_KEY_ID'] ?? null,
+                    'secret' => $config['AWS_SECRET_ACCESS_KEY'] ?? null,
                 ],
             ]);
         }
