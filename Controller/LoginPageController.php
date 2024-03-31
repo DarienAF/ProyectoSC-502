@@ -1,12 +1,14 @@
 <?php
-session_start();
-require_once './Model/Connection.php';
-require_once './Model/Methods/UsuarioM.php';
 
+namespace ProyectoSC502\Controller;
+
+session_start();
+
+use ProyectoSC502\Model\Connection;
+use ProyectoSC502\Model\Methods\UsuarioM;
 
 class LoginPageController
 {
-
     private $usuarioM;
 
     public function __construct()
@@ -52,7 +54,6 @@ class LoginPageController
             $response = ['success' => false, 'error' => 'usuario', 'icon' => 'error', 'message' => 'Usuario incorrecto'];
         }
 
-
         header('Content-Type: application/json');
         echo json_encode($response);
     }
@@ -93,5 +94,4 @@ class LoginPageController
         session_destroy();
         header("Location:./index.php?controller=LoginPage&action=index");
     }
-
 }

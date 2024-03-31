@@ -1,7 +1,7 @@
 <div class="nav">
     <div class="nav-left">
         <a href="./"><img class="nav-logo" src="./View/img/logos/Logo2.png" alt="Home"></a>
-        <a href="./"><img class="nav-profile-pic" src="./View/img/users/default_user.png" alt="Home"></a>
+        <a href="./"><img class="nav-profile-pic" src=<?php echo $userImagePath ?> alt="Home"></a>
         <p><?php echo $current_user->getFullName() ?></p>
     </div>
 

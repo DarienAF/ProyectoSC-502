@@ -1,10 +1,10 @@
 <?php
+
+namespace ProyectoSC502\Controller;
+
 session_start();
-require_once './Model/Connection.php';
-require_once  './Model/Methods/UsuarioM.php';
 
 class PricePageController {
-
     function Index()
     {
         $current_page = 'PricePage';

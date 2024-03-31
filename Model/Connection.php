@@ -1,5 +1,10 @@
 <?php
 
+namespace ProyectoSC502\Model;
+
+use PDO;
+use PDOException;
+
 class Connection
 {
     private static $instance = null;

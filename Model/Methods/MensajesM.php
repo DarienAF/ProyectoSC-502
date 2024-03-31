@@ -1,7 +1,11 @@
 <?php
-require_once './Model/Connection.php';
-require_once './Model/Entities/Mensajes.php';
 
+namespace ProyectoSC502\Model\Methods;
+
+use PDO;
+use PDOException;
+use ProyectoSC502\Model\Connection;
+use ProyectoSC502\Model\Entities\Mensajes;
 
 class MensajesM
 {

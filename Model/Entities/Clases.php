@@ -1,6 +1,6 @@
 <?php
 
-
+namespace ProyectoSC502\Model\Entities;
 
 class Clases {
     private $id_clase;

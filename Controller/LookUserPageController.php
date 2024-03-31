@@ -1,9 +1,12 @@
 <?php
-session_start();
-require_once './Model/Connection.php';
-require_once './Model/Methods/UsuarioM.php';
-require_once './Model/Methods/RolM.php';
 
+namespace ProyectoSC502\Controller;
+
+session_start();
+
+use ProyectoSC502\Model\Entities\Usuario;
+use ProyectoSC502\Model\Methods\UsuarioM;
+use ProyectoSC502\Model\Methods\RolM;
 
 class LookUserPageController
 {
@@ -27,6 +30,7 @@ class LookUserPageController
         $userRole = $current_user->getIdRol();
         $users = $this->usuarioM->viewAll();
         $roles = $this->rolM->viewRolesNames();
+        $userImagePath = $current_user->getRutaImagen();
         require_once './View/views/private/LookUserPage.php';
     }
 
@@ -184,5 +188,4 @@ class LookUserPageController
         header('Content-Type: application/json');
         echo json_encode($response);
     }
-
 }

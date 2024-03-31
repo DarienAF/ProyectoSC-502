@@ -1,5 +1,7 @@
 <?php
 
+namespace ProyectoSC502\Model\Entities;
+
 class Medidas {
     private $id_medida;
     private $id_usuario;

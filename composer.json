@@ -1,0 +1,19 @@
+{
+  "require": {
+    "aws/aws-sdk-php": "^3.302",
+    "ext-fileinfo": "*",
+    "ext-pdo": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ProyectoSC502\\": "./",
+      "ProyectoSC502\\Controller\\": "Controller/",
+      "ProyectoSC502\\Core\\": "Core/",
+      "ProyectoSC502\\Model\\": "Model/",
+      "ProyectoSC502\\Model\\Entities\\": "Model/Entities/",
+      "ProyectoSC502\\Model\\Methods\\": "Model/Methods/",
+      "ProyectoSC502\\Services\\": "Services/"
+    }
+  }
+}

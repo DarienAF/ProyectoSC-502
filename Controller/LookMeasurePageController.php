@@ -1,11 +1,13 @@
 <?php
+
+namespace ProyectoSC502\Controller;
+
 session_start();
-require_once './Model/Connection.php';
-require_once  './Model/Methods/UsuarioM.php';
 
+use ProyectoSC502\Model\Methods\UsuarioM;
 
-class LookMeasurePageController {
-
+class LookMeasurePageController
+{
     function Index()
     {
         $current_page = 'LookMeasurePage';
@@ -14,6 +16,7 @@ class LookMeasurePageController {
         $current_user = $usuarioM->view($user_id);
         $userFullName = $current_user->getFullName();
         $userRole = $current_user->getIdRol();
+        $userImagePath = $current_user->getRutaImagen();
         require_once './View/views/private/LookMeasurePage.php';
     }
 }
