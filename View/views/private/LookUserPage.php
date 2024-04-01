@@ -129,7 +129,7 @@
     </table>
 </div>
 
-<!-- Modal Crear-->>
+<!-- Modal Crear-->
 <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -176,7 +176,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" onclick="createUserData()">
+                <button type="button" class="btn btn-success" onclick="createMeasureData()">
                     Guardar Cambios
                 </button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -186,7 +186,7 @@
 </div>
 
 
-<!-- Modal Modificar-->>
+<!-- Modal Modificar-->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -233,7 +233,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" id="password" name="password" readonly>
                             <button class="btn btn-outline-secondary btn-shuffle-pw" type="button"
-                                    data-password-field="contrasena" title="Generar contraseña temporal">
+                                    data-password-field="password" title="Generar contraseña temporal">
                                 <i class="bi bi-shuffle"></i>
                             </button>
                         </div>

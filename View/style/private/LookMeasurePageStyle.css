@@ -4,7 +4,7 @@ body {
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('../../img/private/private_bg1.jpg');
+    background-image: url('../../img/private/private_bg3.jpg');
 }
 
 .content {
@@ -16,4 +16,154 @@ body {
 
 .active {
     border-bottom: 3px solid #D43B3B;
+}
+
+
+.add-measure-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    font-family: "Poppins", sans-serif;
+    padding-top: 20px;
+}
+
+.add-measure-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 20px;
+    font-weight: bolder;
+    font-size: 1.5vh;
+}
+
+.add-measure-icon {
+    font-size: 2.5vh;
+    padding: 0 5px 0 0;
+}
+
+.table-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 20px 100px 50px 100px;
+    overflow-x: auto;
+    font-family: "Poppins", sans-serif;
+}
+
+thead {
+    font-size: 1.5vh;
+}
+
+.form-select,
+.form-control,
+td {
+    font-size: 1.4vh;
+
+}
+
+.table-titles {
+    user-select: none;
+}
+
+.sort-arrow {
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 0.5em;
+    text-align: center;
+}
+
+.table th#sortID, .table td#sortID {
+    width: 120px;
+}
+
+.table th#sortStatus, .table td#sortStatus {
+    width: 200px;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    align-content: center;
+}
+
+th {
+    min-width: 50px;
+    position: relative;
+}
+
+th span {
+    display: inline-block;
+    width: calc(100% - 25px);
+    color: #8D8D8D;
+}
+
+.btn-toggle {
+    width: 100%;
+    min-width: 120px;
+}
+
+#tablaUsuario tr td {
+    padding: 4px 0 4px 0;
+}
+
+.btn-toggle[data-state="activo"] {
+    background-color: green;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.4vh;
+}
+
+.btn-toggle[data-state="inactivo"] {
+    background-color: #D43B3B;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.4vh;
+}
+
+.btn-warning {
+    font-size: 1.5vh;
+    font-weight: bolder;
+}
+
+.no-result-container {
+    text-align: center;
+    padding: 0;
+    background-color: black;
+    position: relative;
+}
+
+.no-result-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, transparent, black 30%);
+    pointer-events: none;
+}
+
+.no-result-container img {
+    max-width: 40%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.modal-dialog {
+    font-family: "Poppins", sans-serif;
+}
+
+.modal-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image {
+    width: 30%;
 }

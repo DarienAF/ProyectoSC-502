@@ -1,5 +1,7 @@
 <?php
 
+namespace ProyectoSC502\Model\Entities;
+
 class Medidas {
     private $id_medida;
     private $id_usuario;
@@ -89,5 +91,17 @@ class Medidas {
     public function setMusculo($musculo)
     {
         $this->musculo = $musculo;
+    }
+
+    public function setMeasureFields($row)
+    {
+        $this->setIdMedida($row['id_medida']);
+        $this->setIdUsuario($row['id_usuario']);
+        $this->setFechaRegistro($row['fecha_registro']);
+        $this->setPeso($row['peso']);
+        $this->setAltura($row['altura']);
+        $this->setEdad($row['edad']);
+        $this->setGrasa($row['grasa']);
+        $this->setMusculo($row['musculo']);
     }
 }

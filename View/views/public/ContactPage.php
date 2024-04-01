@@ -82,6 +82,7 @@
     </div>
 </div>
 
+
 <?php require './View/fragments/footer.php'; ?>
 
 <script src="./View/js/crudMensajes/contactpage.js"></script>

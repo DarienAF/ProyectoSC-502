@@ -51,3 +51,9 @@ body {
     color: #fff;
     border-radius: 20px;
 }
+
+.modal-image {
+    max-width: 100%;
+    max-height: 400px; /* Ajusta este valor según tus necesidades */
+  }
+  
