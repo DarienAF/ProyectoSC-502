@@ -27,7 +27,7 @@ class ProfilePageController
         $usuarioM = new UsuarioM();
         $current_user = $usuarioM->view($user_id);
         $username = $current_user->getUsername();
-        $userRole = $current_user->getIdRol();
+        $userRole = $this->rolM->getRoleName($current_user->getIdRol());
         $userFullName = $current_user->getFullName();
         $userFirstName = $current_user->getNombre();
         $userLastName = $current_user->getApellidos();

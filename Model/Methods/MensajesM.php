@@ -16,7 +16,7 @@ class MensajesM
         $this->connection = Connection::getInstance();
     }
 
-    function create(Mensajes $mensajes)
+    function create(Mensajes $mensajes): bool
     {
         $retVal = false;
 
@@ -42,11 +42,7 @@ class MensajesM
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
-            $retVal = false;
         }
-
         return $retVal;
     }
-
-
 }

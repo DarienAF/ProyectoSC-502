@@ -92,4 +92,16 @@ class Medidas {
     {
         $this->musculo = $musculo;
     }
+
+    public function setMeasureFields($row)
+    {
+        $this->setIdMedida($row['id_medida']);
+        $this->setIdUsuario($row['id_usuario']);
+        $this->setFechaRegistro($row['fecha_registro']);
+        $this->setPeso($row['peso']);
+        $this->setAltura($row['altura']);
+        $this->setEdad($row['edad']);
+        $this->setGrasa($row['grasa']);
+        $this->setMusculo($row['musculo']);
+    }
 }

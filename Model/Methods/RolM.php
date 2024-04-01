@@ -33,11 +33,10 @@ class RolM{
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $rol;
     }
 
-    function viewAll()
+    function viewAll(): array
     {
         $roles = [];
 
@@ -54,11 +53,10 @@ class RolM{
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $roles;
     }
 
-    function viewRolesNames()
+    function viewRolesNames(): array
     {
         $roles = [];
 
@@ -73,9 +71,24 @@ class RolM{
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $roles;
     }
 
+    function getRoleName($id_rol)
+    {
+        try {
+            $query = "SELECT id_rol, nombre FROM `Rol`";
+            $statement = $this->connection->Prepare($query);
+            $statement->execute();
 
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['id_rol'] == $id_rol) {
+                    return $row['nombre'];
+                };
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+        return null;
+    }
 }
