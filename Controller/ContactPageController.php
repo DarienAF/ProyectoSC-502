@@ -1,18 +1,18 @@
 <?php
-session_start();
-require_once './Model/Connection.php';
-require_once './Model/Methods/MensajesM.php';
-require_once './Model/Entities/Mensajes.php';
 
+namespace ProyectoSC502\Controller;
+
+session_start();
+
+use ProyectoSC502\Model\Methods\MensajesM;
+use ProyectoSC502\Model\Entities\Mensajes;
 
 class ContactPageController
 {
-
     function Index()
     {
         $current_page = 'ContactPage';
         require_once './View/views/public/ContactPage.php';
-
     }
 
     function Contact()
@@ -42,7 +42,5 @@ class ContactPageController
 
         header('Content-Type: application/json');
         echo json_encode($response);
-
     }
-
 }

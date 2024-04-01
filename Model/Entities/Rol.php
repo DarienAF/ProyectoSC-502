@@ -1,5 +1,7 @@
 <?php
 
+namespace ProyectoSC502\Model\Entities;
+
 class Rol
 {
     private $id_rol;

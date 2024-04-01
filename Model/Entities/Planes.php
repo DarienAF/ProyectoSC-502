@@ -1,5 +1,7 @@
 <?php
 
+namespace ProyectoSC502\Model\Entities;
+
 class Planes
 {
     private $id_plan;

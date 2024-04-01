@@ -1,6 +1,11 @@
 <?php
-require_once './Model/Connection.php';
-require_once './Model/Entities/Usuario.php';
+
+namespace ProyectoSC502\Model\Methods;
+
+use PDO;
+use PDOException;
+use ProyectoSC502\Model\Connection;
+use ProyectoSC502\Model\Entities\Usuario;
 
 class UsuarioM
 {
@@ -11,7 +16,7 @@ class UsuarioM
         $this->connection = Connection::getInstance();
     }
 
-    function create(Usuario $usuario)
+    function create(Usuario $usuario): bool
     {
         $retVal = false;
 
@@ -46,43 +51,47 @@ class UsuarioM
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
-            $retVal = false;
         }
 
         return $retVal;
     }
 
-    function update(Usuario $usuarioActualizado, Usuario $usuarioOriginal)
+    function update(Usuario $usuarioActualizado, Usuario $usuarioOriginal): bool
     {
         $updates = [];
         $params = [];
 
-        if ($usuarioActualizado->getUsername() != $usuarioOriginal->getUsername()) {
+        if ($usuarioActualizado->getUsername() !== $usuarioOriginal->getUsername() && !is_null($usuarioActualizado->getUsername())) {
             $updates[] = "`username` = ?";
             $params[] = $usuarioActualizado->getUsername();
         }
-        if ($usuarioActualizado->getNombre() != $usuarioOriginal->getNombre()) {
+        if ($usuarioActualizado->getNombre() !== $usuarioOriginal->getNombre() && !is_null($usuarioActualizado->getNombre())) {
             $updates[] = "`nombre` = ?";
             $params[] = $usuarioActualizado->getNombre();
         }
-        if ($usuarioActualizado->getApellidos() != $usuarioOriginal->getApellidos()) {
+        if ($usuarioActualizado->getApellidos() !== $usuarioOriginal->getApellidos() && !is_null($usuarioActualizado->getApellidos())) {
             $updates[] = "`apellidos` = ?";
             $params[] = $usuarioActualizado->getApellidos();
         }
-        if ($usuarioActualizado->getCorreo() != $usuarioOriginal->getCorreo()) {
+        if ($usuarioActualizado->getCorreo() !== $usuarioOriginal->getCorreo() && !is_null($usuarioActualizado->getCorreo())) {
             $updates[] = "`correo` = ?";
             $params[] = $usuarioActualizado->getCorreo();
         }
-        if ($usuarioActualizado->getTelefono() != $usuarioOriginal->getTelefono()) {
+        if ($usuarioActualizado->getTelefono() !== $usuarioOriginal->getTelefono() && !is_null($usuarioActualizado->getTelefono())) {
             $updates[] = "`telefono` = ?";
             $params[] = $usuarioActualizado->getTelefono();
         }
-        if ($usuarioActualizado->getIdRol() != $usuarioOriginal->getIdRol()) {
+        if ($usuarioActualizado->getIdRol() !== $usuarioOriginal->getIdRol() && !is_null($usuarioActualizado->getIdRol())) {
             $updates[] = "`id_rol` = ?";
             $params[] = $usuarioActualizado->getIdRol();
         }
 
-        if (count($updates) > 0) {
+        if ($usuarioActualizado->getRutaImagen() !== $usuarioOriginal->getRutaImagen() && !is_null($usuarioActualizado->getRutaImagen())) {
+            $updates[] = "`ruta_imagen` = ?";
+            $params[] = $usuarioActualizado->getRutaImagen();
+        }
+
+        if (!empty($updates)) {
             $query = "UPDATE `Usuarios` SET " . implode(", ", $updates) . " WHERE `id_usuario` = ?";
             $params[] = $usuarioActualizado->getIdUsuario();
 
@@ -98,10 +107,11 @@ class UsuarioM
         return false;
     }
 
+
     public function updatePassword($userId, $newPassword, $passwordFlag = false)
     {
         // Obtener la contraseña actual del usuario
-        $currentPasswordQuery = "SELECT password FROM usuarios WHERE id_usuario = :userId";
+        $currentPasswordQuery = "SELECT password FROM `Usuarios` WHERE id_usuario = :userId";
         $stmt = $this->connection->prepare($currentPasswordQuery);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
@@ -111,7 +121,7 @@ class UsuarioM
         if (!password_verify($newPassword, $currentPassword)) {
             // Si son diferentes, actualiza la contraseña y el password_flag
             $newPasswordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-            $updateQuery = "UPDATE usuarios SET password = :newPassword, password_flag = :passwordFlag WHERE id_usuario = :userId";
+            $updateQuery = "UPDATE `Usuarios` SET password = :newPassword, password_flag = :passwordFlag WHERE id_usuario = :userId";
             $updateStmt = $this->connection->prepare($updateQuery);
             $updateStmt->bindParam(':newPassword', $newPasswordHash, PDO::PARAM_STR);
             $updateStmt->bindParam(':passwordFlag', $passwordFlag, PDO::PARAM_INT);
@@ -156,11 +166,10 @@ class UsuarioM
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $usuario;
     }
 
-    function viewAll()
+    function viewAll(): array
     {
         $usuarios = [];
 
@@ -177,12 +186,11 @@ class UsuarioM
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $usuarios;
     }
 
 
-    function setActivationStatus($id_usuario, $status)
+    function setActivationStatus($id_usuario, $status): bool
     {
         $retVal = false;
 
@@ -197,13 +205,11 @@ class UsuarioM
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
-            $retVal = false;
         }
-
         return $retVal;
     }
 
-    function usernameExists($username)
+    function usernameExists($username): bool
     {
         $exists = false;
 
@@ -219,11 +225,10 @@ class UsuarioM
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $exists;
     }
 
-    function emailExists($email)
+    function emailExists($email): bool
     {
         $exists = false;
 
@@ -239,8 +244,6 @@ class UsuarioM
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-
         return $exists;
     }
-
 }

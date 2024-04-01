@@ -1,15 +1,16 @@
 <?php
-session_start();
-require_once './Model/Connection.php';
-require_once  './Model/Methods/UsuarioM.php';
-require_once  './Model/Entities/Usuario.php';
 
+namespace ProyectoSC502\Controller;
+
+session_start();
+
+use ProyectoSC502\Model\Connection;
+use ProyectoSC502\Model\Entities\Usuario;
+use ProyectoSC502\Model\Methods\UsuarioM;
 
 class SignUpPageController {
-
     private $usuarioM;
     private $newUser;
-
     public function __construct()
     {
         $this->usuarioM = new UsuarioM();
@@ -34,7 +35,7 @@ class SignUpPageController {
         $this->newUser->setApellidos($data['lastName']);
         $this->newUser->setCorreo($data['email']);
         $this->newUser->setTelefono($data['phone']);
-        $this->newUser->setRutaImagen("./View/img/users/default_user.png");
+        $this->newUser->setRutaImagen("https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg");
         $this->newUser->setActivo(1);
         $this->newUser->setIdRol(4);
         $this->newUser->setPasswordFlag(0);
