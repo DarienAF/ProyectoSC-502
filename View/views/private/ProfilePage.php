@@ -35,7 +35,8 @@
                         </div>
                         <div class="col-md-3">
                             <label for="role" class="form-label">Rol:</label>
-                            <input type="text" class="form-control" id="role" readonly value=<?php echo $userRole ?>>
+                            <input type="text" class="form-control" id="role" readonly
+                                   value=<?php echo $userRoleName ?>>
                         </div>
                     </div>
                     <div class="row mb-3">

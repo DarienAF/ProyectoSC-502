@@ -43,20 +43,27 @@ class LookMeasurePageController
     {
         $current_page = 'LookMeasurePage';
 
-        // Carga datos del usuario actual y todos los usuarios y roles para la vista.
+        // Carga datos del usuario actual.
         $user_id = $_SESSION['user_id'];
         $current_user = $this->usuarioM->view($user_id);
         $userFullName = $current_user->getFullName();
         $userRole = $current_user->getIdRol();
-        $users = $this->usuarioM->viewAll();
-        $roles = $this->rolM->viewRolesNames();
-        foreach ($this->medidasM->viewAll() as $measure) {
-            $userMeasures[] = $this->SetMeasuresData($measure);
-        }
-
-
         $userImagePath = $current_user->getRutaImagen();
-        require_once './View/views/private/LookMeasurePage.php';
+        $userMeasures = [];
+
+        if ($userRole != 4) {
+            foreach ($this->medidasM->viewAll() as $measure) {
+                $userMeasures[] = $this->SetMeasuresData($measure);
+            }
+            require_once './View/views/private/MeasurePages/LookMeasurePage.php';
+        } else {
+            foreach ($this->medidasM->viewAll() as $measure) {
+                if ($measure->getIdUsuario() == $user_id) {
+                    $userMeasures[] = $this->SetMeasuresData($measure);
+                }
+            }
+            require_once './View/views/private/MeasurePages/LookMeasurePageMembers.php';
+        }
     }
 
 
