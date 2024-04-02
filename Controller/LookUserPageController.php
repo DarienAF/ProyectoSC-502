@@ -1,9 +1,12 @@
 <?php
-session_start();
-require_once './Model/Connection.php';
-require_once './Model/Methods/UsuarioM.php';
-require_once './Model/Methods/RolM.php';
 
+namespace ProyectoSC502\Controller;
+
+session_start();
+
+use ProyectoSC502\Model\Entities\Usuario;
+use ProyectoSC502\Model\Methods\UsuarioM;
+use ProyectoSC502\Model\Methods\RolM;
 
 class LookUserPageController
 {
@@ -27,6 +30,7 @@ class LookUserPageController
         $userRole = $current_user->getIdRol();
         $users = $this->usuarioM->viewAll();
         $roles = $this->rolM->viewRolesNames();
+        $userImagePath = $current_user->getRutaImagen();
         require_once './View/views/private/LookUserPage.php';
     }
 
@@ -81,7 +85,9 @@ class LookUserPageController
             $usuarioActualizado->setIdRol($data['role']);
             $usuarioActualizado->setPassword($data['password']);
 
+            $rol = $this->rolM->view($data['role']);
             $usuarioOriginal = $this->usuarioM->view($data['userId']);
+
 
             if (!$this->usuarioM->emailExists($usuarioActualizado->getCorreo()) || $usuarioOriginal->getCorreo() == $usuarioActualizado->getCorreo()) {
                 if (!$this->usuarioM->usernameExists($usuarioActualizado->getUsername()) || $usuarioOriginal->getUsername() == $usuarioActualizado->getUsername()) {
@@ -93,10 +99,10 @@ class LookUserPageController
                     }
 
                     if ($updateResult || $passwordUpdateResult) {
-                        $response = ['success' => true, 'changed' => true, 'message' => 'Usuario y contraseña actualizados con éxito'];
+                        $response = ['success' => true, 'changed' => true, 'message' => 'Usuario y contraseña actualizados con éxito', 'role' => $rol->getNombre()];
                     } else {
 
-                        $response = ['success' => true, 'false' => true, 'message' => 'No se agregaron cambios al usuario'];
+                        $response = ['success' => true, 'changed' => false, 'message' => 'No se agregaron cambios al usuario'];
                     }
                 } else {
                     $response = ['success' => false, 'error' => 'usuario', 'message' => '¡Nombre de usuario ya se encuentra en uso!'];
@@ -184,5 +190,4 @@ class LookUserPageController
         header('Content-Type: application/json');
         echo json_encode($response);
     }
-
 }

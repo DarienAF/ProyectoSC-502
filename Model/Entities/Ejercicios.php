@@ -1,5 +1,9 @@
 <?php
-    class Ejercicios {
+
+namespace ProyectoSC502\Model\Entities;
+
+class Ejercicios
+{
 
         private $id_ejercicio;
         private $nombre_ejercicio;

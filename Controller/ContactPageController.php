@@ -1,18 +1,18 @@
 <?php
-session_start();
-require_once './Model/Connection.php';
-require_once './Model/Methods/MensajesM.php';
-require_once './Model/Entities/Mensajes.php';
 
+namespace ProyectoSC502\Controller;
+
+session_start();
+
+use ProyectoSC502\Model\Methods\MensajesM;
+use ProyectoSC502\Model\Entities\Mensajes;
 
 class ContactPageController
 {
-
     function Index()
     {
         $current_page = 'ContactPage';
         require_once './View/views/public/ContactPage.php';
-
     }
 
     function Contact()
@@ -20,7 +20,7 @@ class ContactPageController
         $mensajesM = new MensajesM();
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $fullNameMsg = $data['fullNameMsg'];
+        $fullNameMsg = $data['firstNameMsg'] . " " . $data['lastNameMsg'];
         $emailMsg = $data['emailMsg'];
         $titleMsg = $data['titleMsg'];
         $contextMsg = $data['contextMsg'];
@@ -42,7 +42,5 @@ class ContactPageController
 
         header('Content-Type: application/json');
         echo json_encode($response);
-
     }
-
 }

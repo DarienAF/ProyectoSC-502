@@ -1,45 +1,47 @@
 <?php
 
+namespace ProyectoSC502\Core;
+
+use ProyectoSC502\Core\RutaFija;
+use ProyectoSC502\Controller\IndexPageController;
+
 class Rutas
 {
-    function LoadController($Controller)
+    function LoadController($controller)
     {
+
         // Formatea el nombre del controlador para seguir la convención de nomenclatura.
         // Ejemplo: convierte "home" a "HomeController".
-        $nombreController = ucwords(strtolower($Controller)) . "Controller";
+        $controllerName = ucwords(strtolower($controller)) . "Controller";
+
+        //
+        $controllerClass = "\\ProyectoSC502\\Controller\\" . $controllerName;
 
         // Construye la ruta del archivo del controlador basándose en el nombre del controlador.
-        $archivoController = "./Controller/" . ucwords(strtolower($Controller)) . "Controller.php";
+        $controllerPath = "./Controller/" . $controllerName . ".php";
 
-        // Verifica si el archivo del controlador existe. Si no, utiliza el controlador predeterminado.
-        if (!is_file($archivoController))
+        // Verifica si la clase del controlador existe. Si no, utiliza el controlador predeterminado.
+        if (!is_file($controllerPath))
         {
-            $nombreController = MAIN_CONTROLLER; // Controlador predeterminado
-            $archivoController = FIXED_PATH; // Ruta del controlador predeterminado
+            $controllerClass = RutaFija::MAIN_CONTROLLER; // Use the constant from RutaFija
+            $controllerPath = RutaFija::FIXED_PATH; // Ruta del controlador predeterminado
         }
 
-        // Incluye el archivo del controlador.
-        require_once $archivoController;
-
         // Instancia el controlador.
-        $ControllerObjeto = new $nombreController();
-
-        // Devuelve la instancia del controlador.
-        return $ControllerObjeto;
+        $ControllerInstance = new $controllerClass();
+        return $ControllerInstance;
     }
 
     function LoadAction($Controller,$action)
     {
         if(isset($action) && method_exists($Controller, $action))
         {
+            // Llama al metodo si existe
             $Controller->$action();
-        }
-        else
-        {
-            require_once FIXED_PATH;
-            $Controller=new IndexPageController();
-            $Controller->Index();
+        } else {
+            // Si no existe, llama al defaul
+            $defaultAction = RutaFija::MAIN_ACTION;
+            $Controller->$defaultAction();
         }
     }
 }
-
