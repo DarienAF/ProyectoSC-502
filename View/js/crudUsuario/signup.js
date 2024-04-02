@@ -3,90 +3,50 @@ $(document).ready(function () {
     $("#signUpBtn").click(async function (event) {
         event.preventDefault();
 
-        // Limpiar border rojos (si existen)
-        $("#firstName, #lastName, #email, #username, #phone, #password").css('border', '');
-
-        var firstName = $("#firstName").val();
-        var lastName = $("#lastName").val();
-        var email = $("#email").val();
-        var username = $("#username").val();
-        var phone = $("#phone").val();
-        var password = $("#password").val();
-
-        // Buscar campos en blanco y marcar borde de rojo
-        var isFormValid = true;
-        $("#firstName, #lastName, #email, #username, #phone, #password").each(function () {
-            if (!$(this).val()) {
-                $(this).css('border', '1px solid red');
-                isFormValid = false;
-            }
-        });
-
-        if (!isFormValid) {
-            Swal.fire({
-                title: "Todos los campos deben ser completados.",
-                icon: "warning",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+        // Validación de campos
+        const fields = ["firstName", "lastName", "email", "username", "phone", "password"];
+        if (!validateForm(fields)) {
+            showWarning("Todos los campos deben ser completados.");
             return;
         }
 
-        // Validación del email electrónico
-        var regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!regexCorreo.test(email)) {
+        // Recolecta los datos del formulario y valida cada campo
+        const formData = {
+            firstName: $("#firstName").val().trim(),
+            lastName: $("#lastName").val().trim(),
+            email: $("#email").val().trim(),
+            username: $("#username").val().trim(),
+            phone: $("#phone").val().trim(),
+            password: $("#password").val().trim()
+        };
+
+
+        // Validación  para el correo electrónico
+        if (!validateEmail(formData.email)) {
             $("#email").css('border', '1px solid red');
-            Swal.fire({
-                title: "¡Correo electrónico inválido!",
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
-            return;// Detiene la ejecución si el email no es válido
+            showError("¡Correo electrónico inválido!");
+            return;
         }
 
         // Validación del firstName de username
-        var regexUsuario = /^[a-zA-Z0-9_-]+$/;
-        if (!regexUsuario.test(username)) {
+        if (!validateUsername(formData.username)) {
             $("#username").css('border', '1px solid red');
-
-            Swal.fire({
-                title: "¡Nombre de username inválido!",
-                text: "El firstName de username solo puede contener letras, números, guiones y guiones bajos.",
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
-            return;// Detiene la ejecución si el username no es válido
+            showError("¡Correo electrónico inválido!");
+            return;
         }
 
         // Validación de la contraseña
-        var regexContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-        if (!regexContrasena.test(password)) {
+        if (!validatePassword(formData.password)) {
             $("#password").css('border', '1px solid red');
-
-            Swal.fire({
-                title: "¡Contraseña inválida!",
-                text: "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula y un número.",
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
-            return;// Detiene la ejecución si la contraseña
+            showError("¡Correo electrónico inválido!");
+            return;
         }
 
         // Realiza una solicitud POST al servidor con los datos del formulario.
         const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone
-            })
+            body: JSON.stringify(formData)
         });
 
         const result = await response.json();
@@ -104,13 +64,7 @@ $(document).ready(function () {
                 $("#username").css('border', '1px solid red');
             }
             // Si hay un error, muestra un mensaje y no redirige.
-            Swal.fire({
-                title: "¡Hubo un error!",
-                text: result.message,
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+            showError(result.message);
         }
     });
 });

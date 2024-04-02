@@ -26,13 +26,13 @@ async function updateUserData() {
 
     // Validación  para el correo electrónico
     if (!validateEmail(email)) {
-        showValidationError("¡Correo electrónico inválido!");
+        showError("¡Correo electrónico inválido!");
         return;
     }
 
     // Validación  para el nombre de usuario
     if (!validateUsername(username)) {
-        showValidationError("¡Nombre de usuario inválido! El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.");
+        showError("¡Nombre de usuario inválido! El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.");
         return;
     }
 
@@ -48,64 +48,20 @@ async function updateUserData() {
         if (result.success) {
             // Actualiza la interfaz de usuario con los nuevos datos
             let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
-            Swal.fire({
-                title: '¡Éxito!',
-                text: message,
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            }).then((result) => {
-                if (result.value) {
-                    window.location.href = './index.php?controller=ProfilePage&action=index'
-                }
-            });
+            showSuccessAndRedirect(message, './index.php?controller=ProfilePage&action=index');
         } else {
             if (result.error == 'usuario') {
                 $("#username").css('border', '1px solid red');
             } else if (result.error == 'correo') {
                 $("#email").css('border', '1px solid red');
             }
-
             let errorMessage = result.message || 'Hubo un problema al guardar los cambios.';
-            Swal.fire({
-                title: 'Error',
-                text: errorMessage,
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
+            showError(errorMessage);
         }
     } catch (error) {
         console.error('Error al actualizar el usuario', error);
-        Swal.fire({
-            title: 'Error al actualizar el usuario',
-            text: 'Hubo un problema al conectar con el servidor.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-        });
+        showError('Hubo un problema al conectar con el servidor.');
     }
-}
-
-
-// Función para validar el formato del correo electrónico
-function validateEmail(email) {
-    let regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return regexCorreo.test(email);
-}
-
-// Función para validar el nombre de usuario
-function validateUsername(username) {
-    let regexUsuario = /^[a-zA-Z0-9_-]+$/;
-    return regexUsuario.test(username);
-}
-
-
-// Función para mostrar un mensaje de error de validación
-function showValidationError(message) {
-    Swal.fire({
-        title: message,
-        icon: "error",
-        confirmButtonColor: 'rgb(29, 29, 29)',
-        confirmButtonText: 'Aceptar'
-    });
 }
 
 $(document).ready(function () {
@@ -118,38 +74,24 @@ $(document).ready(function () {
     $("#savePasswordBtn").click(async function () {
         event.preventDefault();
 
-        // Recoge los valores de los campos de usuario y contraseña
-        var oldPassword = $("#oldPassword").val();
-        var newPassword = $("#newPassword").val();
-
-        // Limpiar border rojos (si existen)
-        $("#oldPassword, #newPassword").css('border', '');
-
-        // Buscar campos en blanco y marcar borde de rojo
-        var isFormValid = true;
-        $("#oldPassword, #newPassword").each(function () {
-            if (!$(this).val()) {
-                $(this).css('border', '1px solid red');
-                isFormValid = false;
-            }
-        });
-        if (!isFormValid) {
-            Swal.fire({
-                title: "Todos los campos deben ser completados.",
-                icon: "warning",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+        // Validación de campos
+        const fields = ["oldPassword", "newPassword"];
+        if (!validateForm(fields)) {
+            showWarning("Todos los campos deben ser completados.")
             return;
         }
-        // Realiza una solicitud POST al servidor con los datos del usuario
+
+        // Recolecta los datos del formulario y valida cada campo
+        const formData = {
+            oldPassword: $("#oldPassword").val().trim(),
+            newPassword: $("#newPassword").val().trim()
+        };
+
+        // Realiza una solicitud POST al servidor con los datos del formulario.
         const response = await fetch('./index.php?controller=ProfilePage&action=changePassword', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                oldPassword: oldPassword,
-                newPassword: newPassword
-            }),
+            body: JSON.stringify(formData)
         });
 
         // Espera la respuesta del servidor en formato JSON
@@ -157,45 +99,20 @@ $(document).ready(function () {
 
         if (result.success) {
             if (result.passwordMatch) {
+                showSuccess('Tu contraseña ha sido actualizada correctamente.')
                 $('#passwordChangeModal').modal('hide');
-                Swal.fire({
-                    title: 'Éxito',
-                    text: 'Tu contraseña ha sido actualizada correctamente.',
-                    icon: 'success',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                });
             } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Contraseña no coincide con la actual.',
-                    icon: 'error',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                })
+                showError('Contraseña no coincide con la actual.')
             }
         } else {
             if (result.passwordMatch) {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Error en al actualizar la contraseña.',
-                    icon: 'error',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                })
+                showError('Error en al actualizar la contraseña.')
             } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Error en el servidor.',
-                    icon: 'error',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                })
+                showError('Error en el servidor.')
             }
         }
     })
 });
-
 
 $(document).ready(function () {
     $('.form-control').prop('readonly', true);

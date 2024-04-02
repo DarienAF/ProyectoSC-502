@@ -78,7 +78,6 @@ class MedidasM
             $updates[] = "`grasa` = ?";
             $params[] = $medidaActualizada->getGrasa();
         }
-
         if ($medidaActualizada->getMusculo() !== $medidaOriginal->getMusculo() && !is_null($medidaActualizada->getMusculo())) {
             $updates[] = "`musculo` = ?";
             $params[] = $medidaActualizada->getMusculo();

@@ -176,7 +176,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" onclick="createMeasureData()">
+                <button type="button" class="btn btn-success" onclick="createUserData()">
                     Guardar Cambios
                 </button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

@@ -20,7 +20,7 @@ class ContactPageController
         $mensajesM = new MensajesM();
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $fullNameMsg = $data['fullNameMsg'];
+        $fullNameMsg = $data['firstNameMsg'] . " " . $data['lastNameMsg'];
         $emailMsg = $data['emailMsg'];
         $titleMsg = $data['titleMsg'];
         $contextMsg = $data['contextMsg'];

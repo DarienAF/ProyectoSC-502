@@ -140,13 +140,7 @@ async function populateRoleDropdown() {
     } catch (error) {
         // Manejar cualquier error que ocurra durante la obtención o procesamiento de los roles
         console.error('Error al poblar el dropdown de roles:', error);
-        Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error al cargar los roles.',
-            icon: 'error',
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
+        showError('Ocurrió un error al cargar los roles.');
     }
 }
 
@@ -155,71 +149,63 @@ document.addEventListener('DOMContentLoaded', populateRoleDropdown);
 
 // Función que crea un usuario nuevo
 async function createUserData() {
-    // Limpia los bordes rojos de los campos de formulario, si existen
-    $("#Nombre, #Apellidos, #correoElectronico, #nombreUsuario, #numeroContacto, #Contrasena").css('border', '');
 
-    let isFormValid = true;
-
-    // Recolecta los datos del formulario y valida cada campo
-    const userData = {
-        role: validateField('newUserRole'),
-        username: validateField('newUsername'),
-        email: validateField('newEmail'),
-        firstName: validateField('newFirstName'),
-        lastName: validateField('newLastName'),
-        phone: validateField('newPhone'),
-        password: validateField('newPassword')
-    };
-
-    // Función para validar un campo individual y marcarlo si es inválido
-    function validateField(id) {
-        let value = $(`#${id}`).val();
-        if (!value) {
-            $(`#${id}`).css('border', '1px solid red');
-            isFormValid = false;
-        }
-        return value;
-    }
-
-    if (!isFormValid) {
-        Swal.fire({
-            title: "Todos los campos deben ser completados.",
-            icon: "warning",
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
+    // Validación de campos
+    const createUserDataFields = ["newUsername", "newEmail", "newFirstName", "newLastName", "newPhone", "newPassword"];
+    if (!validateForm(createUserDataFields)) {
+        showWarning("Todos los campos deben ser completados.")
         return;
     }
 
+    // Recolecta los datos del formulario y valida cada campo
+    const formData = {
+        role: $("#newUserRole").val().trim(),
+        username: $("#newUsername").val().trim(),
+        email: $("#newEmail").val().trim(),
+        firstName: $("#newFirstName").val().trim(),
+        lastName: $("#newLastName").val().trim(),
+        phone: $("#newPhone").val().trim(),
+        password: $("#newPassword").val().trim()
+    };
+
     // Validación  para el correo electrónico
-    if (!validateEmail(userData.email)) {
+    if (!validateEmail(formData.email)) {
         $("#newEmail").css('border', '1px solid red');
-        showValidationError("¡Correo electrónico inválido!");
+        showError("¡Correo electrónico inválido!");
         return;
     }
 
     // Validación  para el nombre de usuario
-    if (!validateUsername(userData.username)) {
+    if (!validateUsername(formData.username)) {
         $("#newUsername").css('border', '1px solid red');
-        showValidationError("¡Nombre de usuario inválido! El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.");
+        showError("¡Nombre de usuario inválido! El nombre de usuario solo puede contener letras, números, guiones y guiones bajos.");
         return;
     }
 
-    // Envía los datos del usuario al servidor
+    // Realiza una solicitud POST al servidor con los datos del formulario.
     try {
         const response = await fetch('./index.php?controller=LookUserPage&action=createUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(formData)
         });
 
         const result = await response.json();
 
         if (result.success) {
-            localStorage.setItem('userCreated', 'true');  // Almacena un indicador en localStorage
-            window.location.reload();  // Recarga la página para mostrar los nuevos datos
+            Swal.fire({
+                title: '¡Éxito!',
+                text: result.message,
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.value) {
+                    localStorage.setItem('userCreated', 'true');  // Almacena un indicador en localStorage
+                    window.location.reload();  // Recarga la página para mostrar los nuevos datos
+                }
+            });
         } else {
             if (result.error == 'correo') {
                 $("#newEmail").css('border', '1px solid red');
@@ -227,90 +213,63 @@ async function createUserData() {
             if (result.error == 'usuario') {
                 $("#newUsername").css('border', '1px solid red');
             }
-            Swal.fire({
-                title: "¡Hubo un error!",
-                text: result.message,
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+            showError(result.message);
         }
     } catch (error) {
         console.error('Error al crear el usuario:', error);
-        Swal.fire({
-            title: 'Error',
-            text: 'Hubo un problema al conectar con el servidor.',
-            icon: 'error',
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
+        showError('Hubo un problema al conectar con el servidor.');
     }
-}
-
-// Función para validar el formato del correo electrónico
-function validateEmail(email) {
-    let regexCorreo = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return regexCorreo.test(email);
-}
-
-// Función para validar el nombre de usuario
-function validateUsername(username) {
-    let regexUsuario = /^[a-zA-Z0-9_-]+$/;
-    return regexUsuario.test(username);
-}
-
-// Función para mostrar un mensaje de error de validación
-function showValidationError(message) {
-    Swal.fire({
-        title: message,
-        icon: "error",
-        confirmButtonColor: 'rgb(29, 29, 29)',
-        confirmButtonText: 'Aceptar'
-    });
 }
 
 // Función que modifica un usuario existente
 async function updateUserData() {
-    // Recolecta los valores de los campos del formulario
-    const userId = $('#userId').val();
-    const role = $('#userRole').val();
-    const username = $('#username').val();
-    const firstName = $('#firstName').val();
-    const lastName = $('#lastName').val();
-    const email = $('#email').val();
-    const phone = $('#phone').val();
-    const password = $('#password').val();
 
-    // Intenta enviar la solicitud de actualización al servidor
+    // Validación de campos
+    const updateMeasureFields = ["username", "email", "firstName", "lastName", "phone",];
+    if (!validateForm(updateMeasureFields)) {
+        showWarning("Todos los campos deben ser completados.")
+        return;
+    }
+
+    // Recolecta los valores de los campos del formulario
+    const formData = {
+        userId: $('#userId').val(),
+        role: $('#userRole').val(),
+        username: $('#username').val(),
+        email: $('#email').val(),
+        firstName: $('#firstName').val(),
+        lastName: $('#lastName').val(),
+        phone: $('#phone').val(),
+        password: $('#password').val()
+    };
+
+    // Realiza una solicitud POST al servidor con los datos del formulario.
     try {
         const response = await fetch('./index.php?controller=LookUserPage&action=updateUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                userId: userId,
-                role: role,
-                username: username,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone,
-                password: password
-            })
+            body: JSON.stringify(formData)
         });
 
         const result = await response.json();
 
         if (result.success) {
-            // Actualiza la interfaz de usuario con los nuevos datos
-            updateUI(userId, role, username, firstName, lastName, email, phone);
+            if (result.changed) {
+                // Actualiza la interfaz de usuario con los nuevos datos
+                updateUI(formData.userId, result.role, formData.username, formData.firstName, formData.lastName, formData.email, formData.phone);
+            }
             let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
             Swal.fire({
                 title: '¡Éxito!',
                 text: message,
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.value) {
+                    $('#editUserModal').modal('hide');
+                }
             });
         } else {
             if (result.error == 'usuario') {
@@ -318,23 +277,12 @@ async function updateUserData() {
             } else if (result.error == 'correo') {
                 $("#email").css('border', '1px solid red');
             }
-
             let errorMessage = result.message || 'Hubo un problema al guardar los cambios.';
-            Swal.fire({
-                title: 'Error',
-                text: errorMessage,
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
+            showError(errorMessage);
         }
     } catch (error) {
         console.error('Error al actualizar el usuario', error);
-        Swal.fire({
-            title: 'Error al actualizar el usuario',
-            text: 'Hubo un problema al conectar con el servidor.',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-        });
+        showError('Hubo un problema al conectar con el servidor.');
     }
 }
 
@@ -440,20 +388,11 @@ $(document).ready(function () {
                     confirmButtonText: 'Aceptar'
                 });
             } else {
-                Swal.fire({
-                    title: "No se pudo cambiar el estado del usuario.",
-                    icon: "error",
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                });
+                showError('No se pudo cambiar el estado del usuario.');
             }
         } catch (error) {
-            Swal.fire({
-                title: "Ocurrió un error al intentar cambiar el estado del usuario.",
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+            console.error('Error al actualizar el estado del usuario', error);
+            showError('Hubo un problema al conectar con el servidor.');
         }
     });
 });

@@ -3,39 +3,24 @@ $(document).ready(function () {
     $("#loginBtn").click(async function () {
         event.preventDefault();
 
-        // Recoge los valores de los campos de username y contraseña
-        var username = $("#username").val();
-        var password = $("#password").val();
-
-        // Limpiar border rojos (si existen)
-        $("#username, #password").css('border', '');
-
-        // Buscar campos en blanco y marcar borde de rojo
-        var isFormValid = true;
-        $("#username, #password").each(function () {
-            if (!$(this).val()) {
-                $(this).css('border', '1px solid red');
-                isFormValid = false;
-            }
-        });
-        if (!isFormValid) {
-            Swal.fire({
-                title: "Todos los campos deben ser completados.",
-                icon: "warning",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+        // Validación de campos
+        const fields = ["username", "password"];
+        if (!validateForm(fields)) {
+            showWarning("Todos los campos deben ser completados.");
             return;
         }
 
-        // Realiza una solicitud POST al servidor con los datos del username
+        // Recolecta los datos del formulario y valida cada campo
+        const formData = {
+            username: $("#username").val().trim(),
+            password: $("#password").val().trim()
+        };
+
+        // Realiza una solicitud POST al servidor con los datos del formulario.
         const response = await fetch('./index.php?controller=LoginPage&action=LogIn', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                username: username,
-                password: password
-            }),
+            body: JSON.stringify(formData)
         });
 
         // Espera la respuesta del servidor en formato JSON
@@ -71,39 +56,24 @@ $(document).ready(function () {
     $("#savePasswordBtn").click(async function () {
         event.preventDefault();
 
-        // Recoge los valores de los campos de usuario y contraseña
-        var oldPassword = $("#oldPassword").val();
-        var newPassword = $("#newPassword").val();
-
-        // Limpiar border rojos (si existen)
-        $("#oldPassword, #newPassword").css('border', '');
-
-        // Buscar campos en blanco y marcar borde de rojo
-        var isFormValid = true;
-        $("#oldPassword, #newPassword").each(function () {
-            if (!$(this).val()) {
-                $(this).css('border', '1px solid red');
-                isFormValid = false;
-            }
-        });
-        if (!isFormValid) {
-            Swal.fire({
-                title: "Todos los campos deben ser completados.",
-                icon: "warning",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+        // Validación de campos
+        const fields = ["oldPassword", "newPassword"];
+        if (!validateForm(fields)) {
+            showWarning("Todos los campos deben ser completados.");
             return;
         }
 
-        // Realiza una solicitud POST al servidor con los datos del usuario
+        // Recolecta los datos del formulario y valida cada campo
+        const formData = {
+            oldPassword: $("#oldPassword").val().trim(),
+            newPassword: $("#newPassword").val().trim()
+        };
+
+        // Realiza una solicitud POST al servidor con los datos del formulario.
         const response = await fetch('./index.php?controller=LoginPage&action=changePassword', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                oldPassword: oldPassword,
-                newPassword: newPassword
-            }),
+            body: JSON.stringify(formData)
         });
 
         // Espera la respuesta del servidor en formato JSON
@@ -113,43 +83,16 @@ $(document).ready(function () {
         if (result.success) {
             if (result.passwordMatch) {
                 $('#passwordChangeModal').modal('hide');
-                Swal.fire({
-                    title: 'Éxito',
-                    text: 'Tu contraseña ha sido actualizada correctamente.',
-                    icon: 'success',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                }).then((result) => {
-                    if (result.value) {
-                        window.location.href = './index.php?controller=indexPage&action=index'
-                    }
-                });
+                showSuccessAndRedirect('Tu contraseña ha sido actualizada correctamente.',
+                    './index.php?controller=indexPage&action=index')
             } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Contraseña no coincide con la actual.',
-                    icon: 'error',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                })
+                showError('Contraseña no coincide con la actual.')
             }
         } else {
             if (result.passwordMatch) {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Error en al actualizar la contraseña.',
-                    icon: 'error',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                })
+                showError('Error en al actualizar la contraseña.')
             } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Error en el servidor.',
-                    icon: 'error',
-                    confirmButtonColor: 'rgb(29, 29, 29)',
-                    confirmButtonText: 'Aceptar'
-                })
+                showError('Error en el servidor.')
             }
         }
     })

@@ -135,76 +135,44 @@ $('#sortMuscle').click(() => sortTable(8, 'sortMuscle'));
 
 // Función que crea una medida nueva
 async function createMeasureData() {
-    // Limpia los bordes rojos de los campos de formulario, si existen
-    $("#newMeasureUserID, #newWeight, #newHeight, #newAge, #newFat, #newMuscle").css('border', '');
 
-    let isFormValid = true;
-
-    // Recolecta los datos del formulario y valida cada campo
-    const measureDataNew = {
-        userId: validateField('newMeasureUserID'),
-        altura: validateField('newWeight'),
-        peso: validateField('newHeight'),
-        edad: validateField('newAge'),
-        grasa: validateField('newFat'),
-        musculo: validateField('newMuscle'),
-    };
-
-    // Función para validar un campo individual y marcarlo si es inválido
-    function validateField(id) {
-        let value = $(`#${id}`).val();
-        if (!value) {
-            $(`#${id}`).css('border', '1px solid red');
-            isFormValid = false;
-        }
-        return value;
-    }
-
-    if (!isFormValid) {
-        Swal.fire({
-            title: "Todos los campos deben ser completados.",
-            icon: "warning",
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
+    // Validación de campos
+    const createMeasureFields = ["newMeasureUserID", "newWeight", "newHeight", "newAge", "newFat", "newMuscle"];
+    if (!validateForm(createMeasureFields)) {
+        showWarning("Todos los campos deben ser completados.")
         return;
     }
 
-    // Envía los datos del usuario al servidor
+    // Recolecta los datos del formulario y valida cada campo
+    const formData = {
+        userId: $("#newMeasureUserID").val().trim(),
+        altura: $("#newWeight").val().trim(),
+        peso: $("#newHeight").val().trim(),
+        edad: $("#newAge").val().trim(),
+        grasa: $("#newFat").val().trim(),
+        musculo: $("#newMuscle").val().trim()
+    };
+
+
+    // Realiza una solicitud POST al servidor con los datos del formulario.
     try {
         const response = await fetch('./index.php?controller=LookMeasurePage&action=createMeasure', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(measureDataNew)
+            body: JSON.stringify(formData)
         });
 
         const result = await response.json();
-
-        console.log(result)
-
-
         if (result.success) {
-            window.location.reload();  // Recarga la página para mostrar los nuevos datos
+            showSuccessAndReload(result.message);
         } else {
-            Swal.fire({
-                title: "¡Hubo un error!",
-                text: result.message,
-                icon: "error",
-                confirmButtonColor: 'rgb(29, 29, 29)',
-                confirmButtonText: 'Aceptar'
-            });
+            showError(result.message);
         }
     } catch (error) {
         console.error('Error al crear el usuario:', error);
-        Swal.fire({
-            title: 'Error',
-            text: 'Hubo un problema al conectar con el servidor.',
-            icon: 'error',
-            confirmButtonColor: 'rgb(29, 29, 29)',
-            confirmButtonText: 'Aceptar'
-        });
+        showError('Hubo un problema al conectar con el servidor.');
     }
 }
 
@@ -259,6 +227,15 @@ $(function () {
     });
 
     $('#updateMeasureDataBtn').click(async function () {
+
+        // Validación de campos
+        const updateMeasureFields = ["measureId", "measureUserID", "weight", "height", "age", "fat", "muscle"];
+        if (!validateForm(updateMeasureFields)) {
+            showWarning("Todos los campos deben ser completados.")
+            return;
+        }
+
+        // Recolecta los valores de los campos del formulario
         const formData = {
             measureId: $('#measureId').val(),
             measureUserID: $('#measureUserID').val(),
@@ -269,6 +246,7 @@ $(function () {
             muscle: $('#muscle').val()
         };
 
+        // Realiza una solicitud POST al servidor con los datos del formulario.
         try {
             const response = await fetch('./index.php?controller=LookMeasurePage&action=updateMeasure', {
                 method: 'POST',
@@ -279,29 +257,27 @@ $(function () {
             const result = await response.json();
 
             if (result.success) {
-                updateUI(formData.measureId, formData.measureUserID, result.Usuario, formData.weight, formData.height, formData.age, formData.fat, formData.muscle);
+                if (result.changed) {
+                    // Actualiza la interfaz de usuario con los nuevos datos
+                    updateUI(formData.measureId, formData.measureUserID, result.Usuario, formData.weight, formData.height, formData.age, formData.fat, formData.muscle);
+                }
+                let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
                 Swal.fire({
                     title: '¡Éxito!',
-                    text: result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.',
+                    text: message,
                     icon: 'success',
                     confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.value) {
+                        $('#editMeasureModal').modal('hide');
+                    }
                 });
             } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: result.message || 'Hubo un problema al guardar los cambios.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar'
-                });
+                showError(result.message || 'Hubo un problema al guardar los cambios.')
             }
         } catch (error) {
             console.error('Error updating measure:', error);
-            Swal.fire({
-                title: 'Error al actualizar',
-                text: 'Hubo un problema al conectar con el servidor.',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
+            showError('Hubo un problema al conectar con el servidor.')
         }
     });
 });
