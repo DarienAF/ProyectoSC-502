@@ -87,15 +87,9 @@ $(document).ready(function () {
             newPassword: $("#newPassword").val().trim()
         };
 
-        // Realiza una solicitud POST al servidor con los datos del formulario.
-        const response = await fetch('./index.php?controller=ProfilePage&action=changePassword', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        });
-
-        // Espera la respuesta del servidor en formato JSON
-        const result = await response.json();
+        // Realiza una solicitud POST al servidor.
+        const url = './index.php?controller=ProfilePage&action=changePassword';
+        const result = await performAjaxRequest(url, 'POST', formData);
 
         if (result.success) {
             if (result.passwordMatch) {

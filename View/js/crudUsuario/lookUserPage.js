@@ -182,17 +182,10 @@ async function createUserData() {
         return;
     }
 
-    // Realiza una solicitud POST al servidor con los datos del formulario.
     try {
-        const response = await fetch('./index.php?controller=LookUserPage&action=createUser', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        });
-
-        const result = await response.json();
+        // Realiza una solicitud POST al servidor.
+        const url = './index.php?controller=LookUserPage&action=createUser';
+        const result = await performAjaxRequest(url, 'POST', formData);
 
         if (result.success) {
             Swal.fire({
@@ -243,17 +236,10 @@ async function updateUserData() {
         password: $('#password').val()
     };
 
-    // Realiza una solicitud POST al servidor con los datos del formulario.
     try {
-        const response = await fetch('./index.php?controller=LookUserPage&action=updateUser', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        });
-
-        const result = await response.json();
+        // Realiza una solicitud POST al servidor.
+        const url = './index.php?controller=LookUserPage&action=updateUser';
+        const result = await performAjaxRequest(url, 'POST', formData);
 
         if (result.success) {
             if (result.changed) {
@@ -365,24 +351,17 @@ $(document).ready(function () {
         const action = currentState === 'activo' ? 'deactivate' : 'activate';
 
         try {
-            // Realizar la solicitud POST al servidor
-            const response = await fetch(`./index.php?controller=LookUserPage&action=${action}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({userId: userId})
-            });
+            // Realiza una solicitud POST al servidor.
+            const url = `./index.php?controller=LookUserPage&action=${action}`;
+            const result = await performAjaxRequest(url, 'POST', {userId: userId});
 
-            const data = await response.json();
-
-            if (data.success) {
+            if (result.success) {
                 $(this).attr('data-state', action === 'activate' ? 'activo' : 'inactivo');
                 $(this).text(currentState === 'activo' ? 'Inactivo' : 'Activo');
 
                 Swal.fire({
-                    icon: data.icon,
-                    title: data.title,
+                    icon: result.icon,
+                    title: result.title,
                     text: `El usuario ${username} ha sido ${currentState === 'activo' ? 'desactivado' : 'activado'} con éxito.`,
                     confirmButtonColor: 'rgb(29, 29, 29)',
                     confirmButtonText: 'Aceptar'

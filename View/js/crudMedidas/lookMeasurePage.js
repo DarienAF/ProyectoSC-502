@@ -153,18 +153,11 @@ async function createMeasureData() {
         musculo: $("#newMuscle").val().trim()
     };
 
-
-    // Realiza una solicitud POST al servidor con los datos del formulario.
     try {
-        const response = await fetch('./index.php?controller=LookMeasurePage&action=createMeasure', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        });
+        // Realiza una solicitud POST al servidor.
+        const url = './index.php?controller=LookMeasurePage&action=createMeasure';
+        const result = await performAjaxRequest(url, 'POST', formData);
 
-        const result = await response.json();
         if (result.success) {
             showSuccessAndReload(result.message);
         } else {
@@ -204,13 +197,9 @@ $(function () {
         const measureId = this.getAttribute('measure-id');
 
         try {
-            const response = await fetch('./index.php?controller=LookMeasurePage&action=getMeasureUpdate', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({id_medida: measureId})
-            });
-
-            const result = await response.json();
+            // Realiza una solicitud POST al servidor.
+            const url = './index.php?controller=LookMeasurePage&action=getMeasureUpdate';
+            const result = await performAjaxRequest(url, 'POST', {id_medida: measureId});
 
             if (result) {
                 $('#measureId').val(result.id_medida);
@@ -246,15 +235,10 @@ $(function () {
             muscle: $('#muscle').val()
         };
 
-        // Realiza una solicitud POST al servidor con los datos del formulario.
         try {
-            const response = await fetch('./index.php?controller=LookMeasurePage&action=updateMeasure', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData)
-            });
-
-            const result = await response.json();
+            // Realiza una solicitud POST al servidor.
+            const url = './index.php?controller=LookMeasurePage&action=updateMeasure';
+            const result = await performAjaxRequest(url, 'POST', formData);
 
             if (result.success) {
                 if (result.changed) {

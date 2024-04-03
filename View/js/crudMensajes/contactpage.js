@@ -26,7 +26,7 @@ $(document).ready(function () {
             return;
         }
 
-        // Realiza una solicitud POST al servidor con los datos del formulario.
+        // Realiza una solicitud POST al servidor.
         const url = './index.php?controller=ContactPage&action=Contact';
         const result = await performAjaxRequest(url, 'POST', formData);
 

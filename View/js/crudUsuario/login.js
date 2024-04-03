@@ -16,16 +16,9 @@ $(document).ready(function () {
             password: $("#password").val().trim()
         };
 
-        // Realiza una solicitud POST al servidor con los datos del formulario.
-        const response = await fetch('./index.php?controller=LoginPage&action=LogIn', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        });
-
-        // Espera la respuesta del servidor en formato JSON
-        const result = await response.json();
-
+        // Realiza una solicitud POST al servidor.
+        const url = './index.php?controller=LoginPage&action=LogIn';
+        const result = await performAjaxRequest(url, 'POST', formData);
 
         if (result.success) {
             if (result.changePassword) {
@@ -70,15 +63,8 @@ $(document).ready(function () {
         };
 
         // Realiza una solicitud POST al servidor con los datos del formulario.
-        const response = await fetch('./index.php?controller=LoginPage&action=changePassword', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        });
-
-        // Espera la respuesta del servidor en formato JSON
-        const result = await response.json();
-
+        const url = './index.php?controller=LoginPage&action=changePassword';
+        const result = await performAjaxRequest(url, 'POST', formData);
 
         if (result.success) {
             if (result.passwordMatch) {
@@ -103,7 +89,7 @@ $(document).ready(function () {
     $("#togglePassword").click(function () {
         // Verifica el tipo actual del campo de contraseña
         var tipo = $("#password").attr("type");
-        var icon = $(this).find('i'); 
+        var icon = $(this).find('i');
 
         // Cambia el tipo del campo y alterna entre los íconos
         if (tipo === "password") {

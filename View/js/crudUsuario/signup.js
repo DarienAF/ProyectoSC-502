@@ -20,7 +20,6 @@ $(document).ready(function () {
             password: $("#password").val().trim()
         };
 
-
         // Validación  para el correo electrónico
         if (!validateEmail(formData.email)) {
             $("#email").css('border', '1px solid red');
@@ -42,18 +41,10 @@ $(document).ready(function () {
             return;
         }
 
-        // Realiza una solicitud POST al servidor con los datos del formulario.
-        const response = await fetch('./index.php?controller=SignUpPage&action=SignUp', {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(formData)
-        });
+        // Realiza una solicitud POST al servidor.
+        const url = './index.php?controller=SignUpPage&action=SignUp';
+        const result = await performAjaxRequest(url, 'POST', formData);
 
-        const result = await response.json();
-
-        console.log(result)
-
-        // Si la respuesta es exitosa, redirige al username a la página principal.
         if (result.success) {
             location.href = './index.php?controller=indexPage&action=index';
         } else {
