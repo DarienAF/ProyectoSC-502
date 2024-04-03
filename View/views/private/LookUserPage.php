@@ -4,6 +4,7 @@
 <body>
 <?php require './View/fragments/nav_private.php'; ?>
 
+<h1 class="welcomeMessage">Usuarios</h1>
 
 <?php echo ($userRole == 1) ?
     (' 

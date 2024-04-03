@@ -4,6 +4,8 @@
 <body>
 <?php require './View/fragments/nav_private.php'; ?>
 
+<h1 class="welcomeMessage">Medidas</h1>
+
 <div class="add-measure-container">
     <button type="button" class="btn btn-light add-measure-btn"
             data-bs-toggle="modal"
