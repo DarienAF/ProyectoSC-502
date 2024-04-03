@@ -104,4 +104,18 @@ class Medidas {
         $this->setGrasa($row['grasa']);
         $this->setMusculo($row['musculo']);
     }
+
+    public function toArray()
+    {
+        return [
+            'id_medida' => $this->getIdMedida(),
+            'id_usuario' => $this->getIdUsuario(),
+            'fecha_registro' => $this->getFechaRegistro(),
+            'peso' => $this->getPeso(),
+            'altura' => $this->getAltura(),
+            'edad' => $this->getEdad(),
+            'grasa' => $this->getGrasa(),
+            'musculo' => $this->getMusculo()
+        ];
+    }
 }

@@ -7,6 +7,7 @@ class Planes
     private $id_plan;
     private $nombre_plan;
     private $id_usuario;
+    private $dia;
 
     public function getIdPlan()
     {
@@ -38,5 +39,32 @@ class Planes
         $this->id_usuario = $id_usuario;
     }
 
+    public function getDia()
+    {
+        return $this->dia;
+    }
+
+    public function setDia($dia)
+    {
+        $this->dia = $dia;
+    }
+
+    public function setPlanesFields($row)
+    {
+        $this->setIdPlan($row['id_plan']);
+        $this->setNombrePlan($row['nombre_plan']);
+        $this->setIdUsuario($row['id_usuario']);
+        $this->setDia($row['dia']);
+    }
+
+    public function toArray()
+    {
+        return [
+            'id_plan' => $this->getIdPlan(),
+            'nombre_plan' => $this->getNombrePlan(),
+            'id_usuario' => $this->getIdUsuario(),
+            'dia' => $this->getDia()
+        ];
+    }
 
 }

@@ -49,4 +49,21 @@ class Reservaciones
         $this->cancelar = $cancelar;
     }
 
+    public function setReservacionesFields($row)
+    {
+        $this->setIdReserva($row['id_reserva']);
+        $this->setIdUsuario($row['id_usuario']);
+        $this->setIdClase($row['id_clase']);
+        $this->setCancelar($row['cancelar']);
+    }
+
+    public function toArray()
+    {
+        return [
+            'id_reserva' => $this->getIdReserva(),
+            'id_usuario' => $this->getIdUsuario(),
+            'id_clase' => $this->getIdClase(),
+            'cancelar' => $this->getCancelar()
+        ];
+    }
 }
