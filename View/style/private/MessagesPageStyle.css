@@ -4,7 +4,7 @@ body {
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('../../img/private/private_bg1.jpg');
+    background-image: url('../../img/private/private_messages.jpg');
 }
 
 .content {
