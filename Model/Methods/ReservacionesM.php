@@ -18,25 +18,25 @@ class ReservacionesM
 
     public function create(Reservaciones $reserva): bool
     {
-    $retVal = false;
+        $retVal = false;
 
-    try {
-        $query = "INSERT INTO `reservaciones` (`id_usuario`, `id_clase`, `cancelar`) VALUES (?, ?, ?)";
-        $statement = $this->connection->prepare($query);
+        try {
+            $query = "INSERT INTO `reservaclases` (`id_usuario`, `id_clase`, `cancelar`) VALUES (?, ?, ?)";
+            $statement = $this->connection->prepare($query);
 
-        // Vincular valores a los placeholders correspondientes en la sentencia.
-        $statement->bindValue(1, $reserva->getIdUsuario(), PDO::PARAM_INT);
-        $statement->bindValue(2, $reserva->getIdClase(), PDO::PARAM_INT);
-        $statement->bindValue(3, $reserva->getCancelar(), PDO::PARAM_INT); 
+            // Vincular valores a los placeholders correspondientes en la sentencia.
+            $statement->bindValue(1, $reserva->getIdUsuario(), PDO::PARAM_INT);
+            $statement->bindValue(2, $reserva->getIdClase(), PDO::PARAM_INT);
+            $statement->bindValue(3, $reserva->getCancelar(), PDO::PARAM_INT);
 
-        if ($statement->execute()) {
-            $retVal = true;
+            if ($statement->execute()) {
+                $retVal = true;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
         }
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-    }
 
-    return $retVal;
+        return $retVal;
     }
 
     function update(Reservaciones $reservaActualizada, Reservaciones $reservaOriginal): bool
@@ -58,7 +58,7 @@ class ReservacionesM
         }
 
         if (!empty($updates)) {
-            $query = "UPDATE `reservaciones` SET " . implode(", ", $updates) . " WHERE `id_reserva` = ?";
+            $query = "UPDATE `reservaclases` SET " . implode(", ", $updates) . " WHERE `id_reserva` = ?";
             $params[] = $reservaActualizada->getIdReserva();
 
             try {
@@ -77,14 +77,14 @@ class ReservacionesM
     {
         $reserva = null;
         try {
-            $query = "SELECT * FROM `reservaciones` WHERE `id_reserva` = ?";
+            $query = "SELECT * FROM `reservaclases` WHERE `id_reserva` = ?";
             $statement = $this->connection->prepare($query);
             $statement->bindValue(1, $id_reserva, PDO::PARAM_INT);
             $statement->execute();
 
             if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 $reserva = new Reservaciones();
-                $reserva->setBookingsFields($row);
+                $reserva->setReservacionesFields($row);
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
@@ -96,13 +96,13 @@ class ReservacionesM
     {
         $reservaciones = [];
         try {
-            $query = "SELECT * FROM `reservaciones`";
+            $query = "SELECT * FROM `reservaclases`";
             $statement = $this->connection->prepare($query);
             $statement->execute();
 
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 $reserva = new Reservaciones();
-                $reserva->setBookingsFields($row);
+                $reserva->setReservacionesFields($row);
                 $reservaciones[] = $reserva;
             }
         } catch (PDOException $e) {
@@ -115,7 +115,7 @@ class ReservacionesM
     {
         $success = false;
         try {
-            $query = "DELETE FROM `reservaciones` WHERE `id_reserva` = ?";
+            $query = "DELETE FROM `reservaclases` WHERE `id_reserva` = ?";
             $statement = $this->connection->prepare($query);
             $statement->bindValue(1, $id_reserva, PDO::PARAM_INT);
 
@@ -132,7 +132,7 @@ class ReservacionesM
         $retVal = false;
 
         try {
-            $query = "UPDATE `Reservaciones` SET `cancelar` = ? WHERE `id_reserva` = ?";
+            $query = "UPDATE `reservaclases` SET `cancelar` = ? WHERE `id_reserva` = ?";
             $statement = $this->connection->Prepare($query);
             $statement->bindValue(1, $status, PDO::PARAM_BOOL);
             $statement->bindValue(2, $id_reserva, PDO::PARAM_INT);

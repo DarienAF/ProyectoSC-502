@@ -2,7 +2,9 @@
     <div class="nav-left">
         <a href="./"><img class="nav-logo" src="./View/img/logos/Logo2.png" alt="Home"></a>
         <a href="./"><img class="nav-profile-pic" src=<?php echo $userImagePath ?> alt="Home"></a>
-        <p><?php echo $current_user->getFullName() ?></p>
+        <p>
+            <?php echo $current_user->getFullName() ?>
+        </p>
     </div>
 
     <div class="nav-right">
@@ -107,19 +109,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
                     <a class="dropdown-item" href="./index.php?controller=MessagesPage&action=index">Ver mensajes</a>
-                </div>
-            </li>')
-                : '' ?>
-
-            <?php echo ($userRole == 1) ?
-                ('<li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle ' . (($current_page == 'ReservesPage') ? 'active' : '') . '"
-                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                   aria-expanded="false"
-                >RESERVAS
-                </a>
-                <div class="dropdown-menu dropdown-menu-dark">
-                    <a class="dropdown-item" href="./index.php?controller=ReservesPage&action=index">Ver reservas</a>
                 </div>
             </li>')
                 : '' ?>

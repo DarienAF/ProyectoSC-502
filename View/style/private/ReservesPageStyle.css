@@ -26,7 +26,7 @@ body {
 	font-family: 'Poppins', sans-serif;
 }
 
-.add-asignature-container {
+.add-booking-container {
 	flex: 1;
 	display: flex;
 	justify-content: center;
@@ -35,13 +35,18 @@ body {
 	padding-top: 20px;
 }
 
-.add-asignature-btn {
+.add-booking-btn {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 2px 20px;
 	font-weight: bolder;
 	font-size: 1.5vh;
+}
+
+.add-booking-icon {
+    font-size: 2.5vh;
+    padding: 0 5px 0 0;
 }
 
 .table-container {
