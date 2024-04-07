@@ -14,9 +14,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle <?php echo ($current_page == 'ProfilePage' || ($userRole == 4 && ($current_page == 'SchedulePage' || $current_page == 'LookMeasurePage'))) ? 'active' : ''; ?>"
-                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                   aria-expanded="false"
-                >MI
+                    data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">MI
                     PERFIL
                 </a>
                 <div class="dropdown-menu dropdown-menu-dark">
@@ -115,6 +113,19 @@
 
             <?php echo ($userRole == 1) ?
                 ('<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle ' . (($current_page == 'ReservesPage') ? 'active' : '') . '"
+                   data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false"
+                >RESERVAS
+                </a>
+                <div class="dropdown-menu dropdown-menu-dark">
+                    <a class="dropdown-item" href="./index.php?controller=ReservesPage&action=index">Ver reservas</a>
+                </div>
+            </li>')
+                : '' ?>
+
+            <?php echo ($userRole == 1) ?
+                ('<li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle ' . (($current_page == 'ReportsPage') ? 'active' : '') . '"
                    data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"
@@ -128,7 +139,7 @@
 
             <li class="nav-item">
                 <a class="nav-link"
-                   href="./index.php?controller=LoginPage&action=<?php echo ($current_user != null) ? 'LogOut' : 'index'; ?>">
+                    href="./index.php?controller=LoginPage&action=<?php echo ($current_user != null) ? 'LogOut' : 'index'; ?>">
                     <?php echo ($current_user != null) ? 'CERRAR SESION' : 'INICIAR SESION'; ?>
                 </a>
             </li>

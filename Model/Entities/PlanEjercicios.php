@@ -24,7 +24,7 @@ class PlanEjercicios
         return $this->id_ejercicio;
     }
 
-    public function setIdEjericio($id_ejercicio)
+    public function setIdEjercicio($id_ejercicio)
     {
         $this->id_ejercicio = $id_ejercicio;
     }
@@ -49,4 +49,21 @@ class PlanEjercicios
         $this->repeticiones = $repeticiones;
     }
 
+    public function setPlanEjerciciosFields($row)
+    {
+        $this->setIdPlan($row['id_plan']);
+        $this->setIdEjercicio($row['id_ejercicio']);
+        $this->setSeries($row['series']);
+        $this->setRepeticiones($row['repeticiones']);
+    }
+
+    public function toArray()
+    {
+        return [
+            'id_plan' => $this->getIdPlan(),
+            'id_ejercicio' => $this->getIdEjercicio(),
+            'series' => $this->getSeries(),
+            'repeticiones' => $this->getRepeticiones()
+        ];
+    }
 }
