@@ -45,4 +45,80 @@ class MensajesM
         }
         return $retVal;
     }
+
+    function view($id_mensaje)
+{
+    $mensaje = null;
+    try {
+        $query = "SELECT * FROM `mensajes` WHERE `id_mensaje` = ?";
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(1, $id_mensaje, PDO::PARAM_INT);
+        $statement->execute();
+
+        if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $mensaje = new Mensajes();
+            $mensaje->setMessageFields($row);
+        }
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+    }
+    return $mensaje;
+}
+
+function viewAll(): array
+{
+    $mensajes = [];
+    try {
+        $query = "SELECT * FROM `mensajes`";
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $mensaje = new Mensajes();
+            $mensaje->setMessageFields($row);
+            $mensajes[] = $mensaje;
+        }
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+    }
+    return $mensajes;
+}
+
+function delete($id_mensaje)
+{
+    $success = false;
+    try {
+        $query = "DELETE FROM `mensajes` WHERE `id_mensaje` = ?";
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(1, $id_mensaje, PDO::PARAM_INT);
+
+        $success = $statement->execute();
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+    }
+
+    return $success;
+}
+
+function setReadStatus($id_mensaje, $status): bool
+{
+    $retVal = false;
+
+    try {
+        $query = "UPDATE `mensajes` SET `leido` = ? WHERE `id_mensaje` = ?";
+        $statement = $this->connection->prepare($query);
+        $statement->bindValue(1, $status, PDO::PARAM_BOOL); 
+        $statement->bindValue(2, $id_mensaje, PDO::PARAM_INT);
+
+        if ($statement->execute()) {
+            $retVal = true;
+        }
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+    }
+    return $retVal;
+}
+
+
+
 }
