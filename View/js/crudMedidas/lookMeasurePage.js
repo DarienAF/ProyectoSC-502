@@ -145,12 +145,12 @@ async function createMeasureData() {
 
     // Recolecta los datos del formulario y valida cada campo
     const formData = {
-        userId: $("#newMeasureUserID").val().trim(),
-        altura: $("#newWeight").val().trim(),
-        peso: $("#newHeight").val().trim(),
-        edad: $("#newAge").val().trim(),
-        grasa: $("#newFat").val().trim(),
-        musculo: $("#newMuscle").val().trim()
+        measureUserID: $("#newMeasureUserID").val().trim(),
+        weight: $("#newWeight").val().trim(),
+        height: $("#newHeight").val().trim(),
+        age: $("#newAge").val().trim(),
+        fat: $("#newFat").val().trim(),
+        muscle: $("#newMuscle").val().trim()
     };
 
     try {

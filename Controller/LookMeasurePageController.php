@@ -72,15 +72,15 @@ class LookMeasurePageController
         $data = json_decode(file_get_contents('php://input'), true);
 
         $medidaNueva = new Medidas();
-        $usuarioMedida = $this->usuarioM->view($data['userId']);
+        $usuarioMedida = $this->usuarioM->view($data['measureUserID']);
 
         if ($usuarioMedida) {
-            $medidaNueva->setIdUsuario($data['userId']);
-            $medidaNueva->setPeso($data['peso']);
-            $medidaNueva->setAltura($data['altura']);
-            $medidaNueva->setEdad($data['edad']);
-            $medidaNueva->setGrasa($data['grasa']);
-            $medidaNueva->setMusculo($data['musculo']);
+            $medidaNueva->setIdUsuario($data['measureUserID']);
+            $medidaNueva->setPeso($data['weight']);
+            $medidaNueva->setAltura($data['height']);
+            $medidaNueva->setEdad($data['age']);
+            $medidaNueva->setGrasa($data['fat']);
+            $medidaNueva->setMusculo($data['muscle']);
 
 
             if ($this->medidasM->create($medidaNueva)) {
