@@ -59,9 +59,9 @@
                         </td>
 
                         <td id="userName-<?php echo $booking->getIdReserva(); ?>">
+
                             <?php
-                                    $clase = $claseM->view($booking->getIdClase());
-                                    $usuario = $usuarioM->view($clase->getIdUsuario());
+                                    $usuario = $usuarioM->view($booking->getIdUsuario());
                                     echo htmlspecialchars($usuario->getNombre() . ' ' . $usuario->getApellidos()); ?>
                         </td>
 
@@ -114,6 +114,15 @@
     </div>
 
     <?php require './View/fragments/footer.php'; ?>
+
+    <script src="./View/js/crudReservas/reservesPage.js"></script>
+
+    <script>
+    // Imprime el valor de la variable $clase en la consola del navegador
+    <?php foreach ($bookings as $booking): ?>
+    console.log(<?php echo json_encode($claseM->view($booking->getIdClase())); ?>);
+    <?php endforeach; ?>
+    </script>
 
 </body>
 

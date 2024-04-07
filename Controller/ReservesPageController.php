@@ -14,11 +14,14 @@ class ReservesPageController
     private $reservacionM;
     private $claseM;
 
+
+
     public function __construct()
     {
         $this->usuarioM = new UsuarioM();
         $this->reservacionM = new ReservacionesM();
         $this->claseM = new ClasesM();
+
 
     }
 
@@ -31,8 +34,11 @@ class ReservesPageController
         $userFullName = $current_user->getFullName();
         $userRole = $current_user->getIdRol();
         $userImagePath = $current_user->getRutaImagen();
+
         $bookings = $this->reservacionM->viewAll();
+
         $claseM = new ClasesM();
+
 
         require_once './View/views/private/ReservesPage.php';
     }
