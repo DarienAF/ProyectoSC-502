@@ -73,7 +73,6 @@
 
                         <td id="bookingClassName-<?php echo $booking->getIdReserva(); ?>">
                             <?php
-                                    $clase = $claseM->view($booking->getIdClase());
                                     echo htmlspecialchars($clase->getNombreClase());
                                     ?>
                         </td>
@@ -82,7 +81,7 @@
                             <button class="btn btn-toggle"
                                 data-state="<?php echo $booking->getCancelar() ? 'activa' : 'cancelada'; ?>"
                                 data-booking-id="<?php echo $booking->getIdReserva(); ?>"
-                                data-class-id="<?php echo $booking->getIdClase(); ?>">
+                                data-class-name="<?php echo $clase->getNombreClase(); ?>">
                                 <?php echo $booking->getCancelar() ? 'Activa' : 'Cancelada'; ?>
                             </button>
                         </td>
@@ -116,14 +115,6 @@
     <?php require './View/fragments/footer.php'; ?>
 
     <script src="./View/js/crudReservas/reservesPage.js"></script>
-
-    <script>
-    // Imprime el valor de la variable $clase en la consola del navegador
-    <?php foreach ($bookings as $booking): ?>
-    console.log(<?php echo json_encode($claseM->view($booking->getIdClase())); ?>);
-    <?php endforeach; ?>
-    </script>
-
 </body>
 
 </html>

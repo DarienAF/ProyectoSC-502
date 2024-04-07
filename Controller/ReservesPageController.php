@@ -42,4 +42,38 @@ class ReservesPageController
 
         require_once './View/views/private/ReservesPage.php';
     }
+
+    public function activate()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (isset($data['bookingId'])) {
+            $bookingId = $data['bookingId'];
+            $this->reservacionM->setCancelStatus($bookingId, 1);
+            $response = ['success' => true, 'icon' => 'success', 'title' => '¡Reserva Activada!', 'text' => 'activado'];
+        } else {
+            $response = ['success' => false, 'message' => 'bookingId no proporcionado'];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
+    public function deactivate()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+
+        if (isset($data['bookingId'])) {
+            $bookingId = $data['bookingId'];
+            $this->reservacionM->setCancelStatus($bookingId, 0);
+            $response = ['success' => true, 'icon' => 'success', 'title' => '¡Reserva Cancelada!', 'text' => 'activado'];
+        } else {
+            $response = ['success' => false, 'message' => 'bookingId no proporcionado'];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
 }
