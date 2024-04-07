@@ -65,102 +65,113 @@
                                 class="form-control">
                         </th>
                         <th></th>
-                </tr>
+                    </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($userClasses as $class): ?>
-                <tr id="classRow-<?php echo $class['id_clase']; ?>">
-                    <td id="id-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['id_clase']); ?></td>
-                    <td id="userId-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['id_Usuario']); ?></td>
-                    <td id="username-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['usuario']); ?></td>
-                    <td id="horaInicio-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['hora_inicio']); ?></td>
-                    <td id="horaFin-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['hora_fin']); ?></td>
-                    <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?></td>
-                    <td id="nombre-<?php echo $class['id_clase']; ?>">"><?php echo htmlspecialchars($class['nombre']); ?></td>
-                    <td id="idCategoria-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['id_categoria']); ?></td>
-                    <td id="categoria-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['categoria']); ?></td>
-                    <td>
-                        <button type="button" class="btn btn-warning edit-clase-btn"
+                    <?php foreach ($userClasses as $class): ?>
+                    <tr id="classRow-<?php echo $class['id_clase']; ?>">
+                        <td id="id-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['id_clase']); ?></td>
+                        <td id="userId-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['id_Usuario']); ?></td>
+                        <td id="username-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['usuario']); ?></td>
+                        <td id="horaInicio-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['hora_inicio']); ?></td>
+                        <td id="horaFin-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['hora_fin']); ?></td>
+                        <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?>
+                        </td>
+                        <td id="nombre-<?php echo $class['id_clase']; ?>">
+                            "><?php echo htmlspecialchars($class['nombre']); ?></td>
+                        <td id="idCategoria-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['id_categoria']); ?></td>
+                        <td id="categoria-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['categoria']); ?></td>
+                        <td>
+                            <button type="button" class="btn btn-warning edit-clase-btn"
                                 clase-id="<?php echo htmlspecialchars($class['id_clase']); ?>" data-bs-toggle="modal"
                                 data-bs-target="#editClassModal">
-                            <i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+
+                    <tr id="no-result" style="display: none;">
+                        <td colspan="10">
+                            <div class="no-result-container">
+                                <img src="./View/img/private/look-userPage/no_results.png" alt="No hay resultados" />
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modal Modificar-->
+        <div class="modal fade" id="editClassModal" tabindex="-1" aria-labelledby="editClassModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modificar Clase</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editClassForm">
+                            <div class="mb-3">
+                                <label for="classId" class="form-label">ID Clase</label>
+                                <input type="text" class="form-control" id="classId" name="classId" disabled>
+                                <!-- No se edita -->
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Usuario</label>
+                                <select class="form-control" id="classUserID" name="classUserID">
+
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="starthour" class="form-label">Hora Inicio</label>
+                                <input type="time" class="form-control" id="starthour" name="starthour">
+                            </div>
+                            <div class="mb-3">
+                                <label for="endhour" class="form-label">Hora Fin</label>
+                                <input type="time" class="form-control" id="endhour" name="endhour">
+                            </div>
+                            <div class="mb-3">
+                                <label for="day" class="form-label">Día</label>
+                                <select class="form-control" id="day" name="day">
+                                    <option value="" disabled selected>Seleccionar día...</option>
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miercoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
+                                    <option value="Sebado">Sábado</option>
+                                    <option value="Domingo">Domingo</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="classname" class="form-label">Nombre Clase</label>
+                                <input type="text" class="form-control" id="classname" name="classname">
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Categoria</label>
+                                <select class="form-control" id="classCategoryID" name="classCategoryID">
+
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="updateClassDataBtn">
+                            Guardar Cambios
                         </button>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-                
-            <tr id="no-result" style="display: none;">
-            <td colspan="10">
-                <div class="no-result-container">
-                    <img src="./View/img/private/look-userPage/no_results.png" alt="No hay resultados"/>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<!-- Modal Modificar-->
-<div class="modal fade" id="editClassModal" tabindex="-1" aria-labelledby="editClassModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modificar Clase</h5>
-            </div>
-            <div class="modal-body">
-                <form id="editClassForm">
-                    <div class="mb-3">
-                        <label for="classId" class="form-label">ID Clase</label>
-                        <input type="text" class="form-control" id="classId" name="classId" disabled>
-                        <!-- No se edita -->
-                    </div>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Usuario</label>
-                        <select class="form-control" id="classUserID" name="classUserID">
-
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="starthour" class="form-label">Hora Inicio</label>
-                        <input type="time" class="form-control" id="starthour" name="starthour">
-                    </div>
-                    <div class="mb-3">
-                        <label for="endhour" class="form-label">Hora Fin</label>
-                        <input type="time" class="form-control" id="endhour" name="endhour">
-                    </div>
-                    <div class="mb-3">
-                        <label for="day" class="form-label">Día</label>
-                        <select class="form-control" id="day" name="day">
-                            <option value="Lunes">Lunes</option>
-                            <option value="Martes">Martes</option>
-                            <option value="Miercoles">Miércoles</option>
-                            <option value="Jueves">Jueves</option>
-                            <option value="Viernes">Viernes</option>
-                            <option value="Sebado">Sábado</option>
-                            <option value="Domingo">Domingo</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="classname" class="form-label">Nombre Clase</label>
-                        <input type="text" class="form-control" id="classname" name="classname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Categoria</label>
-                        <select class="form-control" id="classCategoryID" name="classCategoryID">
-
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="updateClassDataBtn">
-                    Guardar Cambios
-                </button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
-    </div>
-</div>
 
 
         <?php endif; ?>
@@ -272,7 +283,16 @@
                             </div>
                             <div class="mb-3">
                                 <label for="newDay" class="form-label">Día</label>
-                                <input type="text" class="form-control" id="newDay" name="newDay">
+                                <select class="form-control" id="newDay" name="newDay">
+                                    <option value="" disabled selected>Seleccionar día...</option>
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miercoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
+                                    <option value="Sebado">Sábado</option>
+                                    <option value="Domingo">Domingo</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="newClassName" class="form-label">Nombre Clase</label>
