@@ -27,7 +27,7 @@ function applyFiltersToRow(row, filters) {
     let userNameText = row.children().eq(1).text().trim().toLowerCase();
     let dayText = row.children().eq(2).text().toLowerCase();
     let classNameText = row.children().eq(3).text().toLowerCase();
-    let statusText = row.children().eq(4).text().trim().toLowerCase();
+    let statusText = row.children().eq(6).text().trim().toLowerCase();
 
     let isRowVisible = (filters.searchId === "" || idText === filters.searchId) &&
         (filters.searchUserName === "" || userNameText.includes(filters.searchUserName)) &&
@@ -44,7 +44,8 @@ $('#sortID').click(() => sortTable(0, 'sortID'));
 $('#sortUsername').click(() => sortTable(1, 'sortUsername'));
 $('#sortDay').click(() => sortTable(2, 'sortDay'));
 $('#sortClassName').click(() => sortTable(3, 'sortClassName'));
-$('#sortStatus').click(() => sortTable(4, 'sortStatus'));
+$('#sortStatus').click(() => sortTable(6, 'sortStatus'));
+
 
 // Función para ordenar la tabla de reservas
 function sortTable(columnIndex, columnId) {
