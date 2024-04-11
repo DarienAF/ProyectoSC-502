@@ -146,6 +146,35 @@ class ReservacionesM
         return $retVal;
     }
 
+    public function traerClasesAsistidas(){
+       
+        $query = "SELECT Clases.nombre_clase, COUNT(*) 
+        AS conteo
+        FROM ReservaClases
+        JOIN Clases ON ReservaClases.id_clase = Clases.id_clase
+        WHERE ReservaClases.cancelar = FALSE
+        GROUP BY Clases.nombre_clase
+        ORDER BY conteo DESC";
+         
+    
+        try {
+            $resultado = $this->connection->Prepare($query); 
+            $resultado->execute();
+
+            $arr = array(); 
+            
+            foreach($resultado->fetchAll() as $encontrado){
+                $clase = array("nombre_clase" => $encontrado['nombre_clase'], "conteo" => $encontrado['conteo']);
+                $arr[] = $clase;
+            }
+            return $arr;
+    
+        } catch (PDOException $Exception) {
+            $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );
+            return json_encode($error);
+        }
+    }
+    
 
 
 }
