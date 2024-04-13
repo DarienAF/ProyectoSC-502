@@ -138,7 +138,7 @@ async function createClassData() {
 
     // Validación de campos
     const createClassFields = ["newUserClass", "newStartTime", "newEndTime", 
-    "newDay", "newClassName"];
+    "newDay", "newClassName", "newCategoryClass"];
     if (!validateForm(createClassFields)) {
     showWarning("Todos los campos deben ser completados.")
     return;
@@ -150,7 +150,8 @@ async function createClassData() {
         startTime: $("#newStartTime").val().trim(),
         endTime: $("#newEndTime").val().trim(),
         day: $("#newDay").val().trim(),
-        className: $("#newClassName").val().trim()
+        className: $("#newClassName").val().trim(),
+        categoryClassID: $("#newCategoryClass").val().trim()
     };
 
     try {

@@ -8,16 +8,19 @@ use ProyectoSC502\Model\Entities\Reservaciones;
 use ProyectoSC502\Model\Entities\Usuario;
 use ProyectoSC502\Model\Methods\UsuarioM;
 use ProyectoSC502\Model\Methods\ReservacionesM;
+use ProyectoSC502\Model\Methods\MedidasM;
 
 class ReportsPageController
 {
     private $usuarioM;
     private $reservacionesM;
+    private $medidasM;
 
     public function __construct()
     {
         $this->usuarioM = new UsuarioM();
         $this->reservacionesM = new ReservacionesM();
+        $this->medidasM = new MedidasM();
     }
 
     function Index()
@@ -56,5 +59,32 @@ class ReportsPageController
         return json_encode(array('nombres_clases' => $nombres_clases, 
                                 'conteos' => $conteos));
     }
+
+    public function obtenerPromedio() {
+        $pesos = $this->medidasM->traerPromedioPeso();
+
+        $meses = array();
+        $promedios = array();
+    
+        foreach ($pesos as $peso) {
+            $meses[] = $peso['mes'];
+            $promedios[] = $peso['promedio_peso'];
+        }
+        return json_encode(array('meses' => $meses, 'promedios' => $promedios));
+    }
+
+    public function obtenerCancelaciones() {
+        $cancelaciones = $this->reservacionesM->traerClasesCanceladas();
+       
+        $nombres_clases = array();
+        $conteos = array();
+    
+        foreach ($cancelaciones as $cancelacion) {
+            $nombres_clases[] = $cancelacion['nombre_clase'];
+            $conteos[] = $cancelacion['cancelaciones'];
+        }
+        return json_encode(array('nombres_clases' => $nombres_clases, 'cancelaciones' => $conteos));
+    }
+    
     
 }

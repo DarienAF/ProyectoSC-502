@@ -156,7 +156,7 @@
                                 <input type="text" class="form-control" id="classname" name="classname">
                             </div>
                             <div class="mb-3">
-                                <label for="category" class="form-label">Categoria</label>
+                                <label for="classCategoryID" class="form-label">Categoria</label>
                                 <select class="form-control" id="classCategoryID" name="classCategoryID">
 
                                 </select>
@@ -297,6 +297,10 @@
                             <div class="mb-3">
                                 <label for="newClassName" class="form-label">Nombre Clase</label>
                                 <input type="text" class="form-control" id="newClassName" name="newClassName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newCategoryClass" class="form-label">Nombre Clase</label>
+                                <input type="number" class="form-control" id="newCategoryClass" name="newCategoryClass">
                             </div>
                         </form>
                     </div>
