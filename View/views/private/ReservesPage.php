@@ -19,6 +19,8 @@
                         <th id="sortUsername">Nombre de Usuario <span class="sort-arrow"></span></th>
                         <th id="sortDay">Día <span class="sort-arrow"></span></th>
                         <th id="sortClassName">Nombre Clase <span class="sort-arrow"></span></th>
+                        <th id="sortStartTime">Hora Inicio <span class="sort-arrow"></span></th>
+                        <th id="sortEndTime">Hora Finalización <span class="sort-arrow"></span></th>
                         <th id="sortStatus">Estado<span class="sort-arrow"></span></th>
                         <th></th>
                     </tr>
@@ -36,6 +38,17 @@
                         <th><input type="text" id="searchClassName" placeholder="Buscar" oninput="filterTable()"
                                 class="form-control">
                         </th>
+
+                        <th>
+                            <input type="time" id="searchStartTime" placeholder="Hora Inicio" oninput="filterTable()"
+                                class="form-control">
+                        </th>
+
+                        <th>
+                            <input type="time" id="searchEndTime" placeholder="Hora Fin" oninput="filterTable()"
+                                class="form-control">
+                        </th>
+
                         <th>
                             <select id="searchStatus" class="form-select" onchange="filterTable()">
                                 <option value="">Todos</option>
@@ -73,17 +86,32 @@
 
                         <td id="bookingClassName-<?php echo $booking->getIdReserva(); ?>">
                             <?php
-                                    $clase = $claseM->view($booking->getIdClase());
                                     echo htmlspecialchars($clase->getNombreClase());
                                     ?>
                         </td>
+
+                        <td id="bookingClassStartTime-<?php echo $booking->getIdReserva(); ?>">
+                            <?php
+                                    $horaInicio = strtotime($clase->getHoraInicio());
+                                    echo date("h:i A", $horaInicio);
+                                    ?>
+                        </td>
+
+                        <td id="bookingClassEndTime-<?php echo $booking->getIdReserva(); ?>">
+                            <?php
+                                    $horaFin = strtotime($clase->getHoraFin());
+                                    echo date("h:i A", $horaFin);
+                                    ?>
+                        </td>
+
+
 
                         <td class="<?php echo $booking->getCancelar() ? 'estado-activa' : 'estado-cancelada'; ?>">
                             <button class="btn btn-toggle"
                                 data-state="<?php echo $booking->getCancelar() ? 'activa' : 'cancelada'; ?>"
                                 data-booking-id="<?php echo $booking->getIdReserva(); ?>"
-                                data-class-id="<?php echo $booking->getIdClase(); ?>">
-                                <?php echo $booking->getCancelar() ? 'Activa' : 'Cancelada'; ?>
+                                data-class-name="<?php echo $clase->getNombreClase(); ?>">
+                                <?php echo htmlspecialchars($booking->getCancelar()) ? 'Activa' : 'Cancelada'; ?>
                             </button>
                         </td>
 
@@ -116,14 +144,6 @@
     <?php require './View/fragments/footer.php'; ?>
 
     <script src="./View/js/crudReservas/reservesPage.js"></script>
-
-    <script>
-    // Imprime el valor de la variable $clase en la consola del navegador
-    <?php foreach ($bookings as $booking): ?>
-    console.log(<?php echo json_encode($claseM->view($booking->getIdClase())); ?>);
-    <?php endforeach; ?>
-    </script>
-
 </body>
 
 </html>
