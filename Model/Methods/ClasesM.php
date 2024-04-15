@@ -32,9 +32,9 @@ class ClasesM
             // Vincular  valores a los placeholders correspondientes en la sentencia.
             $statement->bindValue(1, $clase->getIdUsuario(), PDO::PARAM_INT); //int
             $statement->bindValue(2, $clase->getHoraInicio(), PDO::PARAM_STR);
-            $statement->bindValue(3, $clase->getHoraFin(),PDO::PARAM_STR);
-            $statement->bindValue(4, $clase->getDia(),PDO::PARAM_STR);
-            $statement->bindValue(5, $clase->getNombreClase(),PDO::PARAM_STR);
+            $statement->bindValue(3, $clase->getHoraFin(), PDO::PARAM_STR);
+            $statement->bindValue(4, $clase->getDia(), PDO::PARAM_STR);
+            $statement->bindValue(5, $clase->getNombreClase(), PDO::PARAM_STR);
 
             if ($statement->execute()) {
                 $retVal = true;
@@ -50,7 +50,7 @@ class ClasesM
     {
         $updates = [];
         $params = [];
-    
+
         if ($claseActualizada->getIdUsuario() !== $claseOriginal->getIdUsuario() && !is_null($claseActualizada->getIdUsuario())) {
             $updates[] = "`id_usuario` = ?";
             $params[] = $claseActualizada->getIdUsuario();
@@ -71,11 +71,11 @@ class ClasesM
             $updates[] = "`nombre_clase` = ?";
             $params[] = $claseActualizada->getNombreClase();
         }
-    
+
         if (!empty($updates)) {
             $query = "UPDATE `clases` SET " . implode(", ", $updates) . " WHERE `id_clase` = ?";
             $params[] = $claseActualizada->getIdClase();
-    
+
             try {
                 $statement = $this->connection->prepare($query);
                 $statement->execute($params);
@@ -89,59 +89,59 @@ class ClasesM
     }
 
     function view($id_clase)
-{
-    $clase = null;
-    try {
-        $query = "SELECT * FROM `clases` WHERE `id_clase` = ?";
-        $statement = $this->connection->prepare($query);
-        $statement->bindValue(1, $id_clase, PDO::PARAM_INT);
-        $statement->execute();
+    {
+        $clase = null;
+        try {
+            $query = "SELECT * FROM `clases` WHERE `id_clase` = ?";
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(1, $id_clase, PDO::PARAM_INT);
+            $statement->execute();
 
-        if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            $clase = new Clases();
-            $clase->setClassesFields($row);
+            if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $clase = new Clases();
+                $clase->setClassFields($row);
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
         }
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
+        return $clase;
     }
-    return $clase;
-}
 
-function viewAll(): array
-{
-    $clases = [];
-    try {
-        $query = "SELECT * FROM `clases`";
-        $statement = $this->connection->prepare($query);
-        $statement->execute();
+    function viewAll(): array
+    {
+        $clases = [];
+        try {
+            $query = "SELECT * FROM `clases`";
+            $statement = $this->connection->prepare($query);
+            $statement->execute();
 
-        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            $clase = new Clases();
-            $clase->setClassesFields($row);
-            $clases[] = $clase;
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $clase = new Clases();
+                $clase->setClassFields($row);
+                $clases[] = $clase;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
         }
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-    }
-    return $clases;
-}
-
-function delete($id_clase)
-{
-    $success = false;
-    try {
-        $query = "DELETE FROM `clases` WHERE `id_clase` = ?";
-        $statement = $this->connection->prepare($query);
-        $statement->bindValue(1, $id_clase, PDO::PARAM_INT);
-
-        $success = $statement->execute();
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
+        return $clases;
     }
 
-    return $success;
-}
+    function delete($id_clase)
+    {
+        $success = false;
+        try {
+            $query = "DELETE FROM `clases` WHERE `id_clase` = ?";
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(1, $id_clase, PDO::PARAM_INT);
+
+            $success = $statement->execute();
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $success;
+    }
 
 
-    
+
 }
