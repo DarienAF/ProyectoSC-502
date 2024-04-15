@@ -146,13 +146,28 @@ function Index()
         $um = new UsuarioM();
         $response = [];
         foreach ($um->viewAll() as $usuario) {
-            if ($usuario->getIdRol() == 4 && $usuario->getActivo() == 1) {
+            if ($usuario->getIdRol() == 3 && $usuario->getActivo() == 1) {
                 $response[] = [
                     'id' => $usuario->getIdUsuario(),
                     'nombre' => $usuario->getNombre(),
                     'apellidos' => $usuario->getApellidos()
                 ];
             }
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
+    public function CategoryClasses()
+    {
+        $um = new CategoriasM();
+        $response = [];
+        foreach ($um->viewAll() as $categoria) {
+                $response[] = [
+                    'id' => $categoria->getIdCategoria(),
+                    'nombre' => $categoria->getNombreCategoria(),
+                ];
         }
 
         header('Content-Type: application/json');

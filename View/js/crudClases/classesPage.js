@@ -169,3 +169,102 @@ async function createClassData() {
         showError('Hubo un problema al conectar con el servidor.');
     }
 }
+
+$(function () {
+    // Función para cargar datos y poblar un select
+    async function loadData(selectId, selectedUserId) {
+        const selectDOM = $(`#${selectId}`);
+
+        try {
+            const response = await fetch('./index.php?controller=ClassesPage&action=MemberUsers');
+            const users = await response.json();
+
+            let options = users.map(user => {
+                const selectedAttribute = user.id === selectedUserId ? ' selected' : '';
+                return `<option value="${user.id}"${selectedAttribute}>${user.nombre} ${user.apellidos}</option>`;
+            }).join('');
+
+            selectDOM.html(options);
+        } catch (error) {
+            console.error('Error loading data:', error);
+        }
+    }
+
+    loadData('newUserClass', null);
+
+    $("#createClassBTN").click(() => createMeasureData());
+
+    $('.edit-user-btn').click(async function () {
+        const classId = this.getAttribute('class-id');
+
+        try {
+            // Realiza una solicitud POST al servidor.
+            const url = './index.php?controller=ClassesPage&action=getClassUpdate';
+            const result = await performAjaxRequest(url, 'POST', {id_clase: classId});
+
+            if (result) {
+                $('#classID').val(result.id_clase);
+                loadData('classUserID', result.id_Usuario);
+                $("#starthour").val(result.hora_inicio);
+                $("#endhour").val(result.hora_fin);
+                $("#day").val(result.dia);
+                $("#classname").val(result.nombre_clase);
+                $("#classCategoryID").val(result.id_categoria);
+            }
+        } catch (error) {
+            console.error('Error fetching measure details:', error);
+        }
+    });
+
+    $('#updateClassDataBtn').click(async function () {
+
+        // Validación de campos
+        const updateClassFields = ["classId", "classUserID", "starthour", "endhour", "day", "classname", "classCategoryID"];
+        if (!validateForm(updateClassFields)) {
+            showWarning("Todos los campos deben ser completados.")
+            return;
+        }
+
+        // Recolecta los valores de los campos del formulario
+        const formData = {
+            id_clase: $('#classId').val(),
+            classUserID: $('#classUserID').val(),
+            starthour: $('#starthour').val(),
+            endhour: $('#endhour').val(),
+            day: $('#day').val(),
+            classname: $('#classname').val(),
+            classCategoryID: $('#classCategoryID').val()
+        };
+
+        try {
+            // Realiza una solicitud POST al servidor.
+            const url = './index.php?controller=ClassesPage&action=updateClass';
+            const result = await performAjaxRequest(url, 'POST', formData);
+
+            if (result.success) {
+                if (result.changed) {
+                    // Actualiza la interfaz de usuario con los nuevos datos
+                    updateUI(formData.id_clase, formData.classCategoryID, result.Usuario, 
+                        formData.starthour, formData.endhour, formData.day, formData.classname, formData.classCategoryID);
+                }
+                let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: message,
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then((result) => {
+                    if (result.value) {
+                        $('#editClassModal').modal('hide');
+                    }
+                });
+            } else {
+                showError(result.message || 'Hubo un problema al guardar los cambios.')
+            }
+        } catch (error) {
+            console.error('Error updating measure:', error);
+            showError('Hubo un problema al conectar con el servidor.')
+        }
+    });
+
+});

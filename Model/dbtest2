@@ -30,6 +30,19 @@ CREATE TABLE IF NOT EXISTS Medidas (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
+CREATE TABLE IF NOT EXISTS Categoria (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_categoria VARCHAR(100) NOT NULL,
+    imagen_categoria VARCHAR(1024)
+);
+
+INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `imagen_categoria`) VALUES
+(1, 'Yoga', '/yoga.jpg'),
+(2, 'Pilates', '/pilates.jpg'),
+(3, 'Spinning', '/spinning.jpg'),
+(4, 'Zumba', '/zumba.jpg'),
+(5, 'Crossfit', '/crossfit.jpg');
+
 CREATE TABLE IF NOT EXISTS Clases (
     id_clase INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
@@ -86,12 +99,6 @@ CREATE TABLE IF NOT EXISTS Mensajes (
     leido BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE IF NOT EXISTS Categoria (
-    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_categoria VARCHAR(100) NOT NULL,
-    imagen_categoria VARCHAR(1024)
-);
-
 INSERT INTO `rol` (`id_rol`, `nombre`) VALUES (NULL, 'Administrador'), (NULL, 'Recepcionista'), (NULL, 'Entrenador'), (NULL, 'Miembro');
 
 INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, ruta_imagen, activo, id_rol, password_flag) VALUES
@@ -110,3 +117,4 @@ INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, r
 ('taylorwilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Taylor', 'Wilson', 'taylor.wilson@example.com', '6926720005', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('samjones', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Jones', 'sam.jones@example.com', '9225565362', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('caseywilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Wilson', 'casey.wilson@example.com', '7288996943', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE);
+

@@ -269,8 +269,8 @@
                     <div class="modal-body">
                         <form id="createClassForm">
                             <div class="mb-3">
-                                <label for="newUsername" class="form-label">Nombre de Entrenador</label>
-                                <select class="form-select" id="newUserClass" name="newUserClass">
+                                <label for="classUserID" class="form-label">Nombre de Entrenador</label>
+                                <select class="form-select" id="classUserID" name="classUserID">
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -299,7 +299,7 @@
                                 <input type="text" class="form-control" id="newClassName" name="newClassName">
                             </div>
                             <div class="mb-3">
-                                <label for="newCategoryClass" class="form-label">Nombre Clase</label>
+                                <label for="newCategoryClass" class="form-label">Categoria</label>
                                 <input type="number" class="form-control" id="newCategoryClass" name="newCategoryClass">
                             </div>
                         </form>
