@@ -19,43 +19,49 @@ class PlanesM
     public function create(Planes $plan): bool
     {
         $retVal = false;
-    
+
         try {
             $query = "INSERT INTO `planes` (
                       `id_usuario`, 
-                      `nombre_plan`) VALUES (?, ?)";
-    
+                      `nombre_plan`,
+                      `dia`) VALUES (?, ?, ?)";
+
             $statement = $this->connection->prepare($query);
             // Vincular valores a los placeholders correspondientes en la sentencia.
             $statement->bindValue(1, $plan->getIdUsuario(), PDO::PARAM_INT);
             $statement->bindValue(2, $plan->getNombrePlan(), PDO::PARAM_STR);
+            $statement->bindValue(3, $plan->getDia(), PDO::PARAM_STR); 
             if ($statement->execute()) {
                 $retVal = true;
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
-    
+
         return $retVal;
     }
 
-    public function update(Planes $planActualizado, Planes $planOriginal): bool 
+    public function update(Planes $planActualizado, Planes $planOriginal): bool
     {
     $updates = [];
     $params = [];
 
-        if ($planActualizado->getIdUsuario() !== $planOriginal->getIdUsuario() && !is_null($planActualizado->getIdUsuario())) {
-            $updates[] = "`id_usuario` = ?";
-            $params[] = $planActualizado->getIdUsuario();
-        }
-        if ($planActualizado->getNombrePlan() !== $planOriginal->getNombrePlan() && !is_null($planActualizado->getNombrePlan())) {
-            $updates[] = "`nombre_plan` = ?";
-            $params[] = $planActualizado->getNombrePlan();
-        }
+    if ($planActualizado->getIdUsuario() !== $planOriginal->getIdUsuario() && !is_null($planActualizado->getIdUsuario())) {
+        $updates[] = "`id_usuario` = ?";
+        $params[] = $planActualizado->getIdUsuario();
+    }
+    if ($planActualizado->getNombrePlan() !== $planOriginal->getNombrePlan() && !is_null($planActualizado->getNombrePlan())) {
+        $updates[] = "`nombre_plan` = ?";
+        $params[] = $planActualizado->getNombrePlan();
+    }
+    if ($planActualizado->getDia() !== $planOriginal->getDia() && !is_null($planActualizado->getDia())) {
+        $updates[] = "`dia` = ?";
+        $params[] = $planActualizado->getDia();
+    }
 
-        if (!empty($updates)) {
-            $query = "UPDATE `planes` SET " . implode(", ", $updates) . " WHERE `id_plan` = ?";
-            $params[] = $planActualizado->getIdPlan();
+    if (!empty($updates)) {
+        $query = "UPDATE `planes` SET " . implode(", ", $updates) . " WHERE `id_plan` = ?";
+        $params[] = $planActualizado->getIdPlan();
 
         try {
             $statement = $this->connection->prepare($query);
@@ -69,6 +75,7 @@ class PlanesM
     return false;
     }
 
+
     public function view($id_plan)
     {
         $plan = null;
@@ -80,7 +87,7 @@ class PlanesM
 
             if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 $plan = new Planes();
-                $plan->setPlansFields($row);
+                $plan->setPlanesFields($row);
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
@@ -98,7 +105,7 @@ class PlanesM
 
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             $plan = new Planes();
-            $plan->etPlansFields($row);
+            $plan->setPlanesFields($row);
             $planes[] = $plan;
         }
     } catch (PDOException $e) {

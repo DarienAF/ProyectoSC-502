@@ -59,7 +59,7 @@
         </tbody>
     </table>
 </div>
-s
+
 <?php require './View/fragments/footer.php'; ?>
 
 <script src="./View/js/crudMedidas/lookMeasurePage.js"></script>

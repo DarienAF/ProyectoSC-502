@@ -16,9 +16,10 @@ class EjerciciosM{
         $this->connection = Connection::getInstance();
     }
 
-    function view($id_ejercicio)
-{
-    $ejercicio = null;
+   
+    public function view($id_ejercicio)
+    {
+        $ejercicio = null;
 
     try {
         $query = "SELECT * FROM `Ejercicios` WHERE `id_ejercicio` = ?";
@@ -28,13 +29,13 @@ class EjerciciosM{
 
         if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             $ejercicio = new Ejercicios();
-            $ejercicio->setEjercicioFields($row);
+            $ejercicio->setEjerciciosFields($row);
         }
     } catch (PDOException $e) {
         error_log($e->getMessage());
     }
     return $ejercicio;
-}
+    }
 
     function viewAll(): array
     {
@@ -47,7 +48,7 @@ class EjerciciosM{
 
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 $ejercicio = new Ejercicios();
-                $ejercicio->setEjercicioFields($row);
+                $ejercicio->setEjerciciosFields($row);
                 $ejercicios[] = $ejercicio;
             }
         } catch (PDOException $e) {

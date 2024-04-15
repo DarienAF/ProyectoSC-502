@@ -246,4 +246,33 @@ class UsuarioM
         }
         return $exists;
     }
+
+    public function traerActividadGrafico(){
+  
+        $query = "SELECT activo, COUNT(*)
+        AS conteo 
+        FROM usuarios
+        WHERE id_rol = 4
+        GROUP BY activo " ;
+     try {
+        $resultado = $this->connection->Prepare($query); 
+        $resultado->execute();
+
+        $arr = array('miembros_activos' => 0, 'miembros_inactivos' => 0);  
+
+        foreach($resultado->fetchAll() as $encontrado){
+            if ($encontrado['activo'] == 1) {
+                $arr['miembros_activos'] = $encontrado['conteo'];
+            } else {
+                $arr['miembros_inactivos'] = $encontrado['conteo'];
+            }
+        }
+        return $arr;
+
+    } catch (PDOException $Exception) {
+        $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );
+        return json_encode($error);
+    }
+}
+    
 }
