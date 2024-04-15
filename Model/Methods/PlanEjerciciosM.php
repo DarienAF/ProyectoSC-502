@@ -94,7 +94,7 @@ class PlanEjerciciosM
 
             if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 $planEjercicio = new PlanEjercicios();
-                $planEjercicio -> setExcercisePlansFields($row);
+                $planEjercicio -> setPlanEjerciciosFields($row);
             }
         } catch (PDOException $e) {
             error_log($e->getMessage());
@@ -112,7 +112,7 @@ class PlanEjerciciosM
 
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             $planEjercicio = new PlanEjercicios();
-            $planEjercicio-> setExcercisePlansFields($row);
+            $planEjercicio-> setPlanEjerciciosFields($row);
             $planesEjercicios[] = $planEjercicio;
         }
     } catch (PDOException $e) {

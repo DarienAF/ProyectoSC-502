@@ -17,6 +17,7 @@ class MessagesPageController
     {
         $this->usuarioM = new UsuarioM();
         $this->mensajeM = new MensajesM();
+
     }
 
     function Index()
@@ -111,5 +112,4 @@ class MessagesPageController
         header('Content-Type: application/json');
         echo json_encode($response);
     }
-
 }

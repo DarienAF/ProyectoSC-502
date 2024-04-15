@@ -1,3 +1,4 @@
+
 CREATE TABLE IF NOT EXISTS Rol (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
@@ -73,12 +74,10 @@ CREATE TABLE IF NOT EXISTS Planes (
 );
 
 CREATE TABLE IF NOT EXISTS PlanEjercicio (
-    id_plan INT,
+    id_plan_ejercicio INT AUTO_INCREMENT PRIMARY KEY,
     id_ejercicio INT,
     series INT,
     repeticiones INT,
-    PRIMARY KEY (id_plan, id_ejercicio),
-    FOREIGN KEY (id_plan) REFERENCES Planes(id_plan),
     FOREIGN KEY (id_ejercicio) REFERENCES Ejercicio(id_ejercicio)
 );
 
@@ -111,3 +110,4 @@ INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, r
 ('taylorwilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Taylor', 'Wilson', 'taylor.wilson@example.com', '6926720005', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('samjones', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Jones', 'sam.jones@example.com', '9225565362', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('caseywilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Wilson', 'casey.wilson@example.com', '7288996943', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE);
+

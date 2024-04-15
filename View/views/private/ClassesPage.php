@@ -156,7 +156,7 @@
                                 <input type="text" class="form-control" id="classname" name="classname">
                             </div>
                             <div class="mb-3">
-                                <label for="category" class="form-label">Categoria</label>
+                                <label for="classCategoryID" class="form-label">Categoria</label>
                                 <select class="form-control" id="classCategoryID" name="classCategoryID">
 
                                 </select>
@@ -269,8 +269,8 @@
                     <div class="modal-body">
                         <form id="createClassForm">
                             <div class="mb-3">
-                                <label for="newUsername" class="form-label">Nombre de Entrenador</label>
-                                <select class="form-select" id="newUserClass" name="newUserClass">
+                                <label for="classUserID" class="form-label">Nombre de Entrenador</label>
+                                <select class="form-select" id="classUserID" name="classUserID">
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -298,10 +298,14 @@
                                 <label for="newClassName" class="form-label">Nombre Clase</label>
                                 <input type="text" class="form-control" id="newClassName" name="newClassName">
                             </div>
+                            <div class="mb-3">
+                                <label for="newCategoryClass" class="form-label">Categoria</label>
+                                <input type="number" class="form-control" id="newCategoryClass" name="newCategoryClass">
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="createClassData()">
+                        <button type="button" class="btn btn-success"  id="createClassBTN">
                             Guardar Cambios
                         </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
