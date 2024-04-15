@@ -74,12 +74,10 @@ CREATE TABLE IF NOT EXISTS Planes (
 );
 
 CREATE TABLE IF NOT EXISTS PlanEjercicio (
-    id_plan INT,
+    id_plan_ejercicio INT AUTO_INCREMENT PRIMARY KEY,
     id_ejercicio INT,
     series INT,
     repeticiones INT,
-    PRIMARY KEY (id_plan, id_ejercicio),
-    FOREIGN KEY (id_plan) REFERENCES Planes(id_plan),
     FOREIGN KEY (id_ejercicio) REFERENCES Ejercicio(id_ejercicio)
 );
 
