@@ -32,6 +32,7 @@ class ContactPageController
         $newMessage->setTitulo($titleMsg);
         $newMessage->setContexto($contextMsg);
         $newMessage->setLeido(0);
+        $newMessage->setEstado('recibido');
 
         // Guardar el mensaje en la base de datos
         if ($mensajesM->Create($newMessage)) {
