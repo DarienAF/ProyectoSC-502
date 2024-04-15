@@ -15,17 +15,15 @@ $(document).ready(function () {
         sendReply();
     });
     $("#closeMessage").click(function () {
-        $('#messageModal').modal('hide');
-        loadMessages(inboxActive);
+        closeModal();
     })
     $("#archiveMessage").click(function () {
-        loadMessages(inboxActive);
         archiveMessage();
     });
 
     async function loadMessages(estado) {
         try {
-
+            console.log(estado);
             const url = `./index.php?controller=MessagesPage&action=getMessages&estado=${estado}`;
             const response = await fetch(url, {
                 method: 'GET'
@@ -144,7 +142,7 @@ $(document).ready(function () {
 
         if (result.success) {
             showSuccess("Mensaje respondido con éxito.")
-            $('#messageModal').modal('hide');
+            closeModal();
         } else {
             showError(result.message);
         }
@@ -168,10 +166,15 @@ $(document).ready(function () {
 
         if (result.success) {
             showSuccess("Mensaje archivado con éxito.")
-            $('#messageModal').modal('hide');
+            closeModal();
         } else {
             showError(result.message);
         }
+    }
+
+    function closeModal() {
+        loadMessages(inboxActive);
+        $('#messageModal').modal('hide');
     }
 
     loadMessages('recibido');
