@@ -11,6 +11,7 @@ class Mensajes
     private $contexto;
     private $fecha_envio;
     private $leido;
+    private $estado;
 
     public function getIdMensaje()
     {
@@ -82,6 +83,15 @@ class Mensajes
         $this->leido = $leido;
     }
 
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
 
     public function setMessageFields($row)
     {
@@ -92,9 +102,10 @@ class Mensajes
         $this->setContexto($row['contexto']);
         $this->setFechaEnvio($row['fecha_envio']);
         $this->setLeido($row['leido']);
+        $this->setEstado($row['estado']);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->getIdMensaje(),
@@ -104,6 +115,7 @@ class Mensajes
             'contexto' => $this->getContexto(),
             'fecha' => $this->getFechaEnvio(),
             'leido' => $this->getLeido(),
+            'estado' => $this->getEstado()
         ];
     }
 }
