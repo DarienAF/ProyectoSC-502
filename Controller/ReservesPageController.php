@@ -14,15 +14,11 @@ class ReservesPageController
     private $reservacionM;
     private $claseM;
 
-
-
     public function __construct()
     {
         $this->usuarioM = new UsuarioM();
         $this->reservacionM = new ReservacionesM();
         $this->claseM = new ClasesM();
-
-
     }
 
     function Index()
@@ -39,6 +35,7 @@ class ReservesPageController
 
         $claseM = new ClasesM();
 
+        $classes = $this->claseM->viewAll();
 
         require_once './View/views/private/ReservesPage.php';
     }
@@ -74,6 +71,36 @@ class ReservesPageController
 
         header('Content-Type: application/json');
         echo json_encode($response);
+    }
+
+
+    public function getBookingData()
+    {
+        if (isset($_POST['bookingId'])) {
+            $bookingId = $_POST['bookingId'];
+            $booking = $this->reservacionM->view($bookingId);
+
+            $user = $this->usuarioM->view($booking->getIdUsuario());
+            $username = $user->getFullName();
+
+            $cls = $this->claseM->view($booking->getIdClase());
+            $dia = $cls->getDia();
+
+
+            if ($booking != null) {
+                $response = $booking->toArray();
+                $response['username'] = $username;
+                $response['dia'] = $dia;
+            } else {
+                $response = ['error' => 'Reserva no encontrada'];
+
+            }
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } else {
+            echo json_encode(['error' => 'bookingId no proporcionado']);
+        }
     }
 
 }

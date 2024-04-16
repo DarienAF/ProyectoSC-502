@@ -210,6 +210,55 @@ th span {
 	color: #000000;
 }
 
+.custom-modal {
+    max-width: 45%; 
+    margin: 1.75rem auto;
+}
+
+#classCards .card {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    transition: transform 0.3s ease-in-out;
+}
+
+#classCards .card:hover {
+    transform: scale(1.05);
+}
+
+#classCards .card-title {
+    font-size: 1.8vh;
+    font-weight: bold;
+    margin-bottom: 10px;
+	text-align: center;
+}
+
+#classCards .card-text {
+    font-size: 1.4vh;
+    margin-bottom: 15px;
+}
+
+#classCards .btn-edit {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 1.4vh;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+	display: block;
+	margin: 0 auto;
+	width: 70%;
+}
+
+#classCards .btn-edit:hover {
+    background-color: #c82333;
+}
+
 @keyframes animate {
 	from {
 		opacity: 0.5;
