@@ -1,14 +1,11 @@
 // Función para actualizar la interfaz de usuario con los nuevos datos
-function updateUI(id_clase, id_Usuario, usuario, hora_inicio, 
-    hora_fin, dia, nombre, id_categoria, categoria) {
-    $(`#id-${id_clase}`).text(id_clase);
-    $(`#userId-${id_clase}`).text(id_Usuario);
-    $(`#username-${id_clase}`).text(usuario);
+function updateUI(id_clase, usuario, hora_inicio, hora_fin, dia, nombre, categoria) {
+    $(`#idClase-${id_clase}`).text(id_clase);
+    $(`#nombreUsuario-${id_clase}`).text(usuario);
     $(`#horaInicio-${id_clase}`).text(hora_inicio);
     $(`#horaFin-${id_clase}`).text(hora_fin);
     $(`#dia-${id_clase}`).text(dia);
-    $(`#nombre-${id_clase}`).text(nombre);
-    $(`#idCategoria-${id_clase}`).text(id_categoria);
+    $(`#nombreClase-${id_clase}`).text(nombre);
     $(`#categoria-${id_clase}`).text(categoria);
 }
 
@@ -16,21 +13,19 @@ function updateUI(id_clase, id_Usuario, usuario, hora_inicio,
 function filterTable() {
     // Obtener valores de los filtros
     let searchId = $('#searchId').val().trim();
-    let searchUserId = $('#searchUserId').val().trim();
     let searchUsername = $('#searchUsername').val().trim().toLowerCase();
     let searchStartTime = $('#searchStartTime').val().trim();
     let searchEndTime = $('#searchEndTime').val().trim();
     let searchDay = $('#searchDay').val().trim();
     let searchClassName = $('#searchClassName').val().trim();
-    let searchCategoryId = $('#searchCategoryId').val().trim();
     let searchCategoryname = $('#searchCategoryname').val().trim().toLowerCase();
     let visibleRows = 0;
 
     // Iterar sobre cada fila de la tabla para aplicar los filtros
     $('#tablaClase tbody tr[id^="classRow-"]').each(function () {
         let isVisible = applyFiltersToRow($(this), {
-            searchId, searchUserId, searchUsername, searchStartTime, searchEndTime,
-            searchDay, searchClassName, searchCategoryId, searchCategoryname
+            searchId, searchUsername, searchStartTime, searchEndTime,
+            searchDay, searchClassName, searchCategoryname
         }); 
         if (isVisible) visibleRows++;
     });
@@ -41,23 +36,19 @@ function filterTable() {
 
 function applyFiltersToRow(row, filters) {
     let idText = row.children().eq(0).text().trim();
-    let usuarioIDText = row.children().eq(1).text().trim();
-    let usernameText = row.children().eq(2).text().trim().toLowerCase();
-    let startTimeText = row.children().eq(3).text().trim();
-    let endTimeText = row.children().eq(4).text().trim();
-    let dayText = row.children().eq(5).text().trim();
-    let classNameText = row.children().eq(6).text().trim();
-    let categoryIdText = row.children().eq(7).text().trim();
-    let categoryNameText = row.children().eq(8).text().trim().toLowerCase();
+    let usernameText = row.children().eq(1).text().trim().toLowerCase();
+    let startTimeText = row.children().eq(2).text().trim();
+    let endTimeText = row.children().eq(3).text().trim();
+    let dayText = row.children().eq(4).text().trim();
+    let classNameText = row.children().eq(5).text().trim();
+    let categoryNameText = row.children().eq(6).text().trim().toLowerCase();
 
     let isRowVisible = (filters.searchId === "" || idText === filters.searchId) &&
-        (filters.searchUserId === "" || usuarioIDText === filters.searchUserId) &&
         (filters.searchUsername === "" || usernameText.includes(filters.searchUsername)) &&
         (filters.searchStartTime === "" || startTimeText.includes(filters.searchStartTime)) &&
         (filters.searchEndTime === "" || endTimeText.includes(filters.searchEndTime)) &&
         (filters.searchDay === "" || dayText.includes(filters.searchDay)) &&
         (filters.searchClassName === "" || classNameText.includes(filters.searchClassName)) &&
-        (filters.searchCategoryId === "" || categoryIdText.includes(filters.searchCategoryId)) &&
         (filters.searchCategoryname === "" || categoryNameText.includes(filters.searchCategoryname));
     row.css('display', isRowVisible ? '' : 'none');
     return isRowVisible;
@@ -71,6 +62,7 @@ function toggleNoResultRow(visibleRows) {
 
 let sortOrder = 1; // 1 para ascendente, -1 para descendente
 let currentSortColumn = null;
+
 
 // Función para ordernar la tabla en función de la columna seleccionada
 function sortTable(columnIndex, columnId) {
@@ -123,15 +115,12 @@ function sortTable(columnIndex, columnId) {
 
 // Agregando controladores de eventos para la ordenación al hacer clic en los encabezados de las columnas
 $('#sortID').click(() => sortTable(0, 'sortID'));
-$('#sortUserID').click(() => sortTable(1, 'sortUserID'));
-$('#sortUsername').click(() => sortTable(2, 'sortUsername'));
-$('#sortStartTime').click(() => sortTable(3, 'sortStartTime'));
-$('#sortEndTime').click(() => sortTable(4, 'sortEndTime'));
-$('#sortDay').click(() => sortTable(5, 'sortDay'));
-$('#sortClassName').click(() => sortTable(6, 'sortClassName'));
-$('#sortCategoryID').click(() => sortTable(7, 'sortCategoryID'));
-$('#sortCategoryName').click(() => sortTable(8, 'sortCategoryName'));
-
+$('#sortUsername').click(() => sortTable(1, 'sortUsername'));
+$('#sortStartTime').click(() => sortTable(2, 'sortStartTime'));
+$('#sortEndTime').click(() => sortTable(3, 'sortEndTime'));
+$('#sortDay').click(() => sortTable(4, 'sortDay'));
+$('#sortClassName').click(() => sortTable(5, 'sortClassName'));
+$('#sortCategoryName').click(() => sortTable(6, 'sortCategoryName'));
 
 // Función que crea una clase nueva
 async function createClassData() {
@@ -192,7 +181,28 @@ $(function () {
 
     loadData('newUserClass', null);
 
-    $("#createClassBTN").click(() => createMeasureData());
+    async function loadCategories(selectId, selectedCategoryId) {
+        const selectDOM = $(`#${selectId}`);
+    
+        try {
+            const response = await fetch('./index.php?controller=ClassesPage&action=CategoryClasses');
+            const categories = await response.json();
+    
+            let options = categories.map(category => {
+                const selectedAttribute = category.id === selectedCategoryId ? ' selected' : '';
+                return `<option value="${category.id}"${selectedAttribute}>${category.nombre}</option>`;
+            }).join('');
+    
+            selectDOM.html(options);
+        } catch (error) {
+            console.error('Error loading data:', error);
+        }
+    }
+    
+    loadCategories('newCategoryClass', null);
+    
+
+    $("#createClassBTN").click(() => createClassData());
 
     $('.edit-user-btn').click(async function () {
         const classId = this.getAttribute('class-id');
@@ -212,7 +222,7 @@ $(function () {
                 $("#classCategoryID").val(result.id_categoria);
             }
         } catch (error) {
-            console.error('Error fetching measure details:', error);
+            console.error('Error fetching class details:', error);
         }
     });
 
@@ -262,9 +272,8 @@ $(function () {
                 showError(result.message || 'Hubo un problema al guardar los cambios.')
             }
         } catch (error) {
-            console.error('Error updating measure:', error);
-            showError('Hubo un problema al conectar con el servidor.')
+            console.error('Error updating class:', error);
+            showError('Hubo un problema al conectar con el servidor.');
         }
     });
-
 });
