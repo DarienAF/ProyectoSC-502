@@ -13,13 +13,11 @@ class MessagesPageController
 {
     private $usuarioM;
     private $mensajeM;
-    private $rolM;
 
     public function __construct()
     {
         $this->usuarioM = new UsuarioM();
         $this->mensajeM = new MensajesM();
-        $this->rolM = new RolM();
     }
 
     function Index()

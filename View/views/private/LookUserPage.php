@@ -8,9 +8,9 @@
     <h1 class="welcomeMessage">Usuarios</h1>
 
     <?php if ($userRole == 1): ?>
-    <div class="add-user-container">
+        <div class="add-plan-container">
         <button type="button" class="btn btn-light add-user-btn" data-bs-toggle="modal"
-            data-bs-target="#createUserModal">
+                data-bs-target="#createUserModal">
             <span class="add-user-icon"><i class="bi bi-person-add"></i></span>Crear Nuevo
         </button>
     </div>

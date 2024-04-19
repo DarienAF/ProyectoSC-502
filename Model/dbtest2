@@ -71,36 +71,37 @@ CREATE TABLE IF NOT EXISTS ReservaClases (
 CREATE TABLE IF NOT EXISTS Ejercicio (
     id_ejercicio INT AUTO_INCREMENT PRIMARY KEY,
     nombre_ejercicio VARCHAR(100) NOT NULL,
-    grupomuscular VARCHAR(50),
+    grupo_muscular VARCHAR(50),
     imagen_ejercicio VARCHAR(1024)
 );
 
 INSERT INTO `ejercicio` (`id_ejercicio`, `nombre_ejercicio`, `grupomuscular`, `imagen_ejercicio`) VALUES
-(1, 'Press de banca', 'Pecho', 'ruta/press_banca.jpg'),
-(2, 'Sentadilla', 'Piernas', 'ruta/sentadilla.jpg'),
-(3, 'Peso muerto', 'Espalda', 'ruta/peso_muerto.jpg'),
-(4, 'Curl de bíceps', 'Brazos', 'ruta/curl_biceps.jpg'),
-(5, 'Abdominales', 'Abdomen', 'ruta/abdominales.jpg'),
-(6, 'Lagartijas', 'Pecho', 'ruta/lagartijas.jpg'),
-(7, 'Dominadas', 'Espalda', 'ruta/dominadas.jpg');
+(1, 'Press de banca', 'Pecho', 'https://d1copppaysyuhz.cloudfront.net/exercises/bench-press.webp'),
+(2, 'Sentadilla', 'Piernas', 'https://d1copppaysyuhz.cloudfront.net/exercises/squat.webp'),
+(3, 'Peso muerto', 'Espalda', 'https://d1copppaysyuhz.cloudfront.net/exercises/deadlift.webp'),
+(4, 'Curl de bíceps', 'Bicep', 'https://d1copppaysyuhz.cloudfront.net/exercises/bicep-curl.webp'),
+(5, 'Elevaciones laterales', 'Hombro', 'https://d1copppaysyuhz.cloudfront.net/exercises/lateral-raise.webp'),
+(6, 'Extension de tricep', 'Tricep', 'https://d1copppaysyuhz.cloudfront.net/exercises/tricep-extension.webp'),
+(7, 'Jalón lateral', 'Espalda', 'https://d1copppaysyuhz.cloudfront.net/exercises/lat-pulldown.webp')
 
+
+CREATE TABLE IF NOT EXISTS Plan_Ejercicios (
+    id_plan_ejercicio INT AUTO_INCREMENT PRIMARY KEY,
+    id_ejercicio INT,
+    series INT,
+    repeticiones INT,
+    PRIMARY KEY (id_plan_ejercicio, id_ejercicio),
+    FOREIGN KEY (id_ejercicio) REFERENCES Ejercicio(id_ejercicio)
+);
 
 CREATE TABLE IF NOT EXISTS Planes (
     id_plan INT AUTO_INCREMENT PRIMARY KEY,
     nombre_plan VARCHAR(100),
     id_usuario INT,
+    id_plan_ejercicio INT,
     dia VARCHAR(50),
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
-);
-
-CREATE TABLE IF NOT EXISTS PlanEjercicio (
-    id_plan INT,
-    id_ejercicio INT,
-    series INT,
-    repeticiones INT,
-    PRIMARY KEY (id_plan, id_ejercicio),
-    FOREIGN KEY (id_plan) REFERENCES Planes(id_plan),
-    FOREIGN KEY (id_ejercicio) REFERENCES Ejercicio(id_ejercicio)
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
+    FOREIGN KEY (id_plan_ejercicio) REFERENCES PlanEjercicio(id_plan_ejercicio)
 );
 
 CREATE TABLE IF NOT EXISTS Mensajes (

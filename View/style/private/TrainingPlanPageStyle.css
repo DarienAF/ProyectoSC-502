@@ -1,3 +1,7 @@
+.active {
+    border-bottom: 3px solid #D43B3B;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -5,11 +9,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url('../../img/private/private_training.jpg');
-}
-
-
-.active {
-    border-bottom: 3px solid #D43B3B;
 }
 
 .welcomeMessage {
@@ -23,22 +22,7 @@ body {
     align-items: initial;
 }
 
-@keyframes animate {
-    from {
-        opacity: 0.50;
-        transform: translate(0, 100px);
-        filter: blur(33px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translate(0);
-        filter: blur(0);
-    }
-}
-
-
-.add-training-container {
+.add-plan-container {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -47,31 +31,18 @@ body {
     padding-top: 20px;
 }
 
-.add-training-btn {
+.add-user-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2px 20px;
     font-weight: bolder;
     font-size: 1.5vh;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
-.add-training-icon {
-    font-size: 2.5vh;
-    padding: 0 5px 0 0;
-}
-
-
-.add-routine-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2px 20px;
-    font-weight: bolder;
-    font-size: 1.5vh;
-}
-
-.add-routine-icon {
+.add-user-icon {
     font-size: 2.5vh;
     padding: 0 5px 0 0;
 }
@@ -202,5 +173,17 @@ th span {
     width: 30%;
 }
 
+@keyframes animate {
+    from {
+        opacity: 0.5;
+        transform: translate(0, 100px);
+        filter: blur(33px);
+    }
 
+    to {
+        opacity: 1;
+        transform: translate(0);
+        filter: blur(0);
+    }
+}
 
