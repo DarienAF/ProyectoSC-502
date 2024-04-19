@@ -26,7 +26,6 @@ $(document).ready(function () {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
-                    // Aquí puedes añadir headers adicionales si son necesarios
                 }
             });
 
@@ -36,6 +35,7 @@ $(document).ready(function () {
 
             const exercises = await response.json();
             populateExerciseDropdown(exercises);
+            $('#exerciseSelect').change();
         } catch (error) {
             console.error('There was a problem fetching the exercise list:', error);
         }
@@ -65,7 +65,7 @@ $(document).ready(function () {
             return;
         }
 
-        // Ordena los ejercicios alfabéticamente por grupo muscular y luego por nombre de ejercicio
+        // Ordena los ejercicios alfabéticamente
         exercises.sort((a, b) => {
             let comparison = a.grupo_muscular.localeCompare(b.grupo_muscular);
             if (comparison === 0) {
@@ -117,6 +117,25 @@ $(document).ready(function () {
             }
         } catch (error) {
             console.error('Error al crear el plan:', error);
+            showError('Hubo un problema al conectar con el servidor.');
+        }
+    });
+
+
+    $('.delete-plan-btn').on('click', async function () {
+        let planId = $(this).data('plan-id');
+        try {
+            // Realiza una solicitud POST al servidor.
+            const url = './index.php?controller=TrainingPlanPage&action=deletePlan';
+            const result = await performAjaxRequest(url, 'POST', {planId: planId});
+
+            if (result.success) {
+                showSuccessAndReload(result.message);
+            } else {
+                showError(result.message);
+            }
+        } catch (error) {
+            console.error('Error al eliminar el plan:', error);
             showError('Hubo un problema al conectar con el servidor.');
         }
     });

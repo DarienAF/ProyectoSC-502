@@ -107,4 +107,21 @@ class TrainingPlanPageController
         header('Content-Type: application/json');
         echo json_encode($response);
     }
+
+    public function deletePlan()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $idPlanEjercicio = $this->planesM->view($data['planId'])->getIdPlanEjercicio();
+        $succ2 = $this->planesM->delete($data['planId']);
+        $succ1 = $this->planEjerciciosM->delete($idPlanEjercicio);
+        if ($succ1 && $succ2) {
+            $response = ['success' => true, 'message' => 'Plan eliminado con éxito.'];
+        } else {
+            $response = ['success' => false, 'message' => 'No se pudo eliminar el plan s1:' . $succ1 . " / s2:" . $succ2];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
 }

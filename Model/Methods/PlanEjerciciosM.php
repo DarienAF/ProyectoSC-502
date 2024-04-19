@@ -43,53 +43,13 @@ class PlanEjerciciosM
         return $lastInsertId; // Retorna el último ID insertado o 0 si hubo un fallo
     }
 
-
-    public function update(PlanEjercicios $planEjercicioActualizado, PlanEjercicios $planEjercicioOriginal): bool
-    {
-        $updates = [];
-        $params = [];
-
-        if ($planEjercicioActualizado->getIdPlanEjercicio() !== $planEjercicioOriginal->getIdPlanEjercicio() && !is_null($planEjercicioActualizado->getIdPlan())) {
-            $updates[] = "`id_plan_ejercicio` = ?";
-            $params[] = $planEjercicioActualizado->getIdPlanEjercicio();
-        }
-        if ($planEjercicioActualizado->getIdEjercicio() !== $planEjercicioOriginal->getIdEjercicio() && !is_null($planEjercicioActualizado->getIdEjercicio())) {
-            $updates[] = "`id_ejercicio` = ?";
-            $params[] = $planEjercicioActualizado->getIdEjercicio();
-        }
-        if ($planEjercicioActualizado->getSeries() !== $planEjercicioOriginal->getSeries() && !is_null($planEjercicioActualizado->getSeries())) {
-            $updates[] = "`series` = ?";
-            $params[] = $planEjercicioActualizado->getSeries();
-        }
-        if ($planEjercicioActualizado->getRepeticiones() !== $planEjercicioOriginal->getRepeticiones() && !is_null($planEjercicioActualizado->getRepeticiones())) {
-            $updates[] = "`repeticiones` = ?";
-            $params[] = $planEjercicioActualizado->getRepeticiones();
-        }
-
-        if (!empty($updates)) {
-            $query = "UPDATE `plan_ejercicios` SET " . implode(", ", $updates) . " WHERE `id_plan_ejercicio` = ? AND `id_ejercicio` = ?";
-            $params[] = $planEjercicioOriginal->getIdPlanEjercicio();
-            $params[] = $planEjercicioOriginal->getIdEjercicio();
-
-            try {
-                $statement = $this->connection->prepare($query);
-                $statement->execute($params);
-                return $statement->rowCount() > 0;
-            } catch (PDOException $e) {
-                error_log($e->getMessage());
-                return false;
-            }
-        }
-        return false;
-    }
-
-    public function view($id_plan)
+    public function view($id_plan_ejercicio)
     {
         $planEjercicio = null;
         try {
             $query = "SELECT * FROM `plan_ejercicios` WHERE id_plan_ejercicio  = ?";
             $statement = $this->connection->prepare($query);
-            $statement->bindValue(1, $id_plan, PDO::PARAM_INT);
+            $statement->bindValue(1, $id_plan_ejercicio, PDO::PARAM_INT);
             $statement->execute();
 
             if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -121,14 +81,13 @@ class PlanEjerciciosM
     return $planesEjercicios;
     }
 
-    public function delete($id_plan, $id_ejercicio)
+    public function delete($id_plan_ejercicio)
     {
         $success = false;
         try {
-            $query = "DELETE FROM `plan_ejercicios` WHERE `id_plan_ejercicio` = ? AND `id_ejercicio` = ?";
+            $query = "DELETE FROM `plan_ejercicios` WHERE `id_plan_ejercicio` = ?";
             $statement = $this->connection->prepare($query);
-            $statement->bindValue(1, $id_plan, PDO::PARAM_INT);
-            $statement->bindValue(2, $id_ejercicio, PDO::PARAM_INT);
+            $statement->bindValue(1, $id_plan_ejercicio, PDO::PARAM_INT);
     
             $success = $statement->execute();
         } catch (PDOException $e) {

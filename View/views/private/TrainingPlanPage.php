@@ -66,10 +66,9 @@
                     <?php echo htmlspecialchars($plan->getDia()); ?>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-warning edit-plan-btn"
-                            data-plan-id="<?php echo $plan->getIdPlan(); ?>" data-bs-toggle="modal"
-                            data-bs-target="#editPlanModal">
-                        <i class="bi bi-pencil-square"></i>
+                    <button type="button" class="btn btn-danger delete-plan-btn"
+                            data-plan-id="<?php echo $plan->getIdPlan(); ?>">
+                        <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>
             </tr>
