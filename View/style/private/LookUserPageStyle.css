@@ -20,7 +20,7 @@ body {
 	font-family: 'Poppins', sans-serif;
 }
 
-.add-user-container {
+.add-plan-container {
     flex: 1;
     display: flex;
     justify-content: center;

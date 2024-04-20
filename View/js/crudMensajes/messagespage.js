@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    var inboxActive;
-    var openId;
+    let inboxActive;
+    let openId;
 
     $('#inboxBtn').click(function () {
         loadMessages('recibido');
@@ -39,12 +39,12 @@ $(document).ready(function () {
     }
 
     function displayMessages(messages) {
-        var messagesList = $('.messages');
+        let messagesList = $('.messages');
         messagesList.empty();
 
         messages.forEach(function (message) {
-            var messageClass = message.leido == 0 ? 'unread' : '';
-            var messageElement = `
+            let messageClass = message.leido == 0 ? 'unread' : '';
+            let messageElement = `
                 <li class="message ${messageClass}" data-message='${JSON.stringify(message)}'>
                     <a href="#" class="message-link">
                         <div class="actions">
@@ -64,7 +64,7 @@ $(document).ready(function () {
 
         $('.message-link').click(function (e) {
             e.preventDefault();
-            var message = $(this).closest('.message').data('message');
+            let message = $(this).closest('.message').data('message');
             loadMessageIntoModal(message);
         });
     }
