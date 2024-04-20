@@ -178,6 +178,19 @@
                                 <h6 class="modal-title-day"><b>Lista de Clases para el día</b></h6>
                             </div>
 
+                            <select class="form-select mb-3" id="classSelect" aria-label="Seleccionar ejercicio">
+                                <option value="" disabled selected>Seleccione una clase</option>
+                                <?php foreach ($classes as $cls): ?>
+                                <option value="<?php echo $cls->getIdClase(); ?>"
+                                    data-day="<?php echo htmlspecialchars($cls->getDia()); ?>">
+                                    <?php echo htmlspecialchars($cls->getNombreClase()) . ' - ' . date("h:i A", strtotime($cls->getHoraInicio())) . ' - ' . date("h:i A", strtotime($cls->getHoraFin())); ?>
+                                </option>
+                                <?php endforeach; ?>
+                                <option value="" disabled>No hay clases para el día seleccionado</option>
+                            </select>
+
+
+
                             <div class="mb-3">
                                 <div class="row" id="classCards">
                                     <?php foreach ($classes as $cls): ?>
@@ -193,9 +206,7 @@
                                                 <p class="card-text">Hora Finalización:
                                                     <?php echo date("h:i A", strtotime($cls->getHoraFin())); ?>
                                                 </p>
-                                                <button type="button" class="btn btn-edit"
-                                                    data-id="<?php echo $cls->getIdClase(); ?>"
-                                                    onclick="selectClass(<?php echo $cls->getIdClase(); ?>, '<?php echo $cls->getNombreClase(); ?>')">Seleccionar</button>
+
                                             </div>
                                         </div>
                                     </div>
@@ -207,9 +218,9 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <butto type="button" class="btn btn-success" onclick="updateBookingData()">
+                        <button type="button" class="btn btn-success" onclick="updateBookingData()">
                             Guardar Cambios
-                        </butto>
+                        </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>

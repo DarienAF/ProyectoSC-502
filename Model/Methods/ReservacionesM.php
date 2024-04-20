@@ -52,10 +52,6 @@ class ReservacionesM
             $updates[] = "`id_clase` = ?";
             $params[] = $reservaActualizada->getIdClase();
         }
-        if ($reservaActualizada->getCancelar() !== $reservaOriginal->getCancelar() && !is_null($reservaActualizada->getCancelar())) {
-            $updates[] = "`cancelar` = ?";
-            $params[] = $reservaActualizada->getCancelar();
-        }
 
         if (!empty($updates)) {
             $query = "UPDATE `reservaclases` SET " . implode(", ", $updates) . " WHERE `id_reserva` = ?";
@@ -146,8 +142,9 @@ class ReservacionesM
         return $retVal;
     }
 
-    public function traerClasesAsistidas(){
-       
+    public function traerClasesAsistidas()
+    {
+
         $query = "SELECT Clases.nombre_clase, COUNT(*) 
         AS conteo
         FROM ReservaClases
@@ -157,26 +154,29 @@ class ReservacionesM
         ORDER BY conteo DESC";
 
         try {
-            $resultado = $this->connection->Prepare($query); 
+            $resultado = $this->connection->Prepare($query);
             $resultado->execute();
 
-            $arr = array(); 
-            
-            foreach($resultado->fetchAll() as $encontrado){
-                $clase = array("nombre_clase" => $encontrado['nombre_clase'],
-                 "conteo" => $encontrado['conteo']);
+            $arr = array();
+
+            foreach ($resultado->fetchAll() as $encontrado) {
+                $clase = array(
+                    "nombre_clase" => $encontrado['nombre_clase'],
+                    "conteo" => $encontrado['conteo']
+                );
                 $arr[] = $clase;
             }
             return $arr;
-    
+
         } catch (PDOException $Exception) {
-            $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );
+            $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
             return json_encode($error);
         }
     }
 
-    public function traerClasesCanceladas(){
-        
+    public function traerClasesCanceladas()
+    {
+
         $query = "SELECT Clases.nombre_clase, COUNT(*) 
         AS cancelaciones        
         FROM ReservaClases
@@ -185,29 +185,31 @@ class ReservacionesM
         WHERE cancelar = TRUE
         GROUP BY Clases.nombre_clase";
 
-        $arr = array();  
-    
+        $arr = array();
+
         try {
-            $resultado = $this->connection->Prepare($query); 
+            $resultado = $this->connection->Prepare($query);
             $resultado->execute();
-            $arr = array(); 
-            
-            foreach($resultado->fetchAll() as $encontrado){
-                $clase = array("nombre_clase" => $encontrado['nombre_clase'],
-                 "cancelaciones" => $encontrado['cancelaciones']);
+            $arr = array();
+
+            foreach ($resultado->fetchAll() as $encontrado) {
+                $clase = array(
+                    "nombre_clase" => $encontrado['nombre_clase'],
+                    "cancelaciones" => $encontrado['cancelaciones']
+                );
                 $arr[] = $clase;
             }
-        
+
             return $arr;
-    
+
         } catch (PDOException $Exception) {
-            $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );
+            $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
             return json_encode($error);
         }
     }
 
-    
-    
+
+
 
 
 }

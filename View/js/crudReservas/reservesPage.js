@@ -196,71 +196,100 @@ $('#editBookingModal').on('shown.bs.modal', function () {
 	$(`#classCards .col-md-4[data-day="${selectedDay}"]`).show();
 });
 
+
 //Boton Modificar Reserva
 $(document).ready(function () {
-    $('.edit-booking-btn').on('click', async function () {
-        // Obtener el ID del usuario y recuperar sus datos y roles
-        const bookingId = $(this).attr('data-booking-id');
-        const bookingData = await getBookingData(bookingId);
+	$('.edit-booking-btn').on('click', async function () {
+		// Obtener el ID del usuario y recuperar sus datos y roles
+		const bookingId = $(this).attr('data-booking-id');
+		const bookingData = await getBookingData(bookingId);
 
-        // Si se obtuvieron datos de la reserva, actualiza los campos del formulario
-        if (bookingData) {
-            $('#bookingId').val(bookingData.id_reserva);
-            $('#username').val(bookingData.username);
-            $('#bookingClassDay').val(bookingData.dia);
+		// Si se obtuvieron datos de la reserva, actualiza los campos del formulario
+		if (bookingData) {
+			$('#bookingId').val(bookingData.id_reserva);
+			$('#username').val(bookingData.username);
+		
 
-            updateModalTitle(bookingData.dia); // Actualizar el título del modal
-        }
-    });
+			   // Establecer el valor por defecto del select bookingClassDay
+			   const defaultDay = $(`#bookingDay-${bookingId}`).text().trim();
+			   $('#bookingClassDay').val(defaultDay);
+			   
+			   updateModalTitle(defaultDay); // Actualizar el título del modal
+			   filterClasses(defaultDay); // Filtrar las clases basadas en el día
+		}
+	});
 
-    // Actualiza el título del modal cuando se cambie la opción del select
-    $('#bookingClassDay').change(function () {
-        const selectedDay = $(this).val();
-        updateModalTitle(selectedDay);
-    });
+	// Actualiza el título del modal cuando se cambie la opción del select
+	$('#bookingClassDay').change(function () {
+		const selectedDay = $(this).val();
+		updateModalTitle(selectedDay);
+	});
 });
 
 // Función para actualizar el título del modal
 function updateModalTitle(day) {
-    $('.modal-title-day').html(`<b>Lista de Clases para el día ${day}</b>`);
+	$('.modal-title-day').html(`<b>Lista de Clases para el día ${day}</b>`);
 }
 
+// Función para filtrar las clases según el día seleccionado
+function filterClasses(selectedDay) {
+    // Ocultar todas las opciones de clases
+    $('#classSelect option').hide();
 
-$(document).ready(function() {
-	$('.btn-edit').click(function() {
-		// Remover la clase 'selected' de todos los botones
-		$('.btn-edit').removeClass('selected');
-		
-		// Agregar la clase 'selected' al botón clickeado
-		$(this).addClass('selected');
-		
-		// Tu código existente de selectClass
-		// ...
-	});
+    // Mostrar solo las opciones de clases que corresponden al día seleccionado
+    const matchingOptions = $(`#classSelect option[data-day="${selectedDay}"]`);
+    
+    if (matchingOptions.length > 0) {
+        matchingOptions.show();
+        $('#classSelect option[value=""]').hide(); // Oculta la opción "No hay clases para el día seleccionado"
+        $('#classSelect').val(matchingOptions.eq(0).val()); // Selecciona la primera opción disponible
+    } else {
+        $('#classSelect option[value=""]').show(); // Muestra la opción "No hay clases para el día seleccionado"
+        $('#classSelect').val(''); // Restablece el valor seleccionado
+    }
+}
+
+// Llama a filterClasses cuando se cambia el valor del select de días
+$('#bookingClassDay').change(function () {
+    const selectedDay = $(this).val();
+    filterClasses(selectedDay);
+});
+
+// Ejecuta la misma funcionalidad de filtros al cargar por primera vez
+$(document).ready(function () {
+    const selectedDay = $('#bookingClassDay').val();
+    filterClasses(selectedDay);
 });
 
 
 async function updateBookingData() {
-    // Recolecta los valores de los campos del formulario
-    const formData = {
-        bookingId: $('#bookingId').val(),
-        username: $('#username').val(),
-        day: $('#bookingClassDay').val(),
-    };
+	// Recolecta los valores de los campos del formulario
+	const bookingId = $('#bookingId').val();
+	const bookingData = await getBookingData(bookingId);
+	let userId;
+	if (bookingData) {
+		userId = bookingData.user_id;
+	}
+	const selectedClassId = $('#classSelect').val();
 
-    try {
-        // Realiza una solicitud POST al servidor.
-        const url = './index.php?controller=LookUserPage&action=updateBooking';
-        const result = await performAjaxRequest(url, 'POST', formData);
+	const formData = {
+		bookingId: bookingId,
+		classId: selectedClassId,
+		userId: userId
+	};
 
-     
-    } catch (error) {
-        console.error('Error al actualizar la reserva', error);
-        showError('Hubo un problema al conectar con el servidor.');
-    }
-}
+	try {
+		// Realiza una solicitud POST al servidor.
+		const url = './index.php?controller=ReservesPage&action=updateBooking';
+		const result = await performAjaxRequest(url, 'POST', formData);
 
-
-function updateUI(bookingId, username) {
- 
+		if (result.success) {
+			showSuccessAndReload(result.message);
+		} else {
+			showError(result.message);
+		}
+	} catch (error) {
+		console.error('Error al actualizar la reserva', error);
+		showError('Hubo un problema al conectar con el servidor.');
+	}
 }
