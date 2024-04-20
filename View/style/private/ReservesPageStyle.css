@@ -259,6 +259,10 @@ th span {
     background-color: #c82333;
 }
 
+#classCards .btn-edit.selected {
+    background-color: #007bff;
+}
+
 @keyframes animate {
 	from {
 		opacity: 0.5;

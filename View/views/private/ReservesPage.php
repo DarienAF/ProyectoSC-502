@@ -175,7 +175,7 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <h6 class="modal-title"><b>Lista de Clases para el día</b></h6>
+                                <h6 class="modal-title-day"><b>Lista de Clases para el día</b></h6>
                             </div>
 
                             <div class="mb-3">
@@ -194,6 +194,7 @@
                                                     <?php echo date("h:i A", strtotime($cls->getHoraFin())); ?>
                                                 </p>
                                                 <button type="button" class="btn btn-edit"
+                                                    data-id="<?php echo $cls->getIdClase(); ?>"
                                                     onclick="selectClass(<?php echo $cls->getIdClase(); ?>, '<?php echo $cls->getNombreClase(); ?>')">Seleccionar</button>
                                             </div>
                                         </div>
@@ -206,9 +207,9 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="updateUserData()">
+                        <butto type="button" class="btn btn-success" onclick="updateBookingData()">
                             Guardar Cambios
-                        </button>
+                        </butto>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>

@@ -103,4 +103,15 @@ class ReservesPageController
         }
     }
 
+
+    public function updateBookingData()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $response = [];
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
 }
