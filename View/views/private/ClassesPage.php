@@ -151,6 +151,65 @@
             </div>
         </div>
 
+         <!-- Modal Crear-->
+         <div class="modal fade" id="createAsignatureModal" tabindex="-1" aria-labelledby="createAsignatureModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Realizar Nueva Clase</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="createClassForm">
+                            <div class="mb-3">
+                                <label for="newUserClass" class="form-label">Nombre de Entrenador</label>
+                                <select class="form-select" id="newUserClass" name="newUserClass">
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newStartTime" class="form-label">Hora Inicio</label>
+                                <input type="time" class="form-control" id="newStartTime" name="newStartTime">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newEndTime" class="form-label">Hora Fin</label>
+                                <input type="time" class="form-control" id="newEndTime" name="newEndTime">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newDay" class="form-label">Día</label>
+                                <select class="form-control" id="newDay" name="newDay">
+                                    <option value="" disabled selected>Seleccionar día...</option>
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miercoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
+                                    <option value="Sebado">Sábado</option>
+                                    <option value="Domingo">Domingo</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newClassName" class="form-label">Nombre Clase</label>
+                                <input type="text" class="form-control" id="newClassName" name="newClassName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newCategoryClass" class="form-label">Categoria</label>
+                                <select class="form-select" id="newCategoryClass" name="newCategoryClass">
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="createClassBTN">
+                            Guardar Cambios
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
         <?php endif; ?>
         <!-- Vista de Clases Miembros -->
@@ -236,64 +295,7 @@
         </div>
         <?php endif; ?>
 
-        <!-- Modal Crear-->
-        <div class="modal fade" id="createAsignatureModal" tabindex="-1" aria-labelledby="createAsignatureModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Realizar Nueva Clase</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="createClassForm">
-                            <div class="mb-3">
-                                <label for="classUserID" class="form-label">Nombre de Entrenador</label>
-                                <select class="form-select" id="classUserID" name="classUserID">
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="newStartTime" class="form-label">Hora Inicio</label>
-                                <input type="time" class="form-control" id="newStartTime" name="newStartTime">
-                            </div>
-                            <div class="mb-3">
-                                <label for="newEndTime" class="form-label">Hora Fin</label>
-                                <input type="time" class="form-control" id="newEndTime" name="newEndTime">
-                            </div>
-                            <div class="mb-3">
-                                <label for="newDay" class="form-label">Día</label>
-                                <select class="form-control" id="newDay" name="newDay">
-                                    <option value="" disabled selected>Seleccionar día...</option>
-                                    <option value="Lunes">Lunes</option>
-                                    <option value="Martes">Martes</option>
-                                    <option value="Miercoles">Miércoles</option>
-                                    <option value="Jueves">Jueves</option>
-                                    <option value="Viernes">Viernes</option>
-                                    <option value="Sebado">Sábado</option>
-                                    <option value="Domingo">Domingo</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="newClassName" class="form-label">Nombre Clase</label>
-                                <input type="text" class="form-control" id="newClassName" name="newClassName">
-                            </div>
-                            <div class="mb-3">
-                                <label for="newCategoryClass" class="form-label">Categoria</label>
-                                <input type="number" class="form-control" id="newCategoryClass" name="newCategoryClass">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="createClassBTN">
-                            Guardar Cambios
-                        </button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
+       
     <!-- Modal Ver Detalles de la Clase-->
     <div class="modal fade" id="viewClassDetails" tabindex="-1" aria-labelledby="viewClassDetailsLabel"
         aria-hidden="true">
