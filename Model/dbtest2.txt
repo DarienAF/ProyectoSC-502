@@ -112,10 +112,6 @@ INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, r
 ('samjones', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Jones', 'sam.jones@example.com', '9225565362', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('caseywilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Wilson', 'casey.wilson@example.com', '7288996943', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE);
 
-INSERT INTO `medidas` (`id_medida`, `id_usuario`, `fecha_registro`, `peso`, `altura`, `edad`, `grasa`, `musculo`) VALUES
-(1, 16, '2024-04-14 22:36:31', 52, 1.62, 22, 0.25, 0.12),
-(2, 16, '2024-04-14 22:37:17', 51, 1.62, 22, 0.19, 0.2);
-
 INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `imagen_categoria`) VALUES
 (1, 'Yoga', '/yoga.jpg'),
 (2, 'Pilates', '/pilates.jpg'),
