@@ -30,22 +30,11 @@ CREATE TABLE IF NOT EXISTS Medidas (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
-INSERT INTO `medidas` (`id_medida`, `id_usuario`, `fecha_registro`, `peso`, `altura`, `edad`, `grasa`, `musculo`) VALUES
-(1, 16, '2024-04-14 22:36:31', 52, 1.62, 22, 0.25, 0.12),
-(2, 16, '2024-04-14 22:37:17', 51, 1.62, 22, 0.19, 0.2);
-
 CREATE TABLE IF NOT EXISTS Categoria (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre_categoria VARCHAR(100) NOT NULL,
     imagen_categoria VARCHAR(1024)
 );
-
-INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `imagen_categoria`) VALUES
-(1, 'Yoga', '/yoga.jpg'),
-(2, 'Pilates', '/pilates.jpg'),
-(3, 'Spinning', '/spinning.jpg'),
-(4, 'Zumba', '/zumba.jpg'),
-(5, 'Crossfit', '/crossfit.jpg');
 
 CREATE TABLE IF NOT EXISTS Clases (
     id_clase INT AUTO_INCREMENT PRIMARY KEY,
@@ -75,22 +64,11 @@ CREATE TABLE IF NOT EXISTS Ejercicio (
     imagen_ejercicio VARCHAR(1024)
 );
 
-INSERT INTO `ejercicio` (`id_ejercicio`, `nombre_ejercicio`, `grupomuscular`, `imagen_ejercicio`) VALUES
-(1, 'Press de banca', 'Pecho', 'https://d1copppaysyuhz.cloudfront.net/exercises/bench-press.webp'),
-(2, 'Sentadilla', 'Piernas', 'https://d1copppaysyuhz.cloudfront.net/exercises/squat.webp'),
-(3, 'Peso muerto', 'Espalda', 'https://d1copppaysyuhz.cloudfront.net/exercises/deadlift.webp'),
-(4, 'Curl de bíceps', 'Bicep', 'https://d1copppaysyuhz.cloudfront.net/exercises/bicep-curl.webp'),
-(5, 'Elevaciones laterales', 'Hombro', 'https://d1copppaysyuhz.cloudfront.net/exercises/lateral-raise.webp'),
-(6, 'Extension de tricep', 'Tricep', 'https://d1copppaysyuhz.cloudfront.net/exercises/tricep-extension.webp'),
-(7, 'Jalón lateral', 'Espalda', 'https://d1copppaysyuhz.cloudfront.net/exercises/lat-pulldown.webp')
-
-
 CREATE TABLE IF NOT EXISTS Plan_Ejercicios (
     id_plan_ejercicio INT AUTO_INCREMENT PRIMARY KEY,
     id_ejercicio INT,
     series INT,
     repeticiones INT,
-    PRIMARY KEY (id_plan_ejercicio, id_ejercicio),
     FOREIGN KEY (id_ejercicio) REFERENCES Ejercicio(id_ejercicio)
 );
 
@@ -101,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Planes (
     id_plan_ejercicio INT,
     dia VARCHAR(50),
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
-    FOREIGN KEY (id_plan_ejercicio) REFERENCES PlanEjercicio(id_plan_ejercicio)
+    FOREIGN KEY (id_plan_ejercicio) REFERENCES Plan_Ejercicios(id_plan_ejercicio)
 );
 
 CREATE TABLE IF NOT EXISTS Mensajes (
@@ -133,3 +111,23 @@ INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, r
 ('taylorwilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Taylor', 'Wilson', 'taylor.wilson@example.com', '6926720005', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('samjones', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Jones', 'sam.jones@example.com', '9225565362', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('caseywilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Wilson', 'casey.wilson@example.com', '7288996943', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE);
+
+INSERT INTO `medidas` (`id_medida`, `id_usuario`, `fecha_registro`, `peso`, `altura`, `edad`, `grasa`, `musculo`) VALUES
+(1, 16, '2024-04-14 22:36:31', 52, 1.62, 22, 0.25, 0.12),
+(2, 16, '2024-04-14 22:37:17', 51, 1.62, 22, 0.19, 0.2);
+
+INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `imagen_categoria`) VALUES
+(1, 'Yoga', '/yoga.jpg'),
+(2, 'Pilates', '/pilates.jpg'),
+(3, 'Spinning', '/spinning.jpg'),
+(4, 'Zumba', '/zumba.jpg'),
+(5, 'Crossfit', '/crossfit.jpg');
+
+INSERT INTO `ejercicio` (`id_ejercicio`, `nombre_ejercicio`, `grupomuscular`, `imagen_ejercicio`) VALUES
+(1, 'Press de banca', 'Pecho', 'https://d1copppaysyuhz.cloudfront.net/exercises/bench-press.webp'),
+(2, 'Sentadilla', 'Piernas', 'https://d1copppaysyuhz.cloudfront.net/exercises/squat.webp'),
+(3, 'Peso muerto', 'Espalda', 'https://d1copppaysyuhz.cloudfront.net/exercises/deadlift.webp'),
+(4, 'Curl de bíceps', 'Bicep', 'https://d1copppaysyuhz.cloudfront.net/exercises/bicep-curl.webp'),
+(5, 'Elevaciones laterales', 'Hombro', 'https://d1copppaysyuhz.cloudfront.net/exercises/lateral-raise.webp'),
+(6, 'Extension de tricep', 'Tricep', 'https://d1copppaysyuhz.cloudfront.net/exercises/tricep-extension.webp'),
+(7, 'Jalón lateral', 'Espalda', 'https://d1copppaysyuhz.cloudfront.net/exercises/lat-pulldown.webp');
