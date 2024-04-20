@@ -56,8 +56,8 @@ class Ejercicios
             $this->setGrupoMuscular($row['grupo_muscular']);
             $this->setImagenEjercicio($row['imagen_ejercicio']);
         }
-    
-        public function toArray()
+
+    public function toArray(): array
         {
             return [
                 'id_ejercicio' => $this->getIdEjercicio(),

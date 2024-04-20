@@ -22,7 +22,7 @@ class EjerciciosM{
         $ejercicio = null;
 
     try {
-        $query = "SELECT * FROM `Ejercicios` WHERE `id_ejercicio` = ?";
+        $query = "SELECT * FROM `Ejercicio` WHERE `id_ejercicio` = ?";
         $statement = $this->connection->prepare($query);
         $statement->bindValue(1, $id_ejercicio, PDO::PARAM_INT);
         $statement->execute();
@@ -42,7 +42,7 @@ class EjerciciosM{
         $ejercicios = [];
 
         try {
-            $query = "SELECT * FROM `Ejercicios`";
+            $query = "SELECT * FROM `Ejercicio`";
             $statement = $this->connection->prepare($query);
             $statement->execute();
 
@@ -57,12 +57,20 @@ class EjerciciosM{
         return $ejercicios;
     }
 
+    public function viewByMuscleGroup()
+    {
+        $query = "SELECT * FROM `Ejercicio` ORDER BY grupo_muscular";
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function viewExerciseNames(): array
     {
         $exercises = [];
 
         try {
-            $query = "SELECT id_ejercicio, nombre_ejercicio FROM `Ejercicios`";
+            $query = "SELECT id_ejercicio, nombre_ejercicio FROM `Ejercicio`";
             $statement = $this->connection->prepare($query);
             $statement->execute();
 
@@ -90,6 +98,6 @@ class EjerciciosM{
         error_log($e->getMessage());
     }
     return null;
-}
+    }
 
 }

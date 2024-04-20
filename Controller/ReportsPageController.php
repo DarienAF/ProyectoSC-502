@@ -47,47 +47,13 @@ class ReportsPageController
                             'miembros_inactivos' => $miembros_inactivos));
     }
     
+}
 
-    public function obtenerClases() {
-        $clases = $this->reservacionesM->traerClasesAsistidas();
-        
-        $nombres_clases = array();
-        $conteos = array();
-    
-        foreach ($clases as $clase) {
-            $nombres_clases[] = $clase['nombre_clase'];
-            $conteos[] = $clase['conteo'];
-        }
-    
-        return json_encode(array('nombres_clases' => $nombres_clases, 
-                                'conteos' => $conteos));
-    }
+$accion = $_POST['action'];
+$graficos = new ReportsPageController();
 
-    public function obtenerPromedio() {
-        $pesos = $this->medidasM->traerPromedioPeso();
-
-        $meses = array();
-        $promedios = array();
-    
-        foreach ($pesos as $peso) {
-            $meses[] = $peso['mes'];
-            $promedios[] = $peso['promedio_peso'];
-        }
-        return json_encode(array('meses' => $meses, 'promedios' => $promedios));
-    }
-
-    public function obtenerCancelaciones() {
-        $cancelaciones = $this->reservacionesM->traerClasesCanceladas();
-       
-        $nombres_clases = array();
-        $conteos = array();
-    
-        foreach ($cancelaciones as $cancelacion) {
-            $nombres_clases[] = $cancelacion['nombre_clase'];
-            $conteos[] = $cancelacion['cancelaciones'];
-        }
-        return json_encode(array('nombres_clases' => $nombres_clases, 'cancelaciones' => $conteos));
-    }
-    
-    
+switch ($accion) {
+    case 'obtenerActividad':
+        $graficos->obtenerActividad();
+        break;
 }

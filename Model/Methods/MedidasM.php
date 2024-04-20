@@ -118,6 +118,26 @@ class MedidasM
         return $medida;
     }
 
+    function viewUserMeasures($userId): array
+    {
+        $medidas = [];
+        try {
+            $query = "SELECT * FROM `medidas` WHERE `id_usuario` = ?";
+            $statement = $this->connection->prepare($query);
+            $statement->bindParam(1, $userId, PDO::PARAM_INT);
+            $statement->execute();
+
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $medida = new Medidas();
+                $medida->setMeasureFields($row);
+                $medidas[] = $medida;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+        return $medidas;
+    }
+
     function viewAll(): array
     {
         $medidas = [];

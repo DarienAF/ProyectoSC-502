@@ -30,13 +30,11 @@ class ClassesPageController
 {
     $classReturn = [
         "id_clase" => $class->getIdClase(),
-        "id_usuario" => $class->getIdUsuario(),
         "usuario" => $this->usuarioM->view($class->getIdUsuario())->getUsername(),
         "hora_inicio" => $class->getHoraInicio(),
         "hora_fin" => $class->getHoraFin(),
         "dia" => $class->getDia(),
         "nombre_clase" => $class->getNombreClase(),
-        "id_categoria" => $class->getIdCategoria(),
         "categoria" => $this->categoriasM->view($class->getIdCategoria())->getNombreCategoria()
     ];
     return $classReturn;

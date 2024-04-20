@@ -4,19 +4,20 @@ namespace ProyectoSC502\Model\Entities;
 
 class PlanEjercicios
 {
-    private $id_plan;
+    private $id_plan_ejercicio;
     private $id_ejercicio;
     private $series;
     private $repeticiones;
 
-    public function getIdPlan()
+
+    public function getIdPlanEjercicio()
     {
-        return $this->id_plan;
+        return $this->id_plan_ejercicio;
     }
 
-    public function setIdPlan($id_plan)
+    public function setIdPlanEjercicio($id_plan_ejercicio)
     {
-        $this->id_plan = $id_plan;
+        $this->id_plan_ejercicio = $id_plan_ejercicio;
     }
 
     public function getIdEjercicio()
@@ -51,16 +52,16 @@ class PlanEjercicios
 
     public function setPlanEjerciciosFields($row)
     {
-        $this->setIdPlan($row['id_plan']);
+        $this->setIdPlanEjercicio($row['id_plan_ejercicio']);
         $this->setIdEjercicio($row['id_ejercicio']);
         $this->setSeries($row['series']);
         $this->setRepeticiones($row['repeticiones']);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
-            'id_plan' => $this->getIdPlan(),
+            'id_plan_ejercicio' => $this->getIdPlanEjercicio(),
             'id_ejercicio' => $this->getIdEjercicio(),
             'series' => $this->getSeries(),
             'repeticiones' => $this->getRepeticiones()

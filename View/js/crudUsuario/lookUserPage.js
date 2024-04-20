@@ -401,7 +401,7 @@ $(document).ready(function () {
             $('#lastName').val(userData.apellidos);
             $('#email').val(userData.correo);
             $('#phone').val(userData.telefono);
-            $('#userProfileImage').attr('src', userData.ruta_imagen || './View/img/users/default_user.png');
+            $('#userProfileImage').attr('src', userData.ruta_imagen || 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg');
             $('#password').val("");
         }
     });
