@@ -4,7 +4,6 @@ namespace ProyectoSC502\Controller;
 
 session_start();
 
-use ProyectoSC502\Model\Entities\Usuario;
 use ProyectoSC502\Model\Methods\UsuarioM;
 use ProyectoSC502\Model\Entities\Planes;
 use ProyectoSC502\Model\Entities\PlanEjercicios;
@@ -14,32 +13,61 @@ use ProyectoSC502\Model\Methods\EjerciciosM;
 
 class TrainingPlanPageController
 {
-
     private $planesM;
     private $planEjerciciosM;
-    private $usuariosM;
+    private $usuarioM;
     private $ejerciciosM;
 
     public function __construct()
     {
         $this->planesM = new PlanesM();
         $this->planEjerciciosM = new PlanEjerciciosM();
-        $this->usuariosM = new UsuarioM();
+        $this->usuarioM = new UsuarioM();
         $this->ejerciciosM = new EjerciciosM();
     }
 
     function Index()
     {
         $current_page = 'TrainingPlanPage';
+
+        // Carga datos del usuario actual.
         $user_id = $_SESSION['user_id'];
-        $usuarioM = new UsuarioM();
-        $current_user = $usuarioM->view($user_id);
+        $current_user = $this->usuarioM->view($user_id);
         $userFullName = $current_user->getFullName();
         $userRole = $current_user->getIdRol();
         $userImagePath = $current_user->getRutaImagen();
         $planExercises = $this->planEjerciciosM->viewAll();
-        $plans = $this->planesM->viewAll();
-        require_once './View/views/private/TrainingPlanPage.php';
+        if ($userRole != 4) {
+            $plans = $this->planesM->viewAll();
+            require_once './View/views/private/TrainingPlanPages/TrainingPlanPage.php';
+        } else {
+            require_once './View/views/private/TrainingPlanPages/TrainingPlanPageMembers.php';
+        }
+    }
+
+
+    public function getPlanesByUser()
+    {
+
+        $response = [];
+        foreach ($this->planesM->viewUserPlans($_SESSION['user_id']) as $plan) {
+
+            $planEjercicio = $this->planEjerciciosM->view($plan->getIdPlanEjercicio());
+            $ejercicio = $this->ejerciciosM->view($planEjercicio->getIdEjercicio());
+
+            $response[] = [
+                'id_plan' => $plan->getIdPlan(),
+                'nombre_plan' => $plan->getIdPlanEjercicioName(),
+                'dia' => $plan->getDia(),
+                'nombre_ejercicio' => $ejercicio->getNombreEjercicio(),
+                'informacion' => $planEjercicio->getSeries() . " series de " .
+                    $planEjercicio->getRepeticiones() . " repeticiones cada una.",
+                'imagen' => $ejercicio->getImagenEjercicio(),
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 
     public function getMiembros()
@@ -62,9 +90,8 @@ class TrainingPlanPageController
 
     public function getEjercicios()
     {
-        $ejerciciosM = new EjerciciosM();
         $response = [];
-        foreach ($ejerciciosM->viewAll() as $ejercicio) {
+        foreach ($this->ejerciciosM->viewAll() as $ejercicio) {
             $response[] = [
                 'id_ejercicio' => $ejercicio->getIdEjercicio(),
                 'nombre_ejercicio' => $ejercicio->getNombreEjercicio(),
@@ -90,7 +117,7 @@ class TrainingPlanPageController
 
         if ($idPlanEjercicio) {
             $plan = new Planes();
-            $usuario = $this->usuariosM->view($data['selectedUserId']);
+            $usuario = $this->usuarioM->view($data['selectedUserId']);
             $plan->setNombrePlan("Rutina " . $data['day'] . " - " . $usuario->getFullName());
             $plan->setIdUsuario($usuario->getIdUsuario());
             $plan->setIdPlanEjercicio($idPlanEjercicio);

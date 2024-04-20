@@ -22,23 +22,6 @@ class LookMeasurePageController
         $this->medidasM = new MedidasM();
     }
 
-    function SetMeasuresData($measure)
-    {
-        $measureReturn = [
-            "id_medida" => $measure->getIdMedida(),
-            "id_Usuario" => $measure->getIdUsuario(),
-            "usuario" => $this->usuarioM->view($measure->getIdUsuario())->getUsername(),
-            "fecha" => $measure->getFechaRegistro(),
-            "peso" => $measure->getPeso(),
-            "altura" => $measure->getAltura(),
-            "edad" => $measure->getEdad(),
-            "grasa" => $measure->getGrasa(),
-            "musculo" => $measure->getMusculo()
-        ];
-        return $measureReturn;
-
-    }
-
     function Index()
     {
         $current_page = 'LookMeasurePage';
@@ -57,15 +40,27 @@ class LookMeasurePageController
             }
             require_once './View/views/private/MeasurePages/LookMeasurePage.php';
         } else {
-            foreach ($this->medidasM->viewAll() as $measure) {
-                if ($measure->getIdUsuario() == $user_id) {
-                    $userMeasures[] = $this->SetMeasuresData($measure);
-                }
+            foreach ($this->medidasM->viewUserMeasures($user_id) as $measure) {
+                $userMeasures[] = $this->SetMeasuresData($measure);
             }
             require_once './View/views/private/MeasurePages/LookMeasurePageMembers.php';
         }
     }
 
+    function SetMeasuresData($measure): array
+    {
+        return [
+            "id_medida" => $measure->getIdMedida(),
+            "id_Usuario" => $measure->getIdUsuario(),
+            "usuario" => $this->usuarioM->view($measure->getIdUsuario())->getUsername(),
+            "fecha" => $measure->getFechaRegistro(),
+            "peso" => $measure->getPeso(),
+            "altura" => $measure->getAltura(),
+            "edad" => $measure->getEdad(),
+            "grasa" => $measure->getGrasa(),
+            "musculo" => $measure->getMusculo()
+        ];
+    }
 
     public function createMeasure()
     {

@@ -101,6 +101,28 @@ class PlanesM
         return $plan;
     }
 
+
+    public function viewUserPlans($userId): array
+    {
+        $planes = [];
+        try {
+            $query = "SELECT * FROM `planes` WHERE `id_usuario` = ?";
+            $statement = $this->connection->prepare($query);
+            $statement->bindParam(1, $userId, PDO::PARAM_INT);
+            $statement->execute();
+
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $plan = new Planes();
+                $plan->setPlanesFields($row);
+                $planes[] = $plan;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+        return $planes;
+    }
+
+
     public function viewAll(): array
     {
         $planes = [];
