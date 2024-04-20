@@ -36,14 +36,17 @@ class ReportsPageController
     }
 
     public function obtenerActividad() {
-        $actividad = $this->usuarioM->traerActividadGrafico();
-
+        $usuarioM = new UsuarioM();
+        $actividad = $usuarioM -> traerActividadGrafico();
+    
         $miembros_activos = $actividad['miembros_activos'];
         $miembros_inactivos = $actividad['miembros_inactivos'];
-
-        return json_encode(array('miembros_activos' => $miembros_activos, 
-                                'miembros_inactivos' => $miembros_inactivos));
+    
+        header('Content-Type: application/json');
+        echo json_encode(array('miembros_activos' => $miembros_activos, 
+                            'miembros_inactivos' => $miembros_inactivos));
     }
+    
 
     public function obtenerClases() {
         $clases = $this->reservacionesM->traerClasesAsistidas();
