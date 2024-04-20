@@ -50,6 +50,14 @@ function Index()
     $userFullName = $current_user->getFullName();
     $userRole = $current_user->getIdRol();
     $userImagePath = $current_user->getRutaImagen();
+    $userClasses = [];
+
+    foreach ($this->clasesM->viewAll() as $class)
+        $userClassesp[] = $this->SetClassesData($class);
+
+   // $categoriasM = new CategoriasM();
+   // $classes = $this->clasesM->viewAll();
+
     require_once './View/views/private/ClassesPage.php';
 }
 

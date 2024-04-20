@@ -85,7 +85,7 @@
                 </tbody>
             </table>
         </div>
-
+  
 
         <!-- Modal Modificar-->
         <div class="modal fade" id="editClassModal" tabindex="-1" aria-labelledby="editClassModalLabel"

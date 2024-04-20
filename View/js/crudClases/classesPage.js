@@ -63,7 +63,6 @@ function toggleNoResultRow(visibleRows) {
 let sortOrder = 1; // 1 para ascendente, -1 para descendente
 let currentSortColumn = null;
 
-
 // Función para ordernar la tabla en función de la columna seleccionada
 function sortTable(columnIndex, columnId) {
     // Obtiene la tabla y el cuerpo de la tabla
