@@ -115,6 +115,26 @@ class ClasesM
         return $clase;
     }
 
+    function viewUserClasses($userId): array
+{
+    $clases = [];
+    try {
+        $query = "SELECT * FROM `clases` WHERE `id_usuario` = ?";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(1, $userId, PDO::PARAM_INT);
+        $statement->execute();
+
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $clase = new Clases();
+            $clase->setClassFields($row);
+            $clases[] = $clase;
+        }
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+    }
+    return $clases;
+}
+
     function viewAll(): array
     {
         $clases = [];

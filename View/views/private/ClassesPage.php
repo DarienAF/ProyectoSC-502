@@ -52,20 +52,13 @@
                 <tbody>
                     <?php foreach ($userClasses as $class): ?>
                     <tr id="classRow-<?php echo $class['id_clase']; ?>">
-                        <td id="idClase-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['id_clase']); ?></td>
-                        <td id="nombreUsuario-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['usuario']); ?></td>
-                        <td id="horaInicio-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['hora_inicio']); ?></td>
-                        <td id="horaFin-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['hora_fin']); ?></td>
-                        <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?>
-                        </td>
-                        <td id="nombreClase-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['nombre']); ?></td>
-                        <td id="categoria-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['categoria']); ?></td>
+                        <td id="idClase-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['id_clase']); ?></td>
+                        <td id="nombreUsuario-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['usuario']); ?></td>
+                        <td id="horaInicio-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['hora_inicio']); ?></td>
+                        <td id="horaFin-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['hora_fin']); ?></td>
+                        <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?> </td>
+                        <td id="nombreClase-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['nombre_clase']); ?></td>
+                        <td id="categoria-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['categoria']); ?></td>
                         <td>
                             <button type="button" class="btn btn-warning edit-clase-btn"
                                 clase-id="<?php echo htmlspecialchars($class['id_clase']); ?>" data-bs-toggle="modal"
@@ -162,8 +155,9 @@
                     <div class="modal-body">
                         <form id="createClassForm">
                             <div class="mb-3">
-                                <label for="newUserClass" class="form-label">Nombre de Entrenador</label>
-                                <select class="form-select" id="newUserClass" name="newUserClass">
+                                <label for="newClassUserID" class="form-label">Nombre de Entrenador</label>
+                                <select class="form-control" id="newClassUserID" name="newClassUserID">
+                                    
                                 </select>
                             </div>
                             <div class="mb-3">

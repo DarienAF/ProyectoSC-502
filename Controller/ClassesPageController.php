@@ -52,11 +52,15 @@ function Index()
     $userImagePath = $current_user->getRutaImagen();
     $userClasses = [];
 
-    foreach ($this->clasesM->viewAll() as $class)
-        $userClassesp[] = $this->SetClassesData($class);
-
-   // $categoriasM = new CategoriasM();
-   // $classes = $this->clasesM->viewAll();
+    if ($userRole != 4) {
+        foreach ($this->clasesM->viewAll() as $class) {
+            $userClasses[] = $this->SetClassesData($class);
+        }
+    } else {
+        foreach ($this->clasesM->viewUserClasses($user_id) as $class) {
+            $userClasses[] = $this->SetClassesData($class);
+        }
+    }
 
     require_once './View/views/private/ClassesPage.php';
 }
