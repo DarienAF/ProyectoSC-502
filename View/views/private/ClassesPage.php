@@ -23,58 +23,38 @@
                 <thead>
                     <tr class="table-titles">
                         <th id="sortID">ID Clase <span class="sort-arrow"></span></th>
-                        <th id="sortUserID"> ID Usuario <span class="sort-arrow"></span></th>
                         <th id="sortUsername">Nombre de Usuario <span class="sort-arrow"></span></th>
                         <th id="sortStartTime">Hora Inicio <span class="sort-arrow"></span></th>
                         <th id="sortEndTime">Hora Fin <span class="sort-arrow"></span></th>
                         <th id="sortDay">Día <span class="sort-arrow"></span></th>
                         <th id="sortClassName">Nombre Clase <span class="sort-arrow"></span></th>
-                        <th id="sortCategoryID"> ID Categoria <span class="sort-arrow"></span></th>
                         <th id="sortCategoryName">Categoria <span class="sort-arrow"></span></th>
                         <th></th>
-
                     </tr>
                     <tr>
                         <th><input type="number" id="searchId" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
-                        <th><input type="number" id="searchUserId" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
-                        <th>
-                            <input type="text" id="searchUsername" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
+                                class="form-control"></th>
+                        <th><input type="text" id="searchUsername" placeholder="Buscar" oninput="filterTable()"
+                                class="form-control"></th>
                         <th><input type="time" id="searchStartTime" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
+                                class="form-control"></th>
                         <th><input type="time" id="searchEndTime" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
+                                class="form-control"></th>
                         <th><input type="text" id="searchDay" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
+                                class="form-control"></th>
                         <th><input type="text" id="searchClassName" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
-                        <th><input type="number" id="searchCategoryId" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
-                        <th>
-                            <input type="text" id="searchCategoryname" placeholder="Buscar" oninput="filterTable()"
-                                class="form-control">
-                        </th>
+                                class="form-control"></th>
+                        <th><input type="text" id="searchCategoryName" placeholder="Buscar" oninput="filterTable()"
+                                class="form-control"></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($userClasses as $class): ?>
                     <tr id="classRow-<?php echo $class['id_clase']; ?>">
-                        <td id="id-<?php echo $class['id_clase']; ?>">
+                        <td id="idClase-<?php echo $class['id_clase']; ?>">
                             <?php echo htmlspecialchars($class['id_clase']); ?></td>
-                        <td id="userId-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['id_Usuario']); ?></td>
-                        <td id="username-<?php echo $class['id_clase']; ?>">
+                        <td id="nombreUsuario-<?php echo $class['id_clase']; ?>">
                             <?php echo htmlspecialchars($class['usuario']); ?></td>
                         <td id="horaInicio-<?php echo $class['id_clase']; ?>">
                             <?php echo htmlspecialchars($class['hora_inicio']); ?></td>
@@ -82,10 +62,8 @@
                             <?php echo htmlspecialchars($class['hora_fin']); ?></td>
                         <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?>
                         </td>
-                        <td id="nombre-<?php echo $class['id_clase']; ?>">
-                            "><?php echo htmlspecialchars($class['nombre']); ?></td>
-                        <td id="idCategoria-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['id_categoria']); ?></td>
+                        <td id="nombreClase-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['nombre']); ?></td>
                         <td id="categoria-<?php echo $class['id_clase']; ?>">
                             <?php echo htmlspecialchars($class['categoria']); ?></td>
                         <td>
@@ -97,7 +75,6 @@
                         </td>
                     </tr>
                     <?php endforeach; ?>
-
                     <tr id="no-result" style="display: none;">
                         <td colspan="10">
                             <div class="no-result-container">
@@ -108,6 +85,7 @@
                 </tbody>
             </table>
         </div>
+
 
         <!-- Modal Modificar-->
         <div class="modal fade" id="editClassModal" tabindex="-1" aria-labelledby="editClassModalLabel"
@@ -305,7 +283,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success"  id="createClassBTN">
+                        <button type="button" class="btn btn-success" id="createClassBTN">
                             Guardar Cambios
                         </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

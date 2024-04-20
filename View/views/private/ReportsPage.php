@@ -20,11 +20,16 @@
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                         <script>
-                        CargarDatosActividad(); 
+                        CargarDatosActividad();
+
                         function CargarDatosActividad() {
+                            // Solicitud AJAX al controlador para obtener datos
                             $.ajax({
-                                url: './index.php?controller=ReportsPage&action=obtenerActividad',
-                                method: 'GET',
+                                url: './Controller/ReportsPageController.php',
+                                method: 'POST',
+                                data: {
+                                    action: 'traerDatosGrafico'
+                                },
                                 success: function(data) {
                                     data = JSON.parse(data);
 
@@ -57,7 +62,7 @@
                                     });
                                 }
                             });
-                        }                    
+                        }
                         </script>
                     </div>
                 </div>
