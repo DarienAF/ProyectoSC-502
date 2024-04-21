@@ -116,10 +116,14 @@
                         </td>
 
                         <td>
-                            <button type="button" class="btn btn-warning edit-user-btn" data-user-id=""
-                                data-bs-toggle="modal" data-bs-target="#editUserModal">
+                            <button type="button" class="btn btn-warning edit-booking-btn"
+                                data-booking-id="<?php echo $booking->getIdReserva() ?>"
+                                data-class-name="<?php echo $clase->getNombreClase(); ?>"
+                                data-class-id="<?php echo $clase->getIdClase(); ?>" data-bs-toggle="modal"
+                                data-bs-target="#editBookingModal">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
+
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -139,6 +143,89 @@
         <?php endif; ?>
 
 
+        <!-- Modal Editar Reserva -->
+        <div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog custom-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar Reserva</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editBookingForm">
+                            <div class="mb-3">
+                                <label for="bookingId" class="form-label">ID</label>
+                                <input type="text" class="form-control" id="bookingId" name="bookingId" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Nombre de Usuario</label>
+                                <input type="text" class="form-control" id="username" name="username" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookingClassDay" class="form-label">Día</label>
+                                <select class="form-select" id="bookingClassDay" name="bookingClassDay">
+
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miércoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
+                                    <option value="Sábado">Sábado</option>
+                                    <option value="Domingo">Domingo</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="modal-title-day"><b>Lista de Clases para el día</b></h6>
+                            </div>
+
+                            <select class="form-select mb-3" id="classSelect" aria-label="Seleccionar ejercicio">
+                                <option value="" disabled selected>Seleccione una clase</option>
+                                <?php foreach ($classes as $cls): ?>
+                                <option value="<?php echo $cls->getIdClase(); ?>"
+                                    data-day="<?php echo htmlspecialchars($cls->getDia()); ?>">
+                                    <?php echo htmlspecialchars($cls->getNombreClase()) . ' - ' . date("h:i A", strtotime($cls->getHoraInicio())) . ' - ' . date("h:i A", strtotime($cls->getHoraFin())); ?>
+                                </option>
+                                <?php endforeach; ?>
+                                <option value="" disabled>No hay clases para el día seleccionado</option>
+                            </select>
+
+
+
+                            <div class="mb-3">
+                                <div class="row" id="classCards">
+                                    <?php foreach ($classes as $cls): ?>
+                                    <div class="col-md-4" data-day="<?php echo htmlspecialchars($cls->getDia()); ?>">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <?php echo htmlspecialchars($cls->getNombreClase()); ?>
+                                                </h5>
+                                                <p class="card-text">Hora Inicio:
+                                                    <?php echo date("h:i A", strtotime($cls->getHoraInicio())); ?>
+                                                </p>
+                                                <p class="card-text">Hora Finalización:
+                                                    <?php echo date("h:i A", strtotime($cls->getHoraFin())); ?>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php endforeach; ?>
+
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="updateBookingData()">
+                            Guardar Cambios
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <?php require './View/fragments/footer.php'; ?>
