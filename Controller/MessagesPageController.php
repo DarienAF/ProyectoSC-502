@@ -37,7 +37,7 @@ class MessagesPageController
     {
         if (isset($_POST['messageId'])) {
             $messageId = $_POST['messageId'];
-            $message = $this->MensajesM->view($messageId);
+            $message = $this->mensajeM->view($messageId);
 
             if ($message != null) {
                 $response = $message->toArray();
@@ -59,7 +59,7 @@ class MessagesPageController
 
         if (isset($data['messageId'])) {
             $messageId = $data['messageId'];
-            $this->MensajesM->setReadStatus($messageId, 1);
+            $this->mensajeM->setReadStatus($messageId, 1);
             $response = ['success' => true, 'icon' => 'success', 'title' => '¡Mensaje Leido!', 'text' => 'leido'];
         } else {
             $response = ['success' => false, 'message' => 'messageId no proporcionado'];
@@ -91,11 +91,11 @@ class MessagesPageController
     {
         $messageReturn = [
             "id_mensaje" => $message->getIdMensaje(),
-            "nombreM" =>  $message->getNombre(),
-            "correo" =>  $message->getCorreo(),
-            "titulo" =>  $message->getTitulo(),
-            "contexto" =>  $message->getContexto(),
-            "fecha_envio" =>  $message->getFechaEnvio(),
+            "nombreM" => $message->getNombre(),
+            "correo" => $message->getCorreo(),
+            "titulo" => $message->getTitulo(),
+            "contexto" => $message->getContexto(),
+            "fecha_envio" => $message->getFechaEnvio(),
             "leido" => $message->getLeido()
         ];
         return $messageReturn;

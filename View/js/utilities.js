@@ -13,7 +13,7 @@ async function performAjaxRequest(url, method, data, headers = {'Content-Type': 
         return await response.json();
     } catch (error) {
         console.error('Error realizando el fetch:', error);
-        showError('Error al ralizar fetch al servidor.');
+        showError('Error al realizar fetch al servidor.');
     }
 }
 
