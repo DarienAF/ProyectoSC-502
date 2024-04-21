@@ -208,8 +208,54 @@ class ReservacionesM
         }
     }
 
+    public function viewReservesbyUser($id_usuario)
+    {
+        $reservas = [];
+        try {
+            $query = "
+                SELECT rc.id_reserva,
+                       u_reservado.username AS nombre_usuario_reservado,
+                       u_imparte.username AS username_profesor,
+                       u_imparte.nombre AS nombre_usuario_profesor,
+                       u_imparte.apellidos AS apellidos_usuario_profesor,
+                       c.hora_inicio,
+                       c.hora_fin,
+                       c.dia,
+                       c.nombre_clase,
+                       cat.nombre_categoria
+                FROM ReservaClases rc
+                JOIN Usuarios u_reservado ON rc.id_usuario = u_reservado.id_usuario
+                JOIN Clases c ON rc.id_clase = c.id_clase
+                JOIN Categoria cat ON c.id_categoria = cat.id_categoria
+                JOIN Usuarios u_imparte ON c.id_usuario = u_imparte.id_usuario
+                WHERE u_reservado.id_usuario = ? AND rc.cancelar = 1
+            ";
 
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(1, $id_usuario, PDO::PARAM_INT);
+            $statement->execute();
 
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $reserva = [
+                    'id_reserva' => $row['id_reserva'],
+                    'nombre_usuario_reservado' => $row['nombre_usuario_reservado'],
+                    'username_profesor' => $row['username_profesor'],
+                    'nombre_usuario_profesor' => $row['nombre_usuario_profesor'],
+                    'apellidos_usuario_profesor' => $row['apellidos_usuario_profesor'],
+                    'hora_inicio' => $row['hora_inicio'],
+                    'hora_fin' => $row['hora_fin'],
+                    'dia' => $row['dia'],
+                    'nombre_clase' => $row['nombre_clase'],
+                    'nombre_categoria' => $row['nombre_categoria']
+                ];
 
+                $reservas[] = $reserva;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $reservas;
+    }
 
 }

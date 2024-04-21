@@ -109,5 +109,22 @@ function showSuccessAndReload(message) {
     });
 }
 
+async function showConfirmation(message) {
+    const { value: confirmed } =  await Swal.fire({
+        title: 'Confirmación',
+        text: message,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'rgb(29, 29, 29)',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No'
+    });
+
+    return confirmed;
+}
+
+
+
 
 
