@@ -43,17 +43,8 @@ class ReportsPageController
         $miembros_inactivos = $actividad['miembros_inactivos'];
     
         header('Content-Type: application/json');
-        echo json_encode(array('miembros_activos' => $miembros_activos, 
-                            'miembros_inactivos' => $miembros_inactivos));
+        echo json_encode(['miembros_activos' => $miembros_activos, 
+                            'miembros_inactivos' => $miembros_inactivos]);
     }
     
-}
-
-$accion = $_POST['action'];
-$graficos = new ReportsPageController();
-
-switch ($accion) {
-    case 'obtenerActividad':
-        $graficos->obtenerActividad();
-        break;
 }

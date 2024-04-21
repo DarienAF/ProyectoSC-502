@@ -60,8 +60,8 @@
                         <td id="nombreClase-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['nombre_clase']); ?></td>
                         <td id="categoria-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['categoria']); ?></td>
                         <td>
-                            <button type="button" class="btn btn-warning edit-clase-btn"
-                                clase-id="<?php echo htmlspecialchars($class['id_clase']); ?>" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-warning edit-user-btn"
+                                class-id="<?php echo htmlspecialchars($class['id_clase']); ?>" data-bs-toggle="modal"
                                 data-bs-target="#editClassModal">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
@@ -96,18 +96,18 @@
                                 <!-- No se edita -->
                             </div>
                             <div class="mb-3">
-                                <label for="username" class="form-label">Usuario</label>
+                                <label for="classUserID" class="form-label">Usuario</label>
                                 <select class="form-control" id="classUserID" name="classUserID">
 
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="starthour" class="form-label">Hora Inicio</label>
-                                <input type="time" class="form-control" id="starthour" name="starthour">
+                                <label for="startTime" class="form-label">Hora Inicio</label>
+                                <input type="time" class="form-control" id="startTime" name="startTime">
                             </div>
                             <div class="mb-3">
-                                <label for="endhour" class="form-label">Hora Fin</label>
-                                <input type="time" class="form-control" id="endhour" name="endhour">
+                                <label for="endTime" class="form-label">Hora Fin</label>
+                                <input type="time" class="form-control" id="endTime" name="endTime">
                             </div>
                             <div class="mb-3">
                                 <label for="day" class="form-label">Día</label>
@@ -123,12 +123,12 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="classname" class="form-label">Nombre Clase</label>
-                                <input type="text" class="form-control" id="classname" name="classname">
+                                <label for="className" class="form-label">Nombre Clase</label>
+                                <input type="text" class="form-control" id="className" name="className">
                             </div>
                             <div class="mb-3">
-                                <label for="classCategoryID" class="form-label">Categoria</label>
-                                <select class="form-control" id="classCategoryID" name="classCategoryID">
+                                <label for="categoryClassID" class="form-label">Categoria</label>
+                                <select class="form-control" id="categoryClassID" name="categoryClassID">
 
                                 </select>
                             </div>
@@ -186,8 +186,8 @@
                                 <input type="text" class="form-control" id="newClassName" name="newClassName">
                             </div>
                             <div class="mb-3">
-                                <label for="newCategoryClass" class="form-label">Categoria</label>
-                                <select class="form-select" id="newCategoryClass" name="newCategoryClass">
+                                <label for="newCategoryClassID" class="form-label">Categoria</label>
+                                <select class="form-control" id="newCategoryClassID" name="newCategoryClassID">
                                 </select>
                             </div>
                         </form>
@@ -331,6 +331,8 @@
     </div>
 
     <?php require './View/fragments/footer.php'; ?>
+
+    <script src="./View/js/crudClases/classesPage.js"></script>
 
 </body>
 
