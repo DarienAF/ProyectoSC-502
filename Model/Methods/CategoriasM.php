@@ -21,7 +21,7 @@ class CategoriasM
     $categoria = null;
 
     try {
-        $query = "SELECT * FROM `categorias` WHERE `id_categoria` = ?";
+        $query = "SELECT * FROM `categoria` WHERE `id_categoria` = ?";
         $statement = $this->connection->Prepare($query);
         $statement->bindValue(1, $id_categoria, PDO::PARAM_INT);
         $statement->execute();
@@ -41,7 +41,7 @@ class CategoriasM
     $categorias = [];
 
     try {
-        $query = "SELECT * FROM `categorias`";
+        $query = "SELECT * FROM `categoria`";
         $statement = $this->connection->Prepare($query);
         $statement->execute();
 
@@ -61,7 +61,7 @@ class CategoriasM
     $categorias = [];
 
     try {
-        $query = "SELECT id_categoria, nombre_categoria FROM `categorias`";
+        $query = "SELECT id_categoria, nombre_categoria FROM `categoria`";
         $statement = $this->connection->Prepare($query);
         $statement->execute();
 
@@ -77,7 +77,7 @@ class CategoriasM
     function getCategoryName($id_categoria)
     {
     try {
-        $query = "SELECT id_categoria, nombre_categoria FROM `categorias`";
+        $query = "SELECT id_categoria, nombre_categoria FROM `categoria`";
         $statement = $this->connection->Prepare($query);
         $statement->execute();
 

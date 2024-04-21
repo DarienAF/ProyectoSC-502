@@ -37,23 +37,9 @@ class ReportsPageController
 
     public function obtenerActividad() {
         $usuarioM = new UsuarioM();
-        $actividad = $usuarioM -> traerActividadGrafico();
+        $actividad = $usuarioM->traerActividadGrafico();
     
-        $miembros_activos = $actividad['miembros_activos'];
-        $miembros_inactivos = $actividad['miembros_inactivos'];
-    
-        header('Content-Type: application/json');
-        echo json_encode(array('miembros_activos' => $miembros_activos, 
-                            'miembros_inactivos' => $miembros_inactivos));
+        echo json_encode($actividad);
     }
     
-}
-
-$accion = $_POST['action'];
-$graficos = new ReportsPageController();
-
-switch ($accion) {
-    case 'obtenerActividad':
-        $graficos->obtenerActividad();
-        break;
 }
