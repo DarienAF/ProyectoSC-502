@@ -112,12 +112,6 @@ INSERT INTO Usuarios (username, password, nombre, apellidos, correo, telefono, r
 ('samjones', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Sam', 'Jones', 'sam.jones@example.com', '9225565362', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE),
 ('caseywilson', '2y$10$m/uTB.ZnZo.Wt7q5YjMmCeC.fqmwsYQ7wpxd7wbNC.1Xk6keSKeUu', 'Casey', 'Wilson', 'casey.wilson@example.com', '7288996943', 'https://d1copppaysyuhz.cloudfront.net/profile-photos/default/profile-photo.jpg', TRUE, 4, FALSE);
 
-INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `imagen_categoria`) VALUES
-(1, 'Yoga', '/yoga.jpg'),
-(2, 'Pilates', '/pilates.jpg'),
-(3, 'Spinning', '/spinning.jpg'),
-(4, 'Zumba', '/zumba.jpg'),
-(5, 'Crossfit', '/crossfit.jpg');
 
 INSERT INTO `ejercicio` (`id_ejercicio`, `nombre_ejercicio`, `grupo_muscular`, `imagen_ejercicio`) VALUES
 (1, 'Press de banca', 'Pecho', 'https://d1copppaysyuhz.cloudfront.net/exercises/bench-press.webp'),
