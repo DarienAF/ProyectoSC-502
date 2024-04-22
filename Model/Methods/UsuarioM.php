@@ -274,5 +274,34 @@ class UsuarioM
         return json_encode($error);
     }
 }
+
+    public function contarUsuariosPorRol() {
+        $query = "SELECT Rol.nombre, COUNT(*) 
+        AS cantidad_usuarios
+        FROM Usuarios
+        JOIN Rol ON Usuarios.id_rol = Rol.id_rol
+        GROUP BY Rol.nombre";
+
+        try {
+            $resultado = $this->connection->prepare($query);
+            $resultado->execute();
+
+            $arr = array();
+
+            foreach ($resultado->fetchAll() as $encontrado) {
+                $rol = array(
+                    "nombre_rol" => $encontrado['nombre'],
+                    "cantidad_usuarios" => $encontrado['cantidad_usuarios']
+                );
+                $arr[] = $rol;
+            }
+            return $arr;
+
+        } catch (PDOException $Exception) {
+            $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
+            return json_encode($error);
+        }
+    }
+
     
 }

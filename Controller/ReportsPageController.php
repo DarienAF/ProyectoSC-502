@@ -87,6 +87,20 @@ class ReportsPageController
         echo json_encode(array('meses' => $meses, 'promedios' => $promedios));
     }
     
+    public function obtenerConteoRol() {
+        $usuarioM = new UsuarioM();
+        $conteoUsuariosPorRol = $usuarioM->contarUsuariosPorRol();
+    
+        $nombres_roles = array();
+        $cantidades_usuarios = array();
+    
+        foreach ($conteoUsuariosPorRol as $conteo) {
+            $nombres_roles[] = $conteo['nombre_rol'];
+            $cantidades_usuarios[] = $conteo['cantidad_usuarios'];
+        }
+    
+        echo json_encode(array('nombres_roles' => $nombres_roles, 'cantidades_usuarios' => $cantidades_usuarios));
+    }
     
 
 }
