@@ -6,19 +6,16 @@ session_start();
 
 use ProyectoSC502\Model\Entities\Medidas;
 use ProyectoSC502\Model\Methods\UsuarioM;
-use ProyectoSC502\Model\Methods\RolM;
 use ProyectoSC502\Model\Methods\MedidasM;
 
 class LookMeasurePageController
 {
     private $usuarioM;
-    private $rolM;
     private $medidasM;
 
     public function __construct()
     {
         $this->usuarioM = new UsuarioM();
-        $this->rolM = new RolM();
         $this->medidasM = new MedidasM();
     }
 
@@ -129,9 +126,9 @@ class LookMeasurePageController
 
     public function MemberUsers()
     {
-        $um = new UsuarioM();
+        $usuarioM = new UsuarioM();
         $response = [];
-        foreach ($um->viewAll() as $usuario) {
+        foreach ($usuarioM->viewAll() as $usuario) {
             if ($usuario->getIdRol() == 4 && $usuario->getActivo() == 1) {
                 $response[] = [
                     'id' => $usuario->getIdUsuario(),
@@ -149,7 +146,7 @@ class LookMeasurePageController
     {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $medida = $this->medidasM->view($data);
+        $medida = $this->medidasM->view($data['id_medida']);
 
         if ($medida) {
             $response = $this->SetMeasuresData($medida);

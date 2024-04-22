@@ -13,7 +13,7 @@ async function performAjaxRequest(url, method, data, headers = {'Content-Type': 
         return await response.json();
     } catch (error) {
         console.error('Error realizando el fetch:', error);
-        showError('Error al ralizar fetch al servidor.');
+        showError('Error al realizar fetch al servidor.');
     }
 }
 
@@ -108,6 +108,23 @@ function showSuccessAndReload(message) {
         }
     });
 }
+
+async function showConfirmation(message) {
+    const { value: confirmed } =  await Swal.fire({
+        title: 'Confirmación',
+        text: message,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: 'rgb(29, 29, 29)',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No'
+    });
+
+    return confirmed;
+}
+
+
 
 
 
