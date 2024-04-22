@@ -174,39 +174,37 @@ class ReservacionesM
         }
     }
 
-    public function traerClasesCanceladas()
+    public function traerCategoriasAsistidas()
     {
-
-        $query = "SELECT Clases.nombre_clase, COUNT(*) 
-        AS cancelaciones        
-        FROM ReservaClases
-        JOIN Clases 
-        ON ReservaClases.id_clase = Clases.id_clase
-        WHERE cancelar = TRUE
-        GROUP BY Clases.nombre_clase";
-
-        $arr = array();
-
+        $query = "SELECT Categoria.nombre_categoria, COUNT(*) AS cantidad_asistentes
+            FROM ReservaClases
+            JOIN Clases ON ReservaClases.id_clase = Clases.id_clase
+            JOIN Categoria ON Clases.id_categoria = Categoria.id_categoria
+            WHERE ReservaClases.cancelar = FALSE
+            GROUP BY Categoria.nombre_categoria
+            ORDER BY cantidad_asistentes DESC";
+    
         try {
-            $resultado = $this->connection->Prepare($query);
+            $resultado = $this->connection->prepare($query);
             $resultado->execute();
+    
             $arr = array();
-
+    
             foreach ($resultado->fetchAll() as $encontrado) {
-                $clase = array(
-                    "nombre_clase" => $encontrado['nombre_clase'],
-                    "cancelaciones" => $encontrado['cancelaciones']
+                $categoria = array(
+                    "nombre_categoria" => $encontrado['nombre_categoria'],
+                    "cantidad_asistentes" => $encontrado['cantidad_asistentes']
                 );
-                $arr[] = $clase;
+                $arr[] = $categoria;
             }
-
             return $arr;
-
+    
         } catch (PDOException $Exception) {
             $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
             return json_encode($error);
         }
-    }
+
+    }    
 
     public function viewReservesbyUser($id_usuario)
     {
@@ -258,4 +256,7 @@ class ReservacionesM
         return $reservas;
     }
 
-}
+    }
+
+    
+

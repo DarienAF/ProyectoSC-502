@@ -42,4 +42,51 @@ class ReportsPageController
         echo json_encode($actividad);
     }
     
+    public function obtenerClasesAsistidas() {
+        $reservacionesM = new ReservacionesM();
+        $clasesAsistidas = $reservacionesM->traerClasesAsistidas();
+    
+        $nombres_clases = array();
+        $conteos = array();
+    
+        foreach ($clasesAsistidas as $clase) {
+            $nombres_clases[] = $clase['nombre_clase'];
+            $conteos[] = $clase['conteo'];
+        }
+    
+        echo json_encode(array('nombres_clases' => $nombres_clases, 'conteos' => $conteos));
+    }
+    
+    public function obtenerCategoriasAsistidas() {
+        $reservacionesM = new ReservacionesM();
+        $categoriasAsistidas = $reservacionesM->traerCategoriasAsistidas();
+    
+        $nombres_categorias = array();
+        $cantidades_asistentes = array();
+    
+        foreach ($categoriasAsistidas as $categoria) {
+            $nombres_categorias[] = $categoria['nombre_categoria'];
+            $cantidades_asistentes[] = $categoria['cantidad_asistentes'];
+        }
+    
+        echo json_encode(array('nombres_categorias' => $nombres_categorias, 'cantidades_asistentes' => $cantidades_asistentes));
+    }
+
+    public function obtenerPromedioPeso() {
+        $medidasM = new MedidasM();
+        $promediosPeso = $medidasM->obtenerPromedioPeso();
+    
+        $meses = array();
+        $promedios = array();
+    
+        foreach ($promediosPeso as $promedio) {
+            $meses[] = $promedio['mes'];
+            $promedios[] = $promedio['promedio_peso'];
+        }
+    
+        echo json_encode(array('meses' => $meses, 'promedios' => $promedios));
+    }
+    
+    
+
 }

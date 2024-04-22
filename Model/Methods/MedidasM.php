@@ -173,33 +173,35 @@ class MedidasM
         return $success;
     }
 
-    public function traerPromedioPeso(){  
+    public function obtenerPromedioPeso(){
         $query = "SELECT AVG(peso) 
-        AS promedio_peso, 
-        DATE_FORMAT(fecha_registro, '%Y-%m') 
-        AS mes
+        AS promedio_peso,
+        DATE_FORMAT(fecha_registro, '%Y-%m') AS mes
         FROM Medidas
-        WHERE fecha_registro >= DATE_SUB(CURRENT_DATE, INTERVAL 6 MONTH)
+        WHERE fecha_registro >= DATE_SUB(CURRENT_DATE, INTERVAL 4 MONTH) 
+        AND fecha_registro < CURRENT_DATE
         GROUP BY mes
         ORDER BY mes ASC";
-    
-        try {
-            $resultado = $this->connection->Prepare($query); 
-            $resultado->execute();
 
-            $arr = array(); 
+    try {
+        $resultado = $this->connection->prepare($query);
+        $resultado->execute();
 
-            foreach($resultado->fetchAll() as $encontrado){
-                $mes = array("mes" => $encontrado['mes'], 
-                "promedio_peso" => $encontrado['promedio_peso']);
-                $arr[] = $mes;
-            }
-        
-            return $arr;
-    
-        } catch (PDOException $Exception) {
-            $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );
-            return json_encode($error);
+        $arr = array();
+
+        foreach ($resultado->fetchAll() as $encontrado) {
+            $promedio = array(
+                "promedio_peso" => $encontrado['promedio_peso'],
+                "mes" => $encontrado['mes']
+            );
+            $arr[] = $promedio;
         }
+        return $arr;
+
+    } catch (PDOException $Exception) {
+        $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
+        return json_encode($error);
     }
+}
+
 }
