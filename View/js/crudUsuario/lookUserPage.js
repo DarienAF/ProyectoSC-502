@@ -8,7 +8,8 @@ function filterTable() {
     let searchLastName = $('#searchLastName').val().toLowerCase();
     let searchEmail = $('#searchEmail').val().trim().toLowerCase();
     let searchPhone = $('#searchPhone').val().trim().toLowerCase();
-    let searchStatus = $('#searchStatus').val().toLowerCase();
+    let searchStatusElement = $('#searchStatus').val();
+    let searchStatus = searchStatusElement ? searchStatusElement.toLowerCase() : '';
 
     let visibleRows = 0;
 
