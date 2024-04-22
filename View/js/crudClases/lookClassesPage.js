@@ -63,7 +63,6 @@ function toggleNoResultRow(visibleRows) {
 let sortOrder = 1; // 1 para ascendente, -1 para descendente
 let currentSortColumn = null;
 
-
 // Función para ordernar la tabla en función de la columna seleccionada
 function sortTable(columnIndex, columnId) {
     // Obtiene la tabla y el cuerpo de la tabla
@@ -122,25 +121,23 @@ $('#sortDay').click(() => sortTable(4, 'sortDay'));
 $('#sortClassName').click(() => sortTable(5, 'sortClassName'));
 $('#sortCategoryName').click(() => sortTable(6, 'sortCategoryName'));
 
-// Función que crea una clase nueva
 async function createClassData() {
-
     // Validación de campos
-    const createClassFields = ["newUserClass", "newStartTime", "newEndTime", 
-    "newDay", "newClassName", "newCategoryClass"];
+    const createClassFields = ["newClassUserID", "newStartTime", "newEndTime", 
+    "newDay", "newClassName", "newCategoryClassID"];
     if (!validateForm(createClassFields)) {
-    showWarning("Todos los campos deben ser completados.")
-    return;
+        showWarning("Todos los campos deben ser completados.")
+        return;
     }
 
     // Recolecta los datos del formulario y valida cada campo
     const formData = {
-        classUserID: $("#newUserClass").val().trim(),
+        classUserID: $("#newClassUserID").val().trim(),
         startTime: $("#newStartTime").val().trim(),
         endTime: $("#newEndTime").val().trim(),
         day: $("#newDay").val().trim(),
         className: $("#newClassName").val().trim(),
-        categoryClassID: $("#newCategoryClass").val().trim()
+        categoryClassID: $("#newCategoryClassID").val().trim()
     };
 
     try {
@@ -179,7 +176,7 @@ $(function () {
         }
     }
 
-    loadData('newUserClass', null);
+    loadData('newClassUserID', null);
 
     async function loadCategories(selectId, selectedCategoryId) {
         const selectDOM = $(`#${selectId}`);
@@ -199,9 +196,8 @@ $(function () {
         }
     }
     
-    loadCategories('newCategoryClass', null);
+    loadCategories('newCategoryClassID', null);
     
-
     $("#createClassBTN").click(() => createClassData());
 
     $('.edit-user-btn').click(async function () {
@@ -213,13 +209,13 @@ $(function () {
             const result = await performAjaxRequest(url, 'POST', {id_clase: classId});
 
             if (result) {
-                $('#classID').val(result.id_clase);
+                $('#classId').val(result.id_clase);
                 loadData('classUserID', result.id_Usuario);
-                $("#starthour").val(result.hora_inicio);
-                $("#endhour").val(result.hora_fin);
+                $("#startTime").val(result.hora_inicio);
+                $("#endTime").val(result.hora_fin);
                 $("#day").val(result.dia);
-                $("#classname").val(result.nombre_clase);
-                $("#classCategoryID").val(result.id_categoria);
+                $("#className").val(result.nombre_clase);
+                loadCategories("categoryClassID", result.id_categoria); // Le puse # por error. ya lo corregi
             }
         } catch (error) {
             console.error('Error fetching class details:', error);
@@ -229,7 +225,7 @@ $(function () {
     $('#updateClassDataBtn').click(async function () {
 
         // Validación de campos
-        const updateClassFields = ["classId", "classUserID", "starthour", "endhour", "day", "classname", "classCategoryID"];
+        const updateClassFields = ["classId", "classUserID", "startTime", "endTime", "day", "className", "categoryClassID"];
         if (!validateForm(updateClassFields)) {
             showWarning("Todos los campos deben ser completados.")
             return;
@@ -239,11 +235,11 @@ $(function () {
         const formData = {
             id_clase: $('#classId').val(),
             classUserID: $('#classUserID').val(),
-            starthour: $('#starthour').val(),
-            endhour: $('#endhour').val(),
+            starthour: $('#startTime').val(),
+            endhour: $('#endTime').val(),
             day: $('#day').val(),
-            classname: $('#classname').val(),
-            classCategoryID: $('#classCategoryID').val()
+            classname: $('#className').val(),
+            categoryClassID: $('#categoryClassID').val()
         };
 
         try {
@@ -255,7 +251,7 @@ $(function () {
                 if (result.changed) {
                     // Actualiza la interfaz de usuario con los nuevos datos
                     updateUI(formData.id_clase, formData.classCategoryID, result.Usuario, 
-                        formData.starthour, formData.endhour, formData.day, formData.classname, formData.classCategoryID);
+                        formData.starthour, formData.endhour, formData.day, formData.classname, formData.categoryClassID);
                 }
                 let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
                 Swal.fire({

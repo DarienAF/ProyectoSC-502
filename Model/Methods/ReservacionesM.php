@@ -52,10 +52,6 @@ class ReservacionesM
             $updates[] = "`id_clase` = ?";
             $params[] = $reservaActualizada->getIdClase();
         }
-        if ($reservaActualizada->getCancelar() !== $reservaOriginal->getCancelar() && !is_null($reservaActualizada->getCancelar())) {
-            $updates[] = "`cancelar` = ?";
-            $params[] = $reservaActualizada->getCancelar();
-        }
 
         if (!empty($updates)) {
             $query = "UPDATE `reservaclases` SET " . implode(", ", $updates) . " WHERE `id_reserva` = ?";
@@ -146,8 +142,9 @@ class ReservacionesM
         return $retVal;
     }
 
-    public function traerClasesAsistidas(){
-       
+    public function traerClasesAsistidas()
+    {
+
         $query = "SELECT Clases.nombre_clase, COUNT(*) 
         AS conteo
         FROM ReservaClases
@@ -157,26 +154,29 @@ class ReservacionesM
         ORDER BY conteo DESC";
 
         try {
-            $resultado = $this->connection->Prepare($query); 
+            $resultado = $this->connection->Prepare($query);
             $resultado->execute();
 
-            $arr = array(); 
-            
-            foreach($resultado->fetchAll() as $encontrado){
-                $clase = array("nombre_clase" => $encontrado['nombre_clase'],
-                 "conteo" => $encontrado['conteo']);
+            $arr = array();
+
+            foreach ($resultado->fetchAll() as $encontrado) {
+                $clase = array(
+                    "nombre_clase" => $encontrado['nombre_clase'],
+                    "conteo" => $encontrado['conteo']
+                );
                 $arr[] = $clase;
             }
             return $arr;
-    
+
         } catch (PDOException $Exception) {
-            $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );
+            $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
             return json_encode($error);
         }
     }
 
-    public function traerClasesCanceladas(){
-        
+    public function traerClasesCanceladas()
+    {
+
         $query = "SELECT Clases.nombre_clase, COUNT(*) 
         AS cancelaciones        
         FROM ReservaClases
@@ -185,29 +185,77 @@ class ReservacionesM
         WHERE cancelar = TRUE
         GROUP BY Clases.nombre_clase";
 
-        $arr = array();  
-    
+        $arr = array();
+
         try {
-            $resultado = $this->connection->Prepare($query); 
+            $resultado = $this->connection->Prepare($query);
             $resultado->execute();
-            $arr = array(); 
-            
-            foreach($resultado->fetchAll() as $encontrado){
-                $clase = array("nombre_clase" => $encontrado['nombre_clase'],
-                 "cancelaciones" => $encontrado['cancelaciones']);
+            $arr = array();
+
+            foreach ($resultado->fetchAll() as $encontrado) {
+                $clase = array(
+                    "nombre_clase" => $encontrado['nombre_clase'],
+                    "cancelaciones" => $encontrado['cancelaciones']
+                );
                 $arr[] = $clase;
             }
-        
+
             return $arr;
-    
+
         } catch (PDOException $Exception) {
-            $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );
+            $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
             return json_encode($error);
         }
     }
 
-    
-    
+    public function viewReservesbyUser($id_usuario)
+    {
+        $reservas = [];
+        try {
+            $query = "
+                SELECT rc.id_reserva,
+                       u_reservado.username AS nombre_usuario_reservado,
+                       u_imparte.username AS username_profesor,
+                       u_imparte.nombre AS nombre_usuario_profesor,
+                       u_imparte.apellidos AS apellidos_usuario_profesor,
+                       c.hora_inicio,
+                       c.hora_fin,
+                       c.dia,
+                       c.nombre_clase,
+                       cat.nombre_categoria
+                FROM ReservaClases rc
+                JOIN Usuarios u_reservado ON rc.id_usuario = u_reservado.id_usuario
+                JOIN Clases c ON rc.id_clase = c.id_clase
+                JOIN Categoria cat ON c.id_categoria = cat.id_categoria
+                JOIN Usuarios u_imparte ON c.id_usuario = u_imparte.id_usuario
+                WHERE u_reservado.id_usuario = ? AND rc.cancelar = 1
+            ";
 
+            $statement = $this->connection->prepare($query);
+            $statement->bindValue(1, $id_usuario, PDO::PARAM_INT);
+            $statement->execute();
+
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $reserva = [
+                    'id_reserva' => $row['id_reserva'],
+                    'nombre_usuario_reservado' => $row['nombre_usuario_reservado'],
+                    'username_profesor' => $row['username_profesor'],
+                    'nombre_usuario_profesor' => $row['nombre_usuario_profesor'],
+                    'apellidos_usuario_profesor' => $row['apellidos_usuario_profesor'],
+                    'hora_inicio' => $row['hora_inicio'],
+                    'hora_fin' => $row['hora_fin'],
+                    'dia' => $row['dia'],
+                    'nombre_clase' => $row['nombre_clase'],
+                    'nombre_categoria' => $row['nombre_categoria']
+                ];
+
+                $reservas[] = $reserva;
+            }
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+        }
+
+        return $reservas;
+    }
 
 }

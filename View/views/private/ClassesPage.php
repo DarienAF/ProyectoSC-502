@@ -63,12 +63,12 @@
                         <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?>
                         </td>
                         <td id="nombreClase-<?php echo $class['id_clase']; ?>">
-                            <?php echo htmlspecialchars($class['nombre']); ?></td>
+                            <?php echo htmlspecialchars($class['nombre_clase']); ?></td>
                         <td id="categoria-<?php echo $class['id_clase']; ?>">
                             <?php echo htmlspecialchars($class['categoria']); ?></td>
                         <td>
-                            <button type="button" class="btn btn-warning edit-clase-btn"
-                                clase-id="<?php echo htmlspecialchars($class['id_clase']); ?>" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-warning edit-user-btn"
+                                class-id="<?php echo htmlspecialchars($class['id_clase']); ?>" data-bs-toggle="modal"
                                 data-bs-target="#editClassModal">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
@@ -103,18 +103,18 @@
                                 <!-- No se edita -->
                             </div>
                             <div class="mb-3">
-                                <label for="username" class="form-label">Usuario</label>
+                                <label for="classUserID" class="form-label">Usuario</label>
                                 <select class="form-control" id="classUserID" name="classUserID">
 
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="starthour" class="form-label">Hora Inicio</label>
-                                <input type="time" class="form-control" id="starthour" name="starthour">
+                                <label for="startTime" class="form-label">Hora Inicio</label>
+                                <input type="time" class="form-control" id="startTime" name="startTime">
                             </div>
                             <div class="mb-3">
-                                <label for="endhour" class="form-label">Hora Fin</label>
-                                <input type="time" class="form-control" id="endhour" name="endhour">
+                                <label for="endTime" class="form-label">Hora Fin</label>
+                                <input type="time" class="form-control" id="endTime" name="endTime">
                             </div>
                             <div class="mb-3">
                                 <label for="day" class="form-label">Día</label>
@@ -130,12 +130,12 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="classname" class="form-label">Nombre Clase</label>
-                                <input type="text" class="form-control" id="classname" name="classname">
+                                <label for="className" class="form-label">Nombre Clase</label>
+                                <input type="text" class="form-control" id="className" name="className">
                             </div>
                             <div class="mb-3">
-                                <label for="classCategoryID" class="form-label">Categoria</label>
-                                <select class="form-control" id="classCategoryID" name="classCategoryID">
+                                <label for="categoryClassID" class="form-label">Categoria</label>
+                                <select class="form-control" id="categoryClassID" name="categoryClassID">
 
                                 </select>
                             </div>
@@ -151,91 +151,6 @@
             </div>
         </div>
 
-
-        <?php endif; ?>
-        <!-- Vista de Clases Miembros -->
-        <?php if ($userRole == 4): ?>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
-
         <!-- Modal Crear-->
         <div class="modal fade" id="createAsignatureModal" tabindex="-1" aria-labelledby="createAsignatureModalLabel"
             aria-hidden="true">
@@ -247,8 +162,9 @@
                     <div class="modal-body">
                         <form id="createClassForm">
                             <div class="mb-3">
-                                <label for="classUserID" class="form-label">Nombre de Entrenador</label>
-                                <select class="form-select" id="classUserID" name="classUserID">
+                                <label for="newClassUserID" class="form-label">Nombre de Entrenador</label>
+                                <select class="form-control" id="newClassUserID" name="newClassUserID">
+
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -277,8 +193,9 @@
                                 <input type="text" class="form-control" id="newClassName" name="newClassName">
                             </div>
                             <div class="mb-3">
-                                <label for="newCategoryClass" class="form-label">Categoria</label>
-                                <input type="number" class="form-control" id="newCategoryClass" name="newCategoryClass">
+                                <label for="newCategoryClassID" class="form-label">Categoria</label>
+                                <select class="form-control" id="newCategoryClassID" name="newCategoryClassID">
+                                </select>
                             </div>
                         </form>
                     </div>
@@ -293,6 +210,96 @@
         </div>
 
     </div>
+
+
+    <?php endif; ?>
+
+
+
+
+    <!-- Vista de Clases Miembros -->
+    <?php if ($userRole == 4): ?>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
 
     <!-- Modal Ver Detalles de la Clase-->
     <div class="modal fade" id="viewClassDetails" tabindex="-1" aria-labelledby="viewClassDetailsLabel"
@@ -335,6 +342,8 @@
     </div>
 
     <?php require './View/fragments/footer.php'; ?>
+
+    <script src="./View/js/crudClases/classesPage.js"></script>
 
 </body>
 

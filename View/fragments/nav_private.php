@@ -26,7 +26,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="./index.php?controller=TrainingPlanPage&action=index">Mis Rutinas</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="./index.php?controller=SchedulePage&action=index">Mis Horarios</a>
+                    <a class="dropdown-item" href="./index.php?controller=SchedulePage&action=index">Mis Clases</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="./index.php?controller=LookMeasurePage&action=index">Mis Medidas</a>
                     ')

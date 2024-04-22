@@ -1,99 +1,56 @@
 <!DOCTYPE html>
 <html>
 <?php require './View/fragments/head_private.php'; ?>
+
 <body>
-<?php require './View/fragments/nav_private.php'; ?>
+    <?php require './View/fragments/nav_private.php'; ?>
 
 
-<div class="content">
-    <div class="container">
-        <div class="mb-4 title-container">
-            <h1>Horarios de Clases</h1>
-        </div>
-        <div class="no-excuses-image-box">
-            <table class="table table-bordered">
+
+
+    <div class="mb-4 title-container">
+        <h1>Horarios de Clases</h1>
+    </div>
+    <div class="table-container">
+        <div class="calendar-container">
+            <header>
+                <div class="calendar__title">
+                    <h1><strong id="weekRange"></strong> <span id="year"></span></h1>
+                </div>
+            </header>
+
+            <table>
                 <thead>
-                <tr>
-                    <th>Hora</th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miércoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
-                    <th>Sábado</th>
-                    <th>Domingo</th>
-                </tr>
+                    <tr id="daysOfWeek">
+                    </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>08:00 - 09:00</td>
-                    <td>Yoga</td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Yoga</td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td>11:00 - 12:00</td>
-                    <td>Yoga</td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Yoga</td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td>13:00 - 14:00</td>
-                    <td>Yoga</td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Yoga</td>
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td>17:00 - 18:00</td>
-                    <td>Yoga</td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Yoga</td>
-                    <td></td>
-                </tr>
-
-
-                <tr>
-                    <td>20:00 - 21:00</td>
-                    <td>Yoga</td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Pilates</td>
-                    <td></td>
-                    <td>Yoga</td>
-                    <td></td>
-                </tr>
-
+                <tbody id="calendarBody">
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+
+    <div id="classModal" class="modal class-modal" style="display:none;">
+        <div class="modal-content">
+            <h4 id="modalClassName"></h4>
+            <p id="modalClassCoach"></p>
+            <p id="modalClassStartTime"></p>
+            <p id="modalClassEndTime"></p>
+            <p id="modalClassCategory"></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger cancel-button">
+                Cancelar Clase
+            </button>
+        </div>
+    </div>
 
 
-<?php require './View/fragments/footer.php'; ?>
-
-<script>
 
 
-</script>
+    <?php require './View/fragments/footer.php'; ?>
+    <script src="./View/js/crudClases/scheduleClassesPage.js"></script>
+
 
 </body>
 
