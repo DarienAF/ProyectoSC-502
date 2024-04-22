@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS ReservaClases (
     id_reserva INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     id_clase INT,
-    cancelar BOOLEAN DEFAULT FALSE,
+    cancelar BOOLEAN DEFAULT TRUE, 
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
     FOREIGN KEY (id_clase) REFERENCES Clases(id_clase)
 );

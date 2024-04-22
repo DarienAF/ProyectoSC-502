@@ -29,6 +29,8 @@
 
                     </div>
                 </div><!-- /.card -->
+
+
             </div>
             <!-- /.col-md-6 -->
             <div class="col-lg-6">

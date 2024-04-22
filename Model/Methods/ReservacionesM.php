@@ -144,15 +144,15 @@ class ReservacionesM
 
     public function traerClasesAsistidas()
     {
-
         $query = "SELECT Clases.nombre_clase, COUNT(*) 
         AS conteo
         FROM ReservaClases
         JOIN Clases ON ReservaClases.id_clase = Clases.id_clase
-        WHERE ReservaClases.cancelar = FALSE
+        WHERE ReservaClases.cancelar = TRUE
         GROUP BY Clases.nombre_clase
-        ORDER BY conteo DESC";
-
+        ORDER BY conteo DESC
+        LIMIT 5";
+    
         try {
             $resultado = $this->connection->Prepare($query);
             $resultado->execute();
@@ -180,7 +180,7 @@ class ReservacionesM
             FROM ReservaClases
             JOIN Clases ON ReservaClases.id_clase = Clases.id_clase
             JOIN Categoria ON Clases.id_categoria = Categoria.id_categoria
-            WHERE ReservaClases.cancelar = FALSE
+            WHERE ReservaClases.cancelar = TRUE
             GROUP BY Categoria.nombre_categoria
             ORDER BY cantidad_asistentes DESC";
     
@@ -203,8 +203,8 @@ class ReservacionesM
             $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
             return json_encode($error);
         }
-
-    }    
+    }
+    
 
     public function viewReservesbyUser($id_usuario)
     {

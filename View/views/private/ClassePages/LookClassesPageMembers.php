@@ -16,7 +16,8 @@
             <?php foreach ($userClasses as $userCls): ?>
             <div class="col">
                 <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                    <img src="<?php echo htmlspecialchars($userCls['categoria_imagen']); ?>" class="card-img-top"
+                         alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Clase de <?php echo htmlspecialchars($userCls['nombre_clase']); ?></h5>
                         <p class="card-text">Día de la clase: <?php echo htmlspecialchars($userCls['dia']); ?></p>
