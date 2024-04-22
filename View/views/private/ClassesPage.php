@@ -52,13 +52,20 @@
                 <tbody>
                     <?php foreach ($userClasses as $class): ?>
                     <tr id="classRow-<?php echo $class['id_clase']; ?>">
-                        <td id="idClase-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['id_clase']); ?></td>
-                        <td id="nombreUsuario-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['usuario']); ?></td>
-                        <td id="horaInicio-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['hora_inicio']); ?></td>
-                        <td id="horaFin-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['hora_fin']); ?></td>
-                        <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?> </td>
-                        <td id="nombreClase-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['nombre_clase']); ?></td>
-                        <td id="categoria-<?php echo $class['id_clase']; ?>"> <?php echo htmlspecialchars($class['categoria']); ?></td>
+                        <td id="idClase-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['id_clase']); ?></td>
+                        <td id="nombreUsuario-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['usuario']); ?></td>
+                        <td id="horaInicio-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['hora_inicio']); ?></td>
+                        <td id="horaFin-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['hora_fin']); ?></td>
+                        <td id="dia-<?php echo $class['id_clase']; ?>"><?php echo htmlspecialchars($class['dia']); ?>
+                        </td>
+                        <td id="nombreClase-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['nombre_clase']); ?></td>
+                        <td id="categoria-<?php echo $class['id_clase']; ?>">
+                            <?php echo htmlspecialchars($class['categoria']); ?></td>
                         <td>
                             <button type="button" class="btn btn-warning edit-user-btn"
                                 class-id="<?php echo htmlspecialchars($class['id_clase']); ?>" data-bs-toggle="modal"
@@ -78,7 +85,7 @@
                 </tbody>
             </table>
         </div>
-  
+
 
         <!-- Modal Modificar-->
         <div class="modal fade" id="editClassModal" tabindex="-1" aria-labelledby="editClassModalLabel"
@@ -144,8 +151,8 @@
             </div>
         </div>
 
-         <!-- Modal Crear-->
-         <div class="modal fade" id="createAsignatureModal" tabindex="-1" aria-labelledby="createAsignatureModalLabel"
+        <!-- Modal Crear-->
+        <div class="modal fade" id="createAsignatureModal" tabindex="-1" aria-labelledby="createAsignatureModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -157,7 +164,7 @@
                             <div class="mb-3">
                                 <label for="newClassUserID" class="form-label">Nombre de Entrenador</label>
                                 <select class="form-control" id="newClassUserID" name="newClassUserID">
-                                    
+
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -205,91 +212,95 @@
     </div>
 
 
-        <?php endif; ?>
-        <!-- Vista de Clases Miembros -->
-        <?php if ($userRole == 4): ?>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
+    <?php endif; ?>
 
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
+    <!-- Vista de Clases Miembros -->
+    <?php if ($userRole == 4): ?>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
                 </div>
             </div>
         </div>
-        <?php endif; ?>
 
-       
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+
     <!-- Modal Ver Detalles de la Clase-->
     <div class="modal fade" id="viewClassDetails" tabindex="-1" aria-labelledby="viewClassDetailsLabel"
         aria-hidden="true">
