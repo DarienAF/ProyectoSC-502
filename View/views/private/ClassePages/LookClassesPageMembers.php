@@ -12,83 +12,34 @@
         <!-- Vista de Clases Miembros -->
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
 
+            <?php foreach ($userClasses as $userCls): ?>
             <div class="col">
                 <div class="card">
                     <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title">Clase de <?php echo htmlspecialchars($userCls['nombre_clase']); ?></h5>
+                        <p class="card-text">Día de la clase: <?php echo htmlspecialchars($userCls['dia']); ?></p>
+                        <p class="card-text">¡Descubre una experiencia única con la clase
+                            "<?php echo htmlspecialchars($userCls['nombre_clase']); ?>"! Únete a nosotros para un
+                            entrenamiento dinámico que te ayudará a mejorar tu fuerza, resistencia y flexibilidad. ¡No
+                            te lo pierdas y lleva tu rutina fitness al siguiente nivel!</p>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
+                            id="classId-<?php echo $userCls['id_clase']; ?>" data-bs-target="#viewClassDetails"
+                            data-hora-inicio="<?php echo htmlspecialchars($userCls['hora_inicio']); ?>"
+                            data-hora-fin="<?php echo htmlspecialchars($userCls['hora_fin']); ?>"
+                            data-categoria="<?php echo htmlspecialchars($userCls['categoria']); ?>"
+                            data-dia="<?php echo htmlspecialchars($userCls['dia']); ?>"
+                            data-nombre-coach="<?php echo htmlspecialchars($userCls['usuario_nombre']); ?>"
+                            data-apellidos-coach="<?php echo htmlspecialchars($userCls['usuario_apellidos']); ?>"
+                            data-nombre-clase="<?php echo htmlspecialchars($userCls['nombre_clase']); ?>"
+                            data-id_usuario="<?php echo $user_id; ?>">Ver
+                            detalles de la Clase</button>
                     </div>
                 </div>
             </div>
+            <?php endforeach; ?>
 
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">
-                    <img src="./View/img/private/classes-page/card.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#viewClassDetails">Ver detalles de la Clase</button>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
@@ -123,8 +74,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" onclick="cancelClass()">
-                            Cancelar Clase
+                        <button id="createBookingClass" type="button" class="btn btn-success">
+                            Reservar Clase
                         </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     </div>

@@ -212,6 +212,7 @@ th span {
 
 .card-text {
 	font-size: 1.6vh;
+	margin-bottom: 5px;
 }
 
 .card-link {
@@ -251,3 +252,4 @@ th span {
 		filter: blur(0);
 	}
 }
+

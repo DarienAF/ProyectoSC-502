@@ -138,5 +138,4 @@ class ReservesPageController
         echo json_encode($response);
     }
 
-
 }
