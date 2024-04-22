@@ -5,6 +5,7 @@ namespace ProyectoSC502\Controller;
 session_start();
 
 use ProyectoSC502\Model\Entities\Clases;
+use ProyectoSC502\Model\Entities\Categorias;
 use ProyectoSC502\Model\Methods\UsuarioM;
 use ProyectoSC502\Model\Methods\RolM;
 use ProyectoSC502\Model\Methods\ClasesM;
@@ -57,6 +58,8 @@ class ClassesPageController
     {
         $categoria = $this->categoriasM->view($class->getIdCategoria());
         $categoriaNombre = ($categoria !== null) ? $categoria->getNombreCategoria() : "Sin categoría";
+        $categoriaImagen = $categoria->getImagenCategoria();
+
         $classReturn = [
             "id_clase" => $class->getIdClase(),
             "usuario" => $this->usuarioM->view($class->getIdUsuario())->getUsername(),
@@ -66,7 +69,8 @@ class ClassesPageController
             "hora_fin" => $class->getHoraFin(),
             "dia" => $class->getDia(),
             "nombre_clase" => $class->getNombreClase(),
-            "categoria" => $categoriaNombre
+            "categoria" => $categoriaNombre,
+            "categoria_imagen" => $categoriaImagen,
         ];
         return $classReturn;
     }
