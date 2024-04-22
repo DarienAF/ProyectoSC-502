@@ -26,6 +26,14 @@
                     <canvas id="myChart"></canvas>
                 </div>
             </div><!-- /.card -->
+            <div class="col-lg-12">
+                    <div class="card text-white bg-dark mb-3">
+                        <div class="card-header">
+                            <h5 class="m-0">Cantidad de Usuarios por Roles</h5>
+                        </div>
+                        <canvas id="myChart4"></canvas>
+                    </div>
+                </div>
         </div>
         <!-- /.col-md-6 -->
         <div class="col-lg-6">
@@ -50,14 +58,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <div class="card text-white bg-dark mb-3">
-                        <div class="card-header">
-                            <h5 class="m-0">Nuevo Card</h5>
-                        </div>
-                        <canvas id="myChart4"></canvas>
-                    </div>
-                </div>
+               
             </div>
         </div>
         <!-- /.col-md-6 -->
