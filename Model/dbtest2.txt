@@ -127,3 +127,13 @@ INSERT INTO `ejercicio` (`id_ejercicio`, `nombre_ejercicio`, `grupo_muscular`, `
 (5, 'Elevaciones laterales', 'Hombro', 'https://d1copppaysyuhz.cloudfront.net/exercises/lateral-raise.webp'),
 (6, 'Extension de tricep', 'Tricep', 'https://d1copppaysyuhz.cloudfront.net/exercises/tricep-extension.webp'),
 (7, 'Jalón lateral', 'Espalda', 'https://d1copppaysyuhz.cloudfront.net/exercises/lat-pulldown.webp');
+
+
+https://d1copppaysyuhz.cloudfront.net/classes/box.png
+https://d1copppaysyuhz.cloudfront.net/classes/crossfit.png
+https://d1copppaysyuhz.cloudfront.net/classes/general_workout.jpg
+https://d1copppaysyuhz.cloudfront.net/classes/hiit.png
+https://d1copppaysyuhz.cloudfront.net/classes/pilates.png
+https://d1copppaysyuhz.cloudfront.net/classes/spinning.png
+https://d1copppaysyuhz.cloudfront.net/classes/yoga.png
+https://d1copppaysyuhz.cloudfront.net/classes/zumba.jpg

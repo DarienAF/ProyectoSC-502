@@ -6,52 +6,48 @@ session_start();
 
 use ProyectoSC502\Model\Entities\Clases;
 use ProyectoSC502\Model\Methods\UsuarioM;
-use ProyectoSC502\Model\Methods\RolM;
 use ProyectoSC502\Model\Methods\ClasesM;
 use ProyectoSC502\Model\Methods\CategoriasM;
 
 class ClassesPageController
 {
     private $usuarioM;
-    private $rolM;
     private $clasesM;
     private $categoriasM;
 
     public function __construct()
     {
         $this->usuarioM = new UsuarioM();
-        $this->rolM = new RolM();
         $this->clasesM = new ClasesM();
         $this->categoriasM = new CategoriasM();
     }
-   
+
 
     function SetClassesData($class)
-{
-    $classReturn = [
-        "id_clase" => $class->getIdClase(),
-        "usuario" => $this->usuarioM->view($class->getIdUsuario())->getUsername(),
-        "hora_inicio" => $class->getHoraInicio(),
-        "hora_fin" => $class->getHoraFin(),
-        "dia" => $class->getDia(),
-        "nombre_clase" => $class->getNombreClase(),
-        "categoria" => $this->categoriasM->view($class->getIdCategoria())->getNombreCategoria()
-    ];
-    return $classReturn;
-}
+    {
+        return [
+            "id_clase" => $class->getIdClase(),
+            "usuario" => $this->usuarioM->view($class->getIdUsuario())->getUsername(),
+            "hora_inicio" => $class->getHoraInicio(),
+            "hora_fin" => $class->getHoraFin(),
+            "dia" => $class->getDia(),
+            "nombre_clase" => $class->getNombreClase(),
+            "categoria" => $this->categoriasM->view($class->getIdCategoria())->getNombreCategoria()
+        ];
+    }
 
 
-function Index()
-{
-    $current_page = 'ClassesPage';
-    $user_id = $_SESSION['user_id'];
-    $usuarioM = new UsuarioM();
-    $current_user = $usuarioM->view($user_id);
-    $userFullName = $current_user->getFullName();
-    $userRole = $current_user->getIdRol();
-    $userImagePath = $current_user->getRutaImagen();
-    require_once './View/views/private/ClassesPage.php';
-}
+    function Index()
+    {
+        $current_page = 'ClassesPage';
+        $user_id = $_SESSION['user_id'];
+        $usuarioM = new UsuarioM();
+        $current_user = $usuarioM->view($user_id);
+        $userFullName = $current_user->getFullName();
+        $userRole = $current_user->getIdRol();
+        $userImagePath = $current_user->getRutaImagen();
+        require_once './View/views/private/ClassesPage.php';
+    }
 
     public function createClass()
     {
@@ -138,7 +134,6 @@ function Index()
     }
 
 
-    
     public function MemberUsers()
     {
         $um = new UsuarioM();
@@ -162,10 +157,10 @@ function Index()
         $um = new CategoriasM();
         $response = [];
         foreach ($um->viewAll() as $categoria) {
-                $response[] = [
-                    'id' => $categoria->getIdCategoria(),
-                    'nombre' => $categoria->getNombreCategoria(),
-                ];
+            $response[] = [
+                'id' => $categoria->getIdCategoria(),
+                'nombre' => $categoria->getNombreCategoria(),
+            ];
         }
 
         header('Content-Type: application/json');
@@ -176,7 +171,7 @@ function Index()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         // Se recupera la clase usando el ID de la clase proporcionado en los datos
-        $clase = $this->clasesM->view($data);
+        $clase = $this->clasesM->view($data['id_clase']);
 
         if ($clase) {
             // Llama a la función SetClassData() con la clase recuperada como argumento y almacenar el resultado en $response
@@ -190,6 +185,4 @@ function Index()
         header('Content-Type: application/json');
         echo json_encode($response);
     }
-
-
 }

@@ -41,6 +41,7 @@ class LookUserPageController
         $data = json_decode(file_get_contents('php://input'), true);
 
         $usuarioNuevo = new Usuario();
+        // Setear los atributos del usuario con los datos recibidos
         $usuarioNuevo->setIdRol($data['role']);
         $usuarioNuevo->setUsername($data['username']);
         $usuarioNuevo->setCorreo($data['email']);
@@ -52,6 +53,7 @@ class LookUserPageController
         $usuarioNuevo->setActivo(1);
         $usuarioNuevo->setPasswordFlag(1);
 
+        // Verificar si el correo o el usuario ya existen antes de crear el usuario
         if (!$usuarioM->emailExists($usuarioNuevo->getCorreo())) {
             if (!$usuarioM->usernameExists($usuarioNuevo->getUsername())) {
                 if ($usuarioM->create($usuarioNuevo)) {
