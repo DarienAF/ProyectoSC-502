@@ -139,7 +139,7 @@ class ClasesM
     {
         $clases = [];
         try {
-            $query = "SELECT * FROM `clases`";
+            $query = "SELECT * FROM `clases` ORDER BY FIELD(dia, 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo')";
             $statement = $this->connection->prepare($query);
             $statement->execute();
 
