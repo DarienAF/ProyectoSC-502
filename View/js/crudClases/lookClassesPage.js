@@ -18,7 +18,7 @@ function filterTable() {
     let searchEndTime = $('#searchEndTime').val().trim();
     let searchDay = $('#searchDay').val().trim();
     let searchClassName = $('#searchClassName').val().trim();
-    let searchCategoryname = $('#searchCategoryname').val().trim().toLowerCase();
+    let searchCategoryname = $('#searchCategoryName').val().trim().toLowerCase();
     let visibleRows = 0;
 
     // Iterar sobre cada fila de la tabla para aplicar los filtros
@@ -235,12 +235,14 @@ $(function () {
         const formData = {
             id_clase: $('#classId').val(),
             classUserID: $('#classUserID').val(),
-            starthour: $('#startTime').val(),
-            endhour: $('#endTime').val(),
+            startTime: $('#startTime').val(),
+            endTime: $('#endTime').val(),
             day: $('#day').val(),
-            classname: $('#className').val(),
+            className: $('#className').val(),
             categoryClassID: $('#categoryClassID').val()
         };
+
+        const categoryClassName = $('#categoryClassID').find("option:selected").text();
 
         try {
             // Realiza una solicitud POST al servidor.
@@ -250,8 +252,7 @@ $(function () {
             if (result.success) {
                 if (result.changed) {
                     // Actualiza la interfaz de usuario con los nuevos datos
-                    updateUI(formData.id_clase, formData.classCategoryID, result.Usuario, 
-                        formData.starthour, formData.endhour, formData.day, formData.classname, formData.categoryClassID);
+                    updateUI(formData.id_clase, result.Usuario, formData.startTime, formData.endTime, formData.day, formData.className, categoryClassName);
                 }
                 let message = result.changed ? 'Los cambios fueron guardados con éxito.' : 'No se ingresaron cambios al usuario.';
                 Swal.fire({

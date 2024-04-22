@@ -16,31 +16,31 @@
 
 
 <div class="table-container">
-    <table class="table table-striped table-dark" id="tablaUsuario">
+    <table class="table table-striped table-dark" id="tablaPlanes">
         <thead>
         <tr class="table-titles">
             <th id="sortID">ID <span class="sort-arrow"></span></th>
-            <th id="sortRol">Nombre <span class="sort-arrow"></span></th>
-            <th id="sortName">Usuario <span class="sort-arrow"></span></th>
-            <th id="sortSurnames">Plan Ejercicio <span class="sort-arrow"></span></th>
-            <th id="sortMail">Dia <span class="sort-arrow"></span></th>
+            <th id="sortNombre">Nombre <span class="sort-arrow"></span></th>
+            <th id="sortUsuario">Usuario <span class="sort-arrow"></span></th>
+            <th id="sortPlanEjercicio">Plan Ejercicio <span class="sort-arrow"></span></th>
+            <th id="sortDia">Dia <span class="sort-arrow"></span></th>
             <th></th>
         </tr>
         <tr>
             <th><input type="number" id="searchId" placeholder="Buscar" oninput="filterTable()"
                        class="form-control">
             </th>
-            <th><input type="text" id="searchUsername" placeholder="Buscar" oninput="filterTable()"
+            <th><input type="text" id="searchNombre" placeholder="Buscar" oninput="filterTable()"
                        class="form-control">
             </th>
-            <th><input type="text" id="searchFirstName" placeholder="Buscar" oninput="filterTable()"
+            <th><input type="text" id="searchUsuario" placeholder="Buscar" oninput="filterTable()"
                        class="form-control">
             </th>
             <th>
-                <input type="text" id="searchLastName" placeholder="Buscar" oninput="filterTable()"
+                <input type="text" id="searchPlanEjercicio" placeholder="Buscar" oninput="filterTable()"
                        class="form-control">
             </th>
-            <th><input type="text" id="searchEmail" placeholder="Buscar" oninput="filterTable()"
+            <th><input type="text" id="searchDia" placeholder="Buscar" oninput="filterTable()"
                        class="form-control">
             </th>
             <th></th>

@@ -53,22 +53,20 @@ class ClassesPageController
 
     }
 
-    function SetClassesData($class)
+    function SetClassesData($class): array
     {
         $categoria = $this->categoriasM->view($class->getIdCategoria());
         $categoriaNombre = ($categoria !== null) ? $categoria->getNombreCategoria() : "Sin categoría";
-        $classReturn = [
+        return [
             "id_clase" => $class->getIdClase(),
+            "id_Usuario" => $class->getIdUsuario(),
             "usuario" => $this->usuarioM->view($class->getIdUsuario())->getUsername(),
-            "usuario_nombre" => $this->usuarioM->view($class->getIdUsuario())->getNombre(),
-            "usuario_apellidos" => $this->usuarioM->view($class->getIdUsuario())->getApellidos(),
             "hora_inicio" => $class->getHoraInicio(),
             "hora_fin" => $class->getHoraFin(),
             "dia" => $class->getDia(),
             "nombre_clase" => $class->getNombreClase(),
             "categoria" => $categoriaNombre
         ];
-        return $classReturn;
     }
 
     public function createClass()
@@ -79,7 +77,6 @@ class ClassesPageController
 
         // Establece si el usuario asociado a la clase existe
         $usuarioAsociado = $this->usuarioM->view($data['classUserID']);
-
         // Si el usuario asociado existe
         if ($usuarioAsociado) {
             // Asignar los atributos de la clase Clases con los datos recibidos
@@ -185,7 +182,7 @@ class ClassesPageController
     {
         $data = json_decode(file_get_contents('php://input'), true);
         // Se recupera la clase usando el ID de la clase proporcionado en los datos
-        $clase = $this->clasesM->view($data);
+        $clase = $this->clasesM->view($data['id_clase']);
 
         if ($clase) {
             // Llama a la función SetClassData() con la clase recuperada como argumento y almacenar el resultado en $response
