@@ -151,7 +151,9 @@ class ReservacionesM
         JOIN Clases ON ReservaClases.id_clase = Clases.id_clase
         WHERE ReservaClases.cancelar = FALSE
         GROUP BY Clases.nombre_clase
-        ORDER BY conteo DESC";
+        ORDER BY conteo DESC
+        LIMIT 5"
+        ;
 
         try {
             $resultado = $this->connection->Prepare($query);
