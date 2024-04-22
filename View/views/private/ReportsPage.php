@@ -29,6 +29,8 @@
 
                     </div>
                 </div><!-- /.card -->
+
+                
             </div>
             <!-- /.col-md-6 -->
             <div class="col-lg-6">
@@ -54,7 +56,7 @@
         </div>
         <!-- /.row -->
     </div><!-- /.container-fluid -->
-
+    
     <?php require './View/fragments/footer.php'; ?>
     <script src="./View/js/charts.js"></script>
 </body>
